@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGadgeteerSocketIOApp", "ExampleGadgeteerSocketIOApp\ExampleGadgeteerSocketIOApp.csproj", "{F7A1A558-CA04-485C-B97D-8A028E592BE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketIO.NetMF", "..\..\SocketIO.NetMF\SocketIO.NetMF\SocketIO.NetMF.csproj", "{8F7D71E7-1F08-4C79-8D8D-A6D90223469A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7A1A558-CA04-485C-B97D-8A028E592BE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A1A558-CA04-485C-B97D-8A028E592BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A1A558-CA04-485C-B97D-8A028E592BE1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F7A1A558-CA04-485C-B97D-8A028E592BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A1A558-CA04-485C-B97D-8A028E592BE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A1A558-CA04-485C-B97D-8A028E592BE1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{8F7D71E7-1F08-4C79-8D8D-A6D90223469A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7D71E7-1F08-4C79-8D8D-A6D90223469A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F7D71E7-1F08-4C79-8D8D-A6D90223469A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F7D71E7-1F08-4C79-8D8D-A6D90223469A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

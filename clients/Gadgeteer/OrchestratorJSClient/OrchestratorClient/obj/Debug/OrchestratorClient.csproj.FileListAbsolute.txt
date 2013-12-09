@@ -1,0 +1,7 @@
+C:\Users\nikkis\Documents\GitHub\SocialRepo\clients\Gadgeteer\OrchestratorClient\OrchestratorClient\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\nikkis\Documents\GitHub\SocialRepo\clients\Gadgeteer\OrchestratorClient\OrchestratorClient\obj\Debug\TinyCLR_DebugReferences.cache
+C:\Users\nikkis\Documents\GitHub\SocialRepo\clients\Gadgeteer\OrchestratorClient\OrchestratorClient\obj\Debug\OrchestratorClient.Resources.resources
+C:\Users\nikkis\Documents\GitHub\SocialRepo\clients\Gadgeteer\OrchestratorClient\OrchestratorClient\obj\Debug\GenerateResource.read.1.tlog
+C:\Users\nikkis\Documents\GitHub\SocialRepo\clients\Gadgeteer\OrchestratorClient\OrchestratorClient\obj\Debug\GenerateResource.write.1.tlog
+C:\Users\nikkis\Documents\GitHub\SocialRepo\clients\Gadgeteer\OrchestratorClient\OrchestratorClient\obj\Debug\OrchestratorClient.Resources.tinyresources
+C:\Users\nikkis\Documents\GitHub\SocialRepo\clients\Gadgeteer\OrchestratorClient\OrchestratorClient\obj\Debug\TinyResGen.cache
