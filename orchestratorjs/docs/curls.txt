@@ -1,0 +1,27 @@
+
+
+
+# Post new action
+curl -i -X POST http://localhost:8080/api/1/action/MyAction  -H "Content-Type: application/xml" --data-binary @/Users/nikkis/Desktop/my_action.js
+
+# Delete action
+curl -X DELETE http://localhost:8080/api/1/action/Monolog4
+
+
+
+# create/update device
+curl -X POST http://localhost:8080/api/1/device -d '{"identity": "nikkis@s3mini", "bluetoothMAC": "6C:F3:73:65:66:A3", "name": "nikkis", "type": "android", "capabilities": ["TalkingDevice","Apocalymbics","PlayerDevice","UrlScreen","TestDevice"]}' -H "Content-Type: application/json"
+
+
+# new action instance
+curl -X POST http://localhost:8080/api/1/actioninstance -d '{"actionName": "Test", "parameters": ["device:nikkis@s3mini"]}' -H "Content-Type: application/json"
+
+# delete action instance
+curl -X DELETE http://localhost:8080/api/1/actioninstance/id1380019130039
+
+
+
+
+# post new capability
+curl -i -X POST http://localhost:8080/api/1/capability/TalkingDevice  -H "Content-Type: application/xml" --data-binary @/Users/nikkis/Desktop/my_capability.js
+

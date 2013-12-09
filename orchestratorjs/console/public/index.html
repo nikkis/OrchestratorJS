@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width">
+  	<title>Social Devices Orchestrator</title>
+
+	<link rel="stylesheet" href="css/foundation.css">
+	<link rel="stylesheet" href="css/foundation_icons_general/stylesheets/general_foundicons.css">
+	<link rel="stylesheet" href="css/foundation_icons_general/stylesheets/myIcons.css">
+
+  	<script src="js/jquery.min.js"></script>
+	<script src="js/mustache.js"></script>
+	<script src="js/require.js"></script>
+	<script src="js/jquery-migrate-1.2.1.js"></script>
+	<script src="js/jquery.ba-bbq.min.js"></script>
+  	<script src="js/vendor/custom.modernizr.js"></script>
+	<script src="js/foundation.min.js"></script>
+
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/foundation/foundation.tooltips.js"></script>
+
+	<link href="js/select2/select2.css" rel="stylesheet"/>
+	<script src="js/select2/select2.js"></script>
+
+  	<script src="console.js"></script>
+
+  	<script src="js/edit_area/edit_area_full.js"></script>
+  	<script src="edit_area_handlers.js"></script>
+
+</head>
+<body>
+
+
+	<nav class="top-bar">
+	  <ul class="title-area">
+	    <!-- Title Area -->
+	    <li class="name">
+	      <h1><a href="/">Social Devices</a></h1>
+	    </li>
+	    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+	    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+	  </ul>
+
+	  <section class="top-bar-section">
+	    <!-- Left Nav Section -->
+
+<!-- Actions Capabilities Devices Instances Downloads  -->
+
+
+	    <ul class="left">
+	      <li class="divider"></li>
+	      <li class="active"><a href="#actions" class="topMenuBtn2" onclick="showActions();">Actions</a></li>
+	      <li class="divider"></li>
+	      
+	      <li class="active"><a href="#capabilities" class="topMenuBtn">Capabilities</a></li>
+	      <li class="divider"></li>
+
+	      <li class="active"><a href="#instances" class="topMenuBtn">Instances</a></li>
+	      <li class="divider"></li>
+
+	      <li class="active"><a href="#devices" class="topMenuBtn">Devices</a></li>
+	      <li class="divider"></li>
+
+	    </ul>
+
+
+	    <!-- Right Nav Section -->
+	    <ul class="right">
+	      <li class="divider hide-for-small"></li>
+	      <li class="active"><a href="#download" class="topMenuBtn">Download</a></li>
+	    </ul>
+	  </section>
+	</nav>
+
+<!-- add here dynamically modal contents -->
+<div class="generalModalDiv"></div>
+
+
+<div class="container">
+
+	<div class="row">
+		<div class="large-12 columns">
+			<h2>Social Devices Orchestrator Console</h2>
+			<p>This is version 2.0</p>
+			<hr />
+		</div>
+	</div>
+
+
+
+	<div class="row">
+<!--
+		<div id="myModal" class="reveal-modal">
+		  <h2>Awesome. I have it.</h2>
+		  <p class="lead">Your couch.  It is mine.</p>
+		  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
+		  <a class="close-reveal-modal">&#215;</a>
+		</div>
+	-->
+
+
+		<div class="large-8 columns">
+		
+			
+			<div class="row">
+				<div class="small-12 large-centered columns">
+					<p><a href="http://social.cs.tut.fi/registry">Registry</a></p>
+					<p><a href="http://social.cs.tut.fi:8889">Proximity Graph</a></p>
+					<p><a href="http://social.cs.tut.fi:8000">Orchestrator version 1.0</a></p>
+					<!--<img src="img/generalSystem.png">-->					
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+
+
+			<div class="large-6 columns">
+				<div class="flex-video">
+						<iframe width="420" height="315" src="https://www.youtube.com/embed/n4U8ncSClIo" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+
+			<div class="large-6 columns">
+				<div class="flex-video">
+						<iframe width="420" height="315" src="https://www.youtube.com/embed/DigLU_UjYSI" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div> <!-- container -->
+  <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+  '.js><\/script>')
+  </script>
+  
+  <script src="js/foundation.min.js"></script>
+
+  
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+</html>

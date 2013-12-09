@@ -1,0 +1,20 @@
+{
+
+	"server" : {
+		"host" : "192.168.0.10",
+		"port" : 8080 
+	},
+	"api" : "1",
+
+	"log_path" : "/logs/",
+
+
+	"resources" : {
+		"actions" :          "/resources/actions/",
+		"capabilities" :     "/resources/capabilities/",
+		"capability_stubs" : "/resources/capability_stubs/"
+	},
+
+	"clients_path" : "/../clients/app_clients/"
+
+}

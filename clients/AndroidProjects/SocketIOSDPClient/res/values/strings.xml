@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SocketIOSDPClient</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_player_device">PlayerDevice</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="title_activity_url_screen">UrlScreenActivity</string>
+    <string name="title_activity_test_device">TestDeviceActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_capability_root">CapabilityRootActivity</string>
+
+</resources>

@@ -1,0 +1,24 @@
+<resources>
+
+    <string name="title_activity_interfaces">SocialDevices Client Settings</string>
+
+    <!-- Strings related to Settings -->
+
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+    
+    <string name="pref_title_display_name">Device Identity</string>
+    <string name="pref_default_display_name">NoIdentity</string>
+    <string name="pref_hint_display_name">Format: username@devicename</string>
+    
+    
+    <string name="prefs_title_interfaces_activity">Device Capabilities</string>
+    <string name="pref_summary_interface_settings_activity">Manage your devices interfaces</string>
+    
+    <string name="pref_title_advanced_settings_activity">Advanced Settings</string>
+ 	<string name="pref_summary_advanced_settings_activity">Edit servers, ports, etc.</string>   
+    
+ 	<string name="pref_header_server_settings">Server Settings</string>
+ 	
+</resources>

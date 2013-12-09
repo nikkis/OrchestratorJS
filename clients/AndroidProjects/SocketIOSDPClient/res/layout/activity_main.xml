@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/connect"
+        android:layout_alignBottom="@+id/connect"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="14dp"
+        android:text="Disconnect" />
+
+    <ImageView
+        android:id="@+id/hearbeatBlink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/connect"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:src="@drawable/blink2" />
+
+    <Button
+        android:id="@+id/connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/hearbeatBlink"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="19dp"
+        android:text="Connect" />
+
+</RelativeLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sdp.socketiosdpclient"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="16" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.sdp.socketiosdpclient.MainActivity"
+            android:label="@string/app_name" 
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sdp.socketiosdpclient.settings.GeneralSettingsActivity"
+            android:label="@string/pref_header_general" >
+        </activity>
+        <activity
+            android:name="com.sdp.socketiosdpclient.settings.AdvancedSettingsActivity"
+            android:label="@string/pref_title_advanced_settings_activity" >
+            <intent-filter>
+                <action android:name="com.sdp.socketiosdpclient.settings.AdvancedSettingsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sdp.socketiosdpclient.settings.CapabilitySettingsActivity"
+            android:label="@string/pref_title_capability_settings_activity" >
+            <intent-filter>
+                <action android:name="com.sdp.socketiosdpclient.settings.CapabilitySettingsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Developer defined activities goes here -->
+        <activity
+            android:name="com.sdp.capabilities.playerDevice.PlayerDeviceActivity"
+            android:label="@string/title_activity_player_device" >
+        </activity>
+        <activity
+            android:name="com.sdp.capabilities.urlScreen.UrlScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_url_screen"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+        <!-- Developer defined activities end -->
+        <activity
+            android:name="com.sdp.capabilities.testDevice.TestDeviceActivity"
+            android:label="@string/title_activity_test_device" >
+        </activity>
+        <activity
+            android:name="com.sdp.socketiosdpclient.CapabilityRootActivity"
+            android:label="@string/title_activity_capability_root" >
+        </activity>
+        
+        
+        <activity
+            android:name="com.bmge.zombiegame.SampleGame"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="SampleGame"
+            android:screenOrientation="landscape" >
+        </activity>
+        
+        
+    </application>
+
+</manifest>

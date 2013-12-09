@@ -1,0 +1,31 @@
+
+<resources>
+
+    <string name="advanced_pref_title">Advanced Settings</string>
+    
+    <string name="advanced_pref_header_orchestrator">Orchestrator Settings</string>
+
+    <string name="advanced_pref_title_orchestrator_host">hostname</string>
+    <string name="advanced_pref_default_orhestrator_host">social.cs.tut.fi</string>
+    
+    <string name="advanced_pref_title_orhestrator_port">port</string>
+    <string name="advanced_pref_default_orhestrator_port">8080</string>
+    
+    
+    
+   
+    
+    <string name="advanced_pref_header_proximity">Proximity Settings</string>
+        
+    <string name="advanced_pref_title_proximity_host">hostname</string>
+    <string name="advanced_pref_default_proximity_host">social.cs.tut.fi</string>
+    
+    <string name="advanced_pref_title_proximity_port">port</string>
+    <string name="advanced_pref_default_proximity_port">8999</string>
+    
+    
+    
+</resources>
+
+
+
