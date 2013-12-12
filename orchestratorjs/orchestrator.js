@@ -8,7 +8,24 @@ log("HOSTNAME: "+config.server.host);
 log("    PORT: "+config.server.port);
 
 
+var mu2express = require("mu2express");
 
+var express = require('express');
+var app = express();
+app.use(express.bodyParser());
+
+var socket = require('socket.io');
+app.configure(function(){
+  app.use(express.static(ROOT+'/'));
+});
+
+app.use(express.static(ROOT+'/console/public'));
+app.engine('mustache', mu2express.engine);
+app.set('view engine', 'mustache');
+app.set('views', __dirname + '/Views');
+app.listen(config.server.port);
+
+/*
 var express = require('express');
 var app = express();
 var socket = require('socket.io');
@@ -18,17 +35,17 @@ app.configure(function(){
 
 app.use(express.bodyParser());
 
-
-
 app.use(app.router); //use both root and other routes below
 app.use(express.static(ROOT+'/console/public')); //use static files in ROOT/public folder
-
+*/
 
 
 
 
 ////////// MAIN CONSOLE HTML - START //////////
 var webconsole = require(ROOT+'/console/console_server_side.js');
+app.get('/', function(req, res) { webconsole.showIndexView(req, res) });
+
 app.get('/api/'+config.api+'/action', function(req, res) { webconsole.getActions(req, res) });
 app.get('/api/'+config.api+'/action/:actionName', function(req, res) { webconsole.getAction(req, res) });
 

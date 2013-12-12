@@ -7,6 +7,15 @@ var config = require(ROOT+'/config.json');
 var fs = require('fs');
 
 
+this.showIndexView = function(req, res) {
+	res.render('index', {
+    'locals' : {
+        'title': config.app_name,
+        }
+    });
+};
+
+
 this.test = function(req, res) {
 /*
 	var actionsPath = ROOT+'/resources/actions/';
