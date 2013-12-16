@@ -1,0 +1,7 @@
+<div id="deleteActionModal" class="reveal-modal">
+  <h3>Removing Action</h3>
+  <p class="lead">Do you seriously want to remove action {{actionName}}</p>
+  <p>This can not be undone!</p>
+  <a href="#" onclick="$('#deleteActionModal').foundation('reveal', 'close');" class="button">cancel</a><a href="#" onclick="deleteAction('{{actionName}}'); return;" class="button right">yes, remove</a>
+  <a class="close-reveal-modal">&#215;</a>
+</div>

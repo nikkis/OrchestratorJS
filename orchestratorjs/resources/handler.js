@@ -9,7 +9,7 @@ var fs = require('fs');
 var qs = require('querystring');
 /// saves actions and capabilities
 
-var DeviceHandler = require(ROOT+'/databaseHandlers/devicesHandler');
+var DeviceHandler = require(ROOT+'/Models/devicesHandler');
 var DEVICE_HANDLER = new DeviceHandler();
 
 

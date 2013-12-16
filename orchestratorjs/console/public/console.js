@@ -1,4 +1,12 @@
 
+require.config({
+    baseUrl: "/js",
+    paths: {
+        "templates": "/templates"
+    },
+    waitSeconds: 15
+  });
+
 var apiVersion = '1';
 
 $(function(){ 
@@ -104,7 +112,7 @@ function showActionCode(actionName) {
         type: 'GET',
         url: '/api/'+apiVersion+'/action/'+actionName,
     }).done(function( data ) { 
-        require(['templates/editor'], function(dependency) { 
+        require(['text!templates/editor.html'], function(editorTemplate) { 
             var html = Mustache.to_html(editorTemplate, {"code": data});
 
             //var editLink = '<div class="row"><div class="large-4 columns"><p><a class="editStopEditLink" href="#" onclick="editableCode();" >Edit action</a></p></div><div style="display: none;" class="large-4 columns right fileNameEdit"><input type="text" id="fileNameInput" value="'+actionName+'" /></div></div>';
@@ -114,68 +122,80 @@ function showActionCode(actionName) {
             var triggerForm = '<form class="custom triggerActionForm">'
             +'<div class="row">'
             +'<div class="large-10 columns">'
-            +'<label for="checkbox2" class="has-tooltip" title="currently not working"><input onchange="showOrHideNewParams(this);" type="checkbox" id="checkbox2" CHECKED style="display: none;"><span class="custom checkbox checked"></span> Use previous parameters</label>'
+            +'<label for="checkbox2" class="has-tooltip" title="currently not working"><input onchange="showPreviousParams(this,\''+actionName+'\');" type="checkbox" id="checkbox2" style="display: none;"><span class="custom checkbox"></span> Use previous arguments</label>'
             +'</div>'
             +'<div class="large-2 columns right">'
             +'<a class="triggerLink" href="javascript:void(0)" onclick="triggerAction(\''+actionName+'\');" >trigger</a>'
             +'</div>'
             +'</div>'
+            +'<div class="row newActionParams"><div class="large-10 columns"><input type="text" id="paramLine" style="width:100%;" placeholder=\'usage: \"string\" or \"device:username@devicename\" or number, and then hit enter\'/></div></div>'
             +'</form>';
 
             $('.actionCode').replaceWith('<div class="large-9 columns actionCode">'+editLink+editArea+triggerForm+'</div>');
             loadFileToEditor('action');
             $('.actionNameLink').removeClass('active');
             $('.actionName_'+actionName).addClass('active');
+
+            showParams();
         });
     });
 };
 
-function showOrHideNewParams(checkbox) {
-
+function showPreviousParams(checkbox, actionName) {
     if(checkbox.checked) {
-        $('.newActionParams').remove();
-    } else {
-
-        //var newParamLine = '<input type="text" id="paramLine" style="width:100%;" placeholder="usage: &quot;string&quot; or 1234 or &quot;device:username@devicename&quot; and then hit enter"/>';
-        var newParamLine = '<input type="text" id="paramLine" style="width:100%;" placeholder="usage: string or device:username@devicename and then hit enter"/>';
-        $('.triggerActionForm').append('<div class="row newActionParams"><div class="large-10 columns">'+newParamLine+'</div></div>');
-
-        $.getJSON('/api/'+apiVersion+'/devices', function(data) {
-            //var devices = ['"device:nikkis@mac"','"device:nikkis@mac1"','"device:nikkis@mac2"'];
-            //var devices = ['device:nikkis@mac','device:nikkis@mac1','device:nikkis@mac2'];
-            var devices = [];
-            var devicesResp = data.devices;
-            for(i in devicesResp) {
-                var devId = devicesResp[i].identity;
-                devices.push('device:'+devId);
+        $.getJSON('/api/'+apiVersion+'/action/'+actionName+'/metadata', function(data) {
+            console.log(data);
+            var preLoadData = [];
+            for(i in data.args) 
+            {
+                var temp = data.args[i];
+                preLoadData.push({id: "p"+i, text: JSON.stringify(temp)});
             }
-
-            $("#paramLine").select2({
-                tags: devices,
-                separator: "<myseparotor>",
-                tokenSeparators: ["<myseparotor>"]}
-            );
-
-            $('#paramLine').on('change', function() { $('#paramLine_val').html($('#paramLine').val());});
-
-            $('#paramLine').select2('container').find('ul.select2-choices').sortable({
-                containment: 'parent',
-                start: function() { $('#paramLine').select2('onSortStart'); },
-                update: function() { $('#paramLine').select2('onSortEnd'); }
-            });
-        }); 
+            $("input#paramLine").select2('data', preLoadData);            
+        });
     }
 };
 
+function showParams() {
+
+    //var newParamLine = '<input type="text" id="paramLine" style="width:100%;" placeholder="usage: &quot;string&quot; or 1234 or &quot;device:username@devicename&quot; and then hit enter"/>';
+    //var newParamLine = '<input type="text" id="paramLine" style="width:100%;" placeholder="usage: string or device:username@devicename and then hit enter"/>';
+    //$('.triggerActionForm').append('<div class="row newActionParams"><div class="large-10 columns">'+newParamLine+'</div></div>');
+
+    $.getJSON('/api/'+apiVersion+'/devices', function(data) {
+
+        var devices = [];
+        var devicesResp = data.devices;
+        for(i in devicesResp) {
+            var devId = devicesResp[i].identity;
+            devices.push('\"device:'+devId+'\"');
+        }
+
+        $("#paramLine").select2({
+            tags: devices,
+            separator: "<myseparotor>",
+            tokenSeparators: ["<myseparotor>"]}
+        );
+
+        $('#paramLine').on('change', function() { $('#paramLine_val').html($('#paramLine').val());});
+        $('#paramLine').select2('container').find('ul.select2-choices').sortable({
+            containment: 'parent',
+            start: function() { $('#paramLine').select2('onSortStart'); },
+            update: function() { $('#paramLine').select2('onSortEnd'); }
+        });
+    }); 
+
+};
+
 function triggerAction(actionName) {
-    //console.log('triggering: '+actionName);
 
     var actionParameters = [];
     var divs = $("#paramLine").select2("container").children().find('.select2-search-choice').find('div');
     for (var i = 0; i < divs.length; i++) {
         var div = divs[i];
         var param = $(div).text();
-        actionParameters.push(param);
+        var object = JSON.parse(param);
+        actionParameters.push(object);
     };
 
     var pp = {};
@@ -185,12 +205,10 @@ function triggerAction(actionName) {
     $.ajax({
         type: 'POST',
         url: '/api/'+apiVersion+'/actioninstance',
-        //cache: false,
         contentType: 'application/json',
-        //processData: false,
         data: JSON.stringify(pp),
     }).done(function( msg ) { 
-        //action_started(msg);
+        alert(msg);
         console.log(msg);
     });
 
@@ -198,9 +216,8 @@ function triggerAction(actionName) {
 
 
 function ensureDeleteAction() {
-    require(['templates/deleteActionModal'], function(dependency) { 
+    require(['text!templates/deleteActionModal.html'], function(deleteActionModal) { 
         var actionName = $('#fileNameInput').val();
-        //var actionName = 'Monolog';
         var data = {"actionName": actionName};
         var html = Mustache.to_html(deleteActionModal, data);
         $('.generalModalDiv').replaceWith('<div class="generalModalDiv">'+html+'</div>');
@@ -213,7 +230,6 @@ function deleteAction(actionName) {
         type: 'DELETE',
         url: '/api/'+apiVersion+'/action/'+actionName,
     }).done(function( msg ) { 
-        console.log(msg);
         $('#deleteActionModal').foundation('reveal', 'close');
         updateActionNames();
         showActionCode('');
@@ -249,7 +265,6 @@ function updateCapabilityNames() {
 
 function showCapabilityCode(capabilityName) {
     if(capabilityName == '') {
-        console.log('safsafasfaf');
         $('.capabilityCode').replaceWith('<div class="large-9 columns capabilityCode">'+'</div>');
         return;
     }
@@ -258,7 +273,7 @@ function showCapabilityCode(capabilityName) {
         type: 'GET',
         url: '/api/'+apiVersion+'/capability/'+capabilityName,
     }).done(function( data ) { 
-        require(['templates/editor'], function(dependency) { 
+        require(['text!templates/editor.html'], function(editorTemplate) { 
             var html = Mustache.to_html(editorTemplate, {"code": data});
 
             var editLink = '<div class="row"><div class="large-1 columns"><p><a class="editStopEditLink" href="#" onclick="editableCode();" ><i class="foundicon-edit myEditIcon"></i></a></p></div><div class="large-1 columns"><p><a href="#" onclick="ensureDeleteCapability();" ><i class="foundicon-remove myRemoveIcon" style="display: none;" ></i></a></p></div><div style="display: none;" class="large-4 columns right fileNameEdit"><input type="text" id="fileNameInput" value="'+capabilityName+'" /></div></div>';
@@ -273,12 +288,11 @@ function showCapabilityCode(capabilityName) {
 };
 
 function ensureDeleteCapability() {
-    require(['templates/deleteCapabilityModal'], function(dependency) { 
+    require(['text!templates/deleteCapabilityModal.html'], function(deleteCapabilityModal) { 
         var capabilityName = $('#fileNameInput').val();
         var data = {"capabilityName": capabilityName};
         var html = Mustache.to_html(deleteCapabilityModal, data);
 
-        console.log('viii333');
         $('.generalModalDiv').replaceWith('<div class="generalModalDiv">'+html+'</div>');
         $('#deleteCapabilityModal').foundation('reveal', 'open');
     });
@@ -307,7 +321,7 @@ function showInstances() {
     $.getJSON('/api/'+apiVersion+'/actioninstances', function(data) {
 
         console.log(data);
-        require(['templates/actioninstances'], function(dependency) { 
+        require(['text!templates/actioninstances.html'], function(actioninstancesTemplate) { 
             var html = Mustache.to_html(actioninstancesTemplate, data);
             html = '<div class="row contents"><div class="large-12 columns">'+html+'</div></div>';
             $('.container').html(html);
@@ -339,7 +353,7 @@ function deleteActionInstance(actioninstanceID) {
 
 function showDevices() {
     $.getJSON('/api/'+apiVersion+'/devices', function(data) {
-        require(['templates/devices'], function(dependency) { 
+        require(['text!templates/devices.html'], function(devicesTemplate) { 
             var html = Mustache.to_html(devicesTemplate, data);
             html = '<div class="row contents"><div class="large-12 columns">'+html+'</div></div>';
             $('.container').html(html);
@@ -360,7 +374,7 @@ function showDevices() {
 function showDownloads() {
     $.getJSON('/api/'+apiVersion+'/downloads', function(data) {
         console.log(data);
-        require(['templates/downloads'], function(dependency) { 
+        require(['text!templates/downloads.html'], function(downloadsTemplate) { 
             console.log(dependency);
             var html = Mustache.to_html(downloadsTemplate, data);
             $('.container').html(html);

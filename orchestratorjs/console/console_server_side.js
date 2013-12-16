@@ -1,10 +1,14 @@
 ROOT = process.cwd()
 HELPERS = require(ROOT+'/helpers/general.js');
 log = HELPERS.log
-
 var config = require(ROOT+'/config.json');
 
 var fs = require('fs');
+
+var DeviceHandler = require(ROOT+'/Models/devicesHandler');
+var DEVICE_HANDLER = new DeviceHandler();
+
+var ACTION_INSTANCE_DATA_HANDLER = new (require(ROOT+'/Models/actionInstanceData'));
 
 
 this.showIndexView = function(req, res) {
@@ -14,6 +18,37 @@ this.showIndexView = function(req, res) {
         }
     });
 };
+
+
+this.getActionMetadata = function(req, res) {
+	var actionName = req.params.actionName;
+	log('metadata for: '+actionName);
+	ACTION_INSTANCE_DATA_HANDLER.findactionInstanceData(actionName, function(err, metadata) {
+
+		if (err) {
+			res.writeHead(500, {'Content-Type': 'text/plain'}); 
+			res.write(err + '\n');
+			res.end();
+		} else if(metadata == null || metadata == undefined || metadata.args == null || metadata.args == undefined ) {
+			res.writeHead(404, {"Content-Type": "application/json"});
+			res.write('No metadata found for '+actionName);
+			res.end();
+
+		} else {
+
+			var arguments = JSON.stringify(metadata.args);
+			arguments = JSON.parse(arguments);
+
+			res.writeHead(200, {"Content-Type": "application/json"});
+			res.write(
+				JSON.stringify({'args': metadata.args})
+			);
+			res.end();
+		} 
+	});
+};
+
+
 
 
 this.test = function(req, res) {

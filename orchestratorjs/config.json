@@ -1,9 +1,12 @@
 {
 
 	"server" : {
-		"host" : "192.168.0.10",
-		"port" : 8080 
+		"host" : "0.0.0.0",
+		"port" : 8080
 	},
+
+"require_authentication" : true,
+
 	"api" : "1",
 
 	"log_path" : "/logs/",

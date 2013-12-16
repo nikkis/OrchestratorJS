@@ -1,7 +1,7 @@
 ROOT = process.cwd()
 HELPERS = require(ROOT+'/helpers/general.js');
 log = HELPERS.log
-runYieldHelpers = require(ROOT+'/helperForRunYield.js');
+runYieldHelpers = require(ROOT+'/helpers/helperForRunYield.js');
 
 this.sleep = function(ms) {
 

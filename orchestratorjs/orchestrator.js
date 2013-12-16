@@ -23,21 +23,7 @@ app.use(express.static(ROOT+'/console/public'));
 app.engine('mustache', mu2express.engine);
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/Views');
-app.listen(config.server.port);
 
-/*
-var express = require('express');
-var app = express();
-var socket = require('socket.io');
-app.configure(function(){
-  app.use(express.static(ROOT+'/'));
-});
-
-app.use(express.bodyParser());
-
-app.use(app.router); //use both root and other routes below
-app.use(express.static(ROOT+'/console/public')); //use static files in ROOT/public folder
-*/
 
 
 
@@ -48,6 +34,7 @@ app.get('/', function(req, res) { webconsole.showIndexView(req, res) });
 
 app.get('/api/'+config.api+'/action', function(req, res) { webconsole.getActions(req, res) });
 app.get('/api/'+config.api+'/action/:actionName', function(req, res) { webconsole.getAction(req, res) });
+app.get('/api/'+config.api+'/action/:actionName/metadata', function(req, res) { webconsole.getActionMetadata(req, res) });
 
 app.get('/api/'+config.api+'/capability', function(req, res) { webconsole.getCapabilities(req, res) });
 app.get('/api/'+config.api+'/capability/:capabilityName', function(req, res) { webconsole.getCapability(req, res) });
@@ -86,7 +73,7 @@ app.delete('/api/'+config.api+'/capability/:capabilityName', function(req, res) 
 
 
 ////////// Orchestrator - START //////////
-var orchestrator = require(ROOT+'/coordinator.js');
+var orchestrator = require(ROOT+'/Controllers/coordinator.js');
 orchestrator.initialize(app);
 
 app.delete('/api/'+config.api+'/actioninstance/:actioninstanceID', function(req, res) { orchestrator.deleteActionInstance(req, res) });
@@ -97,6 +84,14 @@ app.get('/api/'+config.api+'/devices', function(req, res) { orchestrator.getDevi
 
 ////////// Orchestrator - END   //////////
 
+
+
+
+// Send error messages
+app.use(function(err, req, res, next) {
+  	console.error(err.stack);
+  	res.send(500, err+'\n');
+});
 
 
 

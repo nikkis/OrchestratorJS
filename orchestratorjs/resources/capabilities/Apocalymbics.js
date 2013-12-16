@@ -1,6 +1,6 @@
 module.exports = {
     
-    testLaunch: function (playerNumber) {},
+    testLaunch: function () {},
 
     launchApplication: function (playerNumber) {},
 

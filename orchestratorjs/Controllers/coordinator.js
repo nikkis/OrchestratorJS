@@ -2,17 +2,15 @@ ROOT = process.cwd();
 HELPERS = require(ROOT+'/helpers/general.js');
 log = HELPERS.log
 
+var config = require(ROOT+'/config.json');
 
-
-runYieldHelpers = require(ROOT+'/helpers/helperForRunYield.js');
-
-var config = require('./config.json');
 
 var Fiber = require('fibers');
 
-var DeviceHandler = require('./databaseHandlers/devicesHandler');
+var runYieldHelpers = require(ROOT+'/helpers/helperForRunYield.js');
+var DeviceHandler = require(ROOT+'/Models/devicesHandler');
 var DEVICE_HANDLER = new DeviceHandler();
-
+var ACTION_INSTANCE_DATA_HANDLER = new (require(ROOT+'/Models/actionInstanceData'));
 
 var actionPool = {};
 var CONNECTION_POOL = {};
@@ -237,11 +235,14 @@ this.deleteActionInstance = function(req, res) {
 }
 
 
+
 this.postActionInstance = function(req, res) {
 
     var actionName = req.body['actionName'];
     var parameters = req.body['parameters'];
-    log(parameters);
+
+    // save the parameters
+    ACTION_INSTANCE_DATA_HANDLER.createActionInstanceData(actionName, parameters, function(err, metadata) {});
 
     function getIdentities(params) {
         for (i in params) {
@@ -258,6 +259,7 @@ this.postActionInstance = function(req, res) {
             }
         }
     }
+
 
     var deviceIdentities = [];
     getIdentities(parameters);
@@ -458,7 +460,7 @@ function ActionRunnable(actionName) {
 
 // TODO: set here timeout which throws exception or creates error if devices not responding for a long time
 
-        runYieldHelpers = require(ROOT+'/helperForRunYield.js');
+        runYieldHelpers = require(ROOT+'/helpers/helperForRunYield.js');
         var runRet = null;
         var runRetType = null;
         while(runRetType != runYieldHelpers.METHOD_CALL_RESPONSE && runRetType != runYieldHelpers.SD_EXCEPTION) {
