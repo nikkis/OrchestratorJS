@@ -1,0 +1,21 @@
+
+body {
+  
+  font: 15px "Helvetica Neue", "Lucida Grande", "Arial";
+  background: #ECE9E9 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ECE9E9));
+  background: #ECE9E9 -moz-linear-gradient(top, #fff, #ECE9E9);
+  background-repeat: no-repeat;
+  color: #555;
+  -webkit-font-smoothing: antialiased;
+}
+
+.oTitle {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+
+	-webkit-font-smoothing: antialiased !important;
+
+	color: #5e5e5e;
+	background-color: transparent;
+
+}

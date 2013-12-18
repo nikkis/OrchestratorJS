@@ -7,15 +7,14 @@
   	<meta name="viewport" content="width=device-width">
   	<title>{{title}}</title>
 
-	<link rel="stylesheet" href="css/foundation.css">
-	<link rel="stylesheet" href="css/foundation_icons_general/stylesheets/general_foundicons.css">
-	<link rel="stylesheet" href="css/foundation_icons_general/stylesheets/myIcons.css">
+	<script src="js/jquery.min.js"></script>
 
-  	<script src="js/jquery.min.js"></script>
 	<script src="js/mustache.js"></script>
 	<script src="js/require.js"></script>
+
 	<script src="js/jquery-migrate-1.2.1.js"></script>
 	<script src="js/jquery.ba-bbq.min.js"></script>
+
   	<script src="js/vendor/custom.modernizr.js"></script>
 	<script src="js/foundation.min.js"></script>
 
@@ -29,6 +28,20 @@
 
   	<script src="js/edit_area/edit_area_full.js"></script>
   	<script src="edit_area_handlers.js"></script>
+
+<script src="js/jquery.ba-hashchange.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
+	<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">
+		
+	<script src="../../js/sequence/jquery.sequence-min.js"></script>
+	<script src="js/sequence/sequencejs-options.sliding-horizontal-parallax.js"></script>
+
+	<link rel="stylesheet" href="css/foundation.css">
+	<link rel="stylesheet" href="css/foundation_icons_general/stylesheets/general_foundicons.css">
+	<link rel="stylesheet" href="css/foundation_icons_general/stylesheets/myIcons.css">
+
+	<link rel="stylesheet" href="console.css">
 
 </head>
 <body>
@@ -75,16 +88,47 @@
 	  </section>
 	</nav>
 
+
 <!-- add here dynamically modal contents -->
 <div class="generalModalDiv"></div>
 
 
 <div class="container">
 
+
+	<div id="sequence">
+		<img class="sequence-prev" src="img/sequence/bt-prev.png" alt="Previous" />
+		<img class="sequence-next" src="img/sequence/bt-next.png" alt="Next" />
+
+		<ul class="sequence-canvas">
+			<li class="animate-in">
+				<div class="sObject1_info">
+					<h2>Apocalympics</h2>
+					<h2>Built using Orchestrator.js</h2>
+					<p>Entertaining zombie game for familiar strangers.</p>
+				</div>
+				<iframe class="sObject1" width="420" height="315" src="https://www.youtube.com/embed/n4U8ncSClIo" frameborder="0" allowfullscreen></iframe>
+				<img class="sBackground" src="img/sequence/background_violet.jpg" alt="" />
+			</li>
+
+			<li>
+				<div class="sObject2_info">
+					<h2>Action Oriented Programming Model</h2>
+					<p>Designed for ubiquitous mobile cloud environment</p>
+				</div>
+				<img class="sObject2" src="img/slides/acop.jpeg" alt="" />
+				<img class="sBackground" src="img/sequence/background_purple.jpg" alt="" />
+			</li>
+
+		</ul>
+	</div>
+
+
+
 	<div class="row">
 		<div class="large-12 columns">
 			<h2>{{title}} Console</h2>
-			<p>This is version 2.0</p>
+			<p class="oTitle">This is version 2.0</p>
 			<hr />
 		</div>
 	</div>
@@ -117,6 +161,7 @@
 
 		<div class="row">
 
+<!--
 
 			<div class="large-6 columns">
 				<div class="flex-video">
@@ -129,23 +174,36 @@
 						<iframe width="420" height="315" src="https://www.youtube.com/embed/DigLU_UjYSI" frameborder="0" allowfullscreen></iframe>
 				</div>
 			</div>
-
+-->
 		</div>
 
 
 	</div>
 </div> <!-- container -->
+
   <script>
   document.write('<script src=' +
   ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
   '.js><\/script>')
   </script>
-  
-  <script src="js/foundation.min.js"></script>
-
-  
+  <!--<script src="js/foundation.min.js"></script> -->
   <script>
     $(document).foundation();
   </script>
+
+
+
+<script type="text/javascript">
+  $(window).hashchange( function(){
+  	console.log('showView: '+location.hash.substring(1));
+    showView(location.hash.substring(1));
+  })
+  $(window).hashchange();
+</script>
+
+
+
+
+
 </body>
 </html>
