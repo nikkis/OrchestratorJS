@@ -1,0 +1,61 @@
+
+body {
+  
+  font: 15px "Helvetica Neue", "Lucida Grande", "Arial";
+  background: #ECE9E9 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ECE9E9));
+  background: #ECE9E9 -moz-linear-gradient(top, #fff, #ECE9E9);
+  background-repeat: no-repeat;
+  color: #555;
+  -webkit-font-smoothing: antialiased;
+}
+
+.oTitle {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+
+	-webkit-font-smoothing: antialiased !important;
+
+	color: #5e5e5e;
+	background-color: transparent;
+
+}
+
+footer {
+  -webkit-box-shadow: rgb(32, 42, 50) 1px 3px 1px -2px inset;
+  -webkit-font-smoothing: antialiased;
+  background-color: rgb(41, 53, 64);
+  background-repeat: repeat-x;
+  box-shadow: rgb(32, 42, 50) 1px 3px 1px -2px inset;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  height: 100%;
+  line-height: 20px;
+  width: 1278px;
+  font-family:'Open Sans', sans-serif;
+}
+
+h4 {
+  color: rgb(255, 255, 255);
+}
+
+.feature, .feature h3 {
+  -webkit-font-smoothing: antialiased !important;
+  color: #5e5e5e;
+  background-color: transparent;
+
+}
+
+/*
+nav.top-bar {
+  background-color: rgb(41, 53, 64);
+  background-repeat: repeat-x;
+}
+
+a.topMenuBtn, a.topMenuBtn2 {
+  background-color: rgb(41, 53, 64);
+  background-repeat: repeat-x;
+}
+*/

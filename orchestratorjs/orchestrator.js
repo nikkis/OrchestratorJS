@@ -19,7 +19,7 @@ app.configure(function(){
   app.use(express.static(ROOT+'/'));
 });
 
-app.use(express.static(ROOT+'/console/public'));
+app.use(express.static(ROOT+'/Public'));
 app.engine('mustache', mu2express.engine);
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/Views');
@@ -29,7 +29,7 @@ app.set('views', __dirname + '/Views');
 
 
 ////////// MAIN CONSOLE HTML - START //////////
-var webconsole = require(ROOT+'/console/console_server_side.js');
+var webconsole = require(ROOT+'/Controllers/console.js');
 app.get('/', function(req, res) { webconsole.showIndexView(req, res) });
 
 app.get('/api/'+config.api+'/action', function(req, res) { webconsole.getActions(req, res) });

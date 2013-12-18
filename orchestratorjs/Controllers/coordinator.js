@@ -4,7 +4,7 @@ log = HELPERS.log
 
 var config = require(ROOT+'/config.json');
 
-
+var colors = require('colors');
 var Fiber = require('fibers');
 
 var runYieldHelpers = require(ROOT+'/helpers/helperForRunYield.js');
@@ -386,6 +386,7 @@ function ActionRunnable(actionName) {
         this.exceptionHandlerFiber = null;
         this.eventHandlerFiber = null;
         log('destructor executed for action: '+this.id);
+
     };
 
     this.finishAction = function() {
@@ -455,6 +456,7 @@ function ActionRunnable(actionName) {
         var arguments = [this.id,methodCallId];
         var allArgs = arguments.concat(methodArguments);
         soc.emit('methodcall', allArgs);
+
 
         log('method call sent.. waiting for response');
 
