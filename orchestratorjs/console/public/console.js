@@ -83,7 +83,7 @@ function showActions() {
     $.getJSON('/api/'+apiVersion+'/action', function(data) {
         var template = '<ul class="side-nav">{{#actions}}<li class="actionNameLink actionName_{{.}}"><a href="#" onclick="showActionCode(\'{{.}}\');">{{.}}</a></li>{{/actions}}</ul>';
         var html = Mustache.to_html(template, data);
-        html = '<div class="row contents"><div class="large-9 columns actionCode"></div><div class="large-3 columns actionNames">'+html+'</div></div>';
+        html = '<div class="row contents"><div class="large-10 columns actionCode"></div><div class="large-2 columns actionNames">'+html+'</div></div>';
         $('.container').html(html);
     });
 };
