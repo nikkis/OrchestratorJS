@@ -423,7 +423,7 @@ function ActionRunnable(actionName) {
 
 
     this.handleResponse = function(actionId, methodCallId, methodCallResponseValue, methodCallResponseType) {
-        log('handling response..');
+        //log('handling response..');
         var runResponse = {runRetType: runYieldHelpers.METHOD_CALL_RESPONSE, runRetValue: methodCallResponseValue, methodCallId: methodCallId};
         this.run(runResponse);
     };
@@ -476,8 +476,6 @@ function ActionRunnable(actionName) {
                 if(runRet['runRetType'] && runRet['runRetType'] == runYieldHelpers.METHOD_CALL_RESPONSE) {
                     if(runRet['methodCallId'] && runRet['methodCallId'] == methodCallId) {
                         runRetType = runRet['runRetType'];
-                        //log('look mom: ');
-                        //log(runRet);
                         break;
                     }
 
@@ -488,11 +486,7 @@ function ActionRunnable(actionName) {
                 }
             }catch(e) {log(e);}
         }
-        //log('look mom2: ');
-        //log(runRet);
-
         log('got response for: '+methodCallId);
-        
         return runRet['runRetValue'];
     };
 
