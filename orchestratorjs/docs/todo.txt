@@ -1,19 +1,13 @@
 
 
-
 TODO:
 
-- parsing devices from request parameters (curl -X POST http://localhost:8080/test -d '["device:nikkis@mac", 22, 33, "moikka"]' -H "Content-Type: application/json"
-
-
-
-
-TODO:
-
-- array of devices as a parameter
-- error handlers
-- event handlers
+- reserving devices to only one action at a time
 - join action while already executing
+x array of devices as a parameter
+x error handlers
+x event handlers
+x parsing devices from request parameters (curl -X POST http://localhost:8080/test -d '["device:nikkis@mac", 22, 33, "moikka"]' -H "Content-Type: application/json"
 
 
 

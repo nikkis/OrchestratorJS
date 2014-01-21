@@ -1,8 +1,6 @@
-
-
 module.exports = {
 
-    authenticate: function(usr, psw) {
-        
-    }
+	authenticate: function( usr, psw ) {
+
+	}
 };

@@ -152,6 +152,126 @@ table {
 }
 
 
+
+
+
+
+
+
+#sequence .sObject0_info {
+  color: white;
+  font-size: 3em;
+  right: 100%;
+  line-height: 1.2em;
+  top: 30%;
+  width: 25%;
+  z-index: 10;
+  vertical-align: middle;
+  -webkit-transition-duration: 2s;
+  -moz-transition-duration: 2s;
+  -ms-transition-duration: 2s;
+  -o-transition-duration: 2s;
+  transition-duration: 2s;
+  -webkit-transition-property: right;
+  -moz-transition-property: right;
+  -ms-transition-property: right;
+  -o-transition-property: right;
+  transition-property: right;
+}
+
+
+#sequence .sObject0_info p {
+  color: white;
+  font-size: 0.5em;
+  right: 100%;
+  line-height: 1.2em;
+  top: 35%;
+  width: 95%;
+  z-index: 10;
+  vertical-align: middle;
+  -webkit-transition-duration: 2s;
+  -moz-transition-duration: 2s;
+  -ms-transition-duration: 2s;
+  -o-transition-duration: 2s;
+  transition-duration: 2s;
+  -webkit-transition-property: right;
+  -moz-transition-property: right;
+  -ms-transition-property: right;
+  -o-transition-property: right;
+  transition-property: right;
+}
+
+
+
+
+
+#sequence .animate-in .sObject0_info {
+  right: 35%;
+  -webkit-transition-duration: 2s;
+  -moz-transition-duration: 2s;
+  -ms-transition-duration: 2s;
+  -o-transition-duration: 2s;
+  transition-duration: 2s;
+}
+#sequence .animate-out .sObject0_info {
+  right: -150%;
+  -webkit-transition-duration: 2s;
+  -moz-transition-duration: 2s;
+  -ms-transition-duration: 2s;
+  -o-transition-duration: 2s;
+  transition-duration: 2s;
+}
+
+
+#sequence .sObject0 {
+  left: -140%;
+  top: 70px;
+  max-width: 40%;
+  z-index: 6;
+  -webkit-transition-property: left top;
+  -moz-transition-property: left top;
+  -ms-transition-property: left top;
+  -o-transition-property: left top;
+  transition-property: left top;
+}
+#sequence .animate-in .sObject0 {
+  left: 15%;
+  /*top: 35px; 
+  z-index: 6;*/
+  -webkit-transition-duration: 1250ms;
+  -moz-transition-duration: 1250ms;
+  -ms-transition-duration: 1250ms;
+  -o-transition-duration: 1250ms;
+  transition-duration: 1250ms;
+  
+}
+#sequence .animate-out .sObject0 {
+  left: 140%;
+  /*top: 35px; 
+  z-index: 6; */
+  -webkit-transition-duration: 1250ms;
+  -moz-transition-duration: 1250ms;
+  -ms-transition-duration: 1250ms;
+  -o-transition-duration: 1250ms;
+  transition-duration: 1250ms;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #sequence .sObject1_info {
   color: white;
   font-size: 1em;

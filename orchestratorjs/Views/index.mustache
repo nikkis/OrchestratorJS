@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width">
   	<title>{{title}}</title>
+  	<link rel="icon" type="image/png" href="img/ojs_logos/OrchestratorJS-favicon.png">
 
 	<script src="js/jquery.min.js"></script>
 
@@ -29,7 +30,7 @@
   	<script src="js/edit_area/edit_area_full.js"></script>
   	<script src="edit_area_handlers.js"></script>
 
-<script src="js/jquery.ba-hashchange.min.js"></script>
+	<script src="js/jquery.ba-hashchange.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
 	<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">
@@ -59,7 +60,6 @@
 </head>
 <body>
 
-
 	<nav class="top-bar">
 	  <ul class="title-area">
 	    <!-- Title Area -->
@@ -72,9 +72,6 @@
 
 	  <section class="top-bar-section">
 	    <!-- Left Nav Section -->
-
-<!-- Actions Capabilities Devices Instances Downloads  -->
-
 
 	    <ul class="left">
 	      <li class="divider"></li>
@@ -94,10 +91,16 @@
 
 
 	    <!-- Right Nav Section -->
+	    <!--
 	    <ul class="right">
 	      <li class="divider hide-for-small"></li>
 	      <li class="active"><a href="#download" class="topMenuBtn">Download</a></li>
 	    </ul>
+		-->
+
+
+<a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0; width: 149px; height: 149px; z-index: 11;" src="http://aral.github.com/fork-me-on-github-retina-ribbons/right-dusk-blue@2x.png" alt="Fork me on GitHub"></a>
+
 	  </section>
 	</nav>
 
@@ -114,6 +117,17 @@
 		<img class="sequence-next" src="img/sequence/bt-next.png" alt="Next" />
 
 		<ul class="sequence-canvas">
+
+			<li>
+				<div class="sObject0_info">
+					<h2>orchestrator.js</h2>
+					<p>Coordinate Devices inside Mobile Clouds</p>
+				</div>
+				<img class="sObject0" src="img/slides/OrchestratorJS_2.png" alt="" />
+				<img class="sBackground" src="img/sequence/background_blue.png" alt="" />
+			</li>
+
+
 			<li class="animate-in">
 				<div class="sObject1_info">
 					<h2>Apocalympics</h2>
@@ -121,7 +135,7 @@
 					<p>Entertaining zombie game for familiar strangers.</p>
 				</div>
 				<iframe class="sObject1" width="420" height="315" src="https://www.youtube.com/embed/n4U8ncSClIo" frameborder="0" allowfullscreen></iframe>
-				<img class="sBackground" src="img/sequence/background_violet.jpg" alt="" />
+				<img class="sBackground" src="img/sequence/background_violet.png" alt="" />
 			</li>
 
 			<li>
@@ -130,137 +144,94 @@
 					<p>Designed for ubiquitous mobile cloud environment</p>
 				</div>
 				<img class="sObject2" src="img/slides/acop.jpeg" alt="" />
-				<img class="sBackground" src="img/sequence/background_purple.jpg" alt="" />
+				<img class="sBackground" src="img/sequence/background_purple.png" alt="" />
 			</li>
 
 		</ul>
 	</div>
 
 
-
-<!--
-	<div class="row">
-		<div class="large-12 columns">
-			<h2>{{title}} Console</h2>
-			<p class="oTitle">This is version 2.0</p>
-			<hr />
-		</div>
-	</div>
--->
-
-
-	<div class="row">
-<!--
-		<div id="myModal" class="reveal-modal">
-		  <h2>Awesome. I have it.</h2>
-		  <p class="lead">Your couch.  It is mine.</p>
-		  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
-		  <a class="close-reveal-modal">&#215;</a>
-		</div>
-	-->
-
-        <div class="row features">
-            <div class="small-4 feature columns">
-                <h3><a class="glyphicons soccer_ball"><i></i></a>Attempts to enrich interactions</h3>
-                <p>The aim of Social Devices is to increase, facilitate, and enrich social interactions between people in various kinds of co-located and face-to-face situations. For example, when people meet, the devices can greet each other aloud to help people to remember each others’ names. Also device-to-device interaction can be enriched: Social Devices can make otherwise invisible device interaction explicit to users.</p>
-            </div>
-            <div class="small-4 feature columns">
-                <h3><i class="glyphicons group"><i></i></i>Devices must be close to each other</h3>
-                <p>A precondition of Social Devices is the availability of computationally capable smart devices that are aware of and can interact with other devices and users in their proximity. The apps are started in a proactive manner without user initiation. Additionally, a user can start an app which then suggest to other users in the vicinity to take part to some interaction.</p>
-            </div>
-            <div class="small-4 feature columns">
-                <h3><i class="glyphicons cloud"><i></i></i>Cloud-based system</h3>
-                <p>The Social Devices Platform currently runs in Amazon cloud, consisting a number of cloud services. The infrastructure abstracts the differences of the devices. However, instead of hiding or ignoring the different resources of each device, Social Devices accents the differences by regarding them as capabilities, which describe what a device can do. The client side currently consists of Android devices and Python capable devices, such as Linux laptops and MeeGo phones.</p>
-            </div>        
+    <div class="row">
+        <div class="small-4 columns">
+            <h3><a class="glyphicons soccer_ball"><i></i></a>Attempts to enrich interactions</h3>
+            <p>The aim of Social Devices is to increase, facilitate, and enrich social interactions between people in various kinds of co-located and face-to-face situations. For example, when people meet, the devices can greet each other aloud to help people to remember each others’ names. Also device-to-device interaction can be enriched: Social Devices can make otherwise invisible device interaction explicit to users.</p>
         </div>
-
-	</div>
+        <div class="small-4 columns">
+            <h3><i class="glyphicons group"><i></i></i>Devices must be close to each other</h3>
+            <p>A precondition of Social Devices is the availability of computationally capable smart devices that are aware of and can interact with other devices and users in their proximity. The apps are started in a proactive manner without user initiation. Additionally, a user can start an app which then suggest to other users in the vicinity to take part to some interaction.</p>
+        </div>
+        <div class="small-4 columns">
+            <h3><i class="glyphicons cloud"><i></i></i>Cloud-based system</h3>
+            <p>The Social Devices Platform currently runs in Amazon cloud, consisting a number of cloud services. The infrastructure abstracts the differences of the devices. However, instead of hiding or ignoring the different resources of each device, Social Devices accents the differences by regarding them as capabilities, which describe what a device can do. The client side currently consists of Android devices and Python capable devices, such as Linux laptops and MeeGo phones.</p>
+        </div>        
+    </div>
 
 
     <footer class="footer">
-            <div class="row">
+        <div class="row">
 
-<!--
-                <div class="small-3 columns">
-                    <h4>About Grove</h4>
-                    <p>Adalah menjadi satu fakta bahawa pembaca akan ter ganggu oleh text yang boleh difa hami apabila meli hi at susunan mukasurat.</p>
-                </div>
--->
-                <div class="small-4 columns">
-                    <h4>Links to older systems</h4>
-                    <ul class="grove-list">
-                        <li><a href="http://social.cs.tut.fi/registry">Registry</a></li>
-                        <li><a href="http://social.cs.tut.fi:8889">Proximity Graph</a></li>
-                        <li><a href="http://social.cs.tut.fi:8000">Orchestrator version 1.0</a></li>
-                    </ul>
-                    
-                </div>
-
-<!--                
-                <div class="small-3 columns">
-                    <h4>About Grove</h4>
-                    <p>Adalah menjadi satu fakta bahawa pembaca akan ter ganggu oleh text yang boleh difa hami apabila meli hi at susunan mukasurat.</p>
-                </div>
--->
-                <div class="small-4 columns">
-                    <h4>Contact</h4>
-                    <ul class="grove-list">
-                    	<li><a href="http://social.cs.tut.fi">Social Devices Platform</a></li>
-                    	<li><a href="http://www.cs.tut.fi/ihte/projects/CoSMo/">CoSMo</a></li>
-                    	<li><a href="http://iki.fi/niko.makitalo">Niko Mäkitalo</a></li>
-                    </ul>
-                </div>
-
-                <div class="small-4 columns">
-                    <h4>Demos</h4>
-                    <ul class="grove-list">
-                    	<li><a href="https://www.youtube.com/watch?v=n4U8ncSClIo">Apocalympics</a></li>
-                    	<li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI">Photo sharing</a></li>
-                    	<li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI&t=1m8s">Car game</a></li>
-                    </ul>
-                </div>
+            <div class="small-4 columns">
+                <h4>Links to older systems</h4>
+                <ul class="grove-list">
+                    <li><a href="http://social.cs.tut.fi/registry">Registry</a></li>
+                    <li><a href="http://social.cs.tut.fi:8889">Proximity Graph</a></li>
+                    <li><a href="http://social.cs.tut.fi:8000">Orchestrator version 1.0</a></li>
+                </ul>
                 
             </div>
-        
-        	<div class="row">	        
-	            <div class="copyright">
-	                <center>
-	                    <p>&copy; 2013 OrchestratorJS</p>
-	                </center>
-	            </div>
+
+            <div class="small-4 columns">
+                <h4>Contact</h4>
+                <ul class="grove-list">
+                	<li><a href="http://social.cs.tut.fi">Social Devices Platform</a></li>
+                	<li><a href="http://www.cs.tut.fi/ihte/projects/CoSMo/">CoSMo</a></li>
+                	<li><a href="http://iki.fi/niko.makitalo">Niko Mäkitalo</a></li>
+                </ul>
             </div>
-        
+
+            <div class="small-4 columns">
+                <h4>Demos</h4>
+                <ul class="grove-list">
+                	<li><a href="https://www.youtube.com/watch?v=n4U8ncSClIo">Apocalympics</a></li>
+                	<li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI">Photo sharing</a></li>
+                	<li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI&t=1m8s">Car game</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    
+    	<div class="row">	        
+            <div class="copyright">
+                <center>
+                    <p>&copy; 2013 Orchestrator.js</p>
+                </center>
+            </div>
+        </div>
+    
     </footer>
 
 
 </div> <!-- container -->
 
 
-
-
-
-  <script>
-  document.write('<script src=' +
-  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
-  '.js><\/script>')
-  </script>
-  <!--<script src="js/foundation.min.js"></script> -->
-  <script>
-    $(document).foundation();
-  </script>
-
-
-
-<script type="text/javascript">
-  $(window).hashchange( function(){
-  	console.log('showView: '+location.hash.substring(1));
-    showView(location.hash.substring(1));
-  })
-  $(window).hashchange();
+<script>
+	document.write('<script src=' +
+	('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+	'.js><\/script>')
+	</script>
+	<!--<script src="js/foundation.min.js"></script> -->
+	<script>
+	$(document).foundation();
 </script>
 
 
 
+<script type="text/javascript">
+	$(window).hashchange( function(){
+	showView(location.hash.substring(1));
+	})
+	$(window).hashchange();
+</script>
 
 
 </body>

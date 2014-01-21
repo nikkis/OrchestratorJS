@@ -1,4 +1,25 @@
 
+@media (max-width: 767px) {
+
+  #sequence {
+    display:none;
+  }
+
+}
+
+
+
+@media (max-width: 767px) {
+
+  .small_screen_logo {
+    display: inline;
+  }
+
+}
+
+
+
+
 body {
   
   font: 15px "Helvetica Neue", "Lucida Grande", "Arial";
@@ -33,7 +54,7 @@ footer {
   font-size: 13px;
   height: 100%;
   line-height: 20px;
-  width: 1278px;
+  width: 100%;
   font-family:'Open Sans', sans-serif;
 }
 
