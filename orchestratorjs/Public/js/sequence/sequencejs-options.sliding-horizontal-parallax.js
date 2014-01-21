@@ -4,7 +4,7 @@ $(document).ready(function(){
         nextButton: true,
         prevButton: true,
         preloader: true,
-        navigationSkip: true
+        navigationSkip: true,
     };
     var sequence = $("#sequence").sequence(options).data("sequence");
 

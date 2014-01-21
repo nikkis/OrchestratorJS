@@ -1,21 +1,25 @@
 
+  .small_screen_logo {
+    display: none;
+  }
+
+
+/* phone screen */
 @media (max-width: 767px) {
 
   #sequence {
     display:none;
   }
 
-}
-
-
-
-@media (max-width: 767px) {
-
   .small_screen_logo {
     display: inline;
   }
 
 }
+
+
+
+
 
 
 

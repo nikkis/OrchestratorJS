@@ -1,30 +1,28 @@
 ROOT = process.cwd()
-HELPERS = require(ROOT+'/helpers/general.js');
+HELPERS = require( ROOT + '/helpers/general.js' );
 log = HELPERS.log
 
 
-var config = require(ROOT+'/config.json');
-log("HOSTNAME: "+config.server.host);
-log("    PORT: "+config.server.port);
+var config = require( ROOT + '/config.json' );
+log( "HOSTNAME: " + config.server.host );
+log( "    PORT: " + config.server.port );
 
 
-var mu2express = require("mu2express");
+var mu2express = require( "mu2express" );
 
-var express = require('express');
+var express = require( 'express' );
 var app = express();
-app.use(express.bodyParser());
+app.use( express.bodyParser() );
 
-var socket = require('socket.io');
-app.configure(function(){
-  app.use(express.static(ROOT+'/'));
-});
+var socket = require( 'socket.io' );
+app.configure( function() {
+	app.use( express.static( ROOT + '/' ) );
+} );
 
-app.use(express.static(ROOT+'/Public'));
-app.engine('mustache', mu2express.engine);
-app.set('view engine', 'mustache');
-app.set('views', __dirname + '/Views');
-
-
+app.use( express.static( ROOT + '/Public' ) );
+app.engine( 'mustache', mu2express.engine );
+app.set( 'view engine', 'mustache' );
+app.set( 'views', __dirname + '/Views' );
 
 
 
@@ -86,15 +84,11 @@ app.get('/api/'+config.api+'/devices', function(req, res) { orchestrator.getDevi
 
 
 
-
 // Send error messages
-app.use(function(err, req, res, next) {
-  	console.error(err.stack);
-  	res.send(500, err+'\n');
-});
-
-
-
+app.use( function( err, req, res, next ) {
+	console.error( err.stack );
+	res.send( 500, err + '\n' );
+} );
 
 	
 

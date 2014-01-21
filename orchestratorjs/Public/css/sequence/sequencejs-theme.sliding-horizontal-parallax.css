@@ -152,7 +152,27 @@ table {
 }
 
 
+#sequence .animate-in .sBackground {
+  height: 101%;
+  width: 100%;
+  z-index: 1;
+    -webkit-transition-duration: 50ms;
+  -moz-transition-duration: 50ms;
+  -ms-transition-duration: 50ms;
+  -o-transition-duration: 50ms;
+  transition-duration: 50ms;
+}
 
+#sequence .animate-out .sBackground {
+  height: 101%;
+  width: 100%;
+  z-index: 1;
+    -webkit-transition-duration: 50ms;
+  -moz-transition-duration: 50ms;
+  -ms-transition-duration: 50ms;
+  -o-transition-duration: 50ms;
+  transition-duration: 50ms;
+}
 
 
 
@@ -202,7 +222,27 @@ table {
 }
 
 
+#sequence .sObject0_info .animate-in p {
+  color: white;
+  font-size: 0.5em;
+  right: 100%;
+  line-height: 1.2em;
+  top: 35%;
+  width: 95%;
+  z-index: 10;
+  vertical-align: middle;
+}
 
+#sequence .sObject0_info .animate-out p {
+  color: white;
+  font-size: 0.5em;
+  right: 100%;
+  line-height: 1.2em;
+  top: 35%;
+  width: 95%;
+  z-index: 10;
+  vertical-align: middle;
+}
 
 
 #sequence .animate-in .sObject0_info {
@@ -258,7 +298,40 @@ table {
 
 
 
+/*
+#sequence .sObject0_BG {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+    -webkit-transition-duration: 1250ms;
+  -moz-transition-duration: 1250ms;
+  -ms-transition-duration: 1250ms;
+  -o-transition-duration: 1250ms;
+  transition-duration: 1250ms;
+}
 
+#sequence .animate-in .sObject0_BG {
+  height: 200%;
+  width: 100%;
+  z-index: 1;
+    -webkit-transition-duration: 1250ms;
+  -moz-transition-duration: 1250ms;
+  -ms-transition-duration: 1250ms;
+  -o-transition-duration: 1250ms;
+  transition-duration: 1250ms;
+}
+
+#sequence .animate-out .sObject0_BG {
+  height: 200%;
+  width: 100%;
+  z-index: 1;
+    -webkit-transition-duration: 1250ms;
+  -moz-transition-duration: 1250ms;
+  -ms-transition-duration: 1250ms;
+  -o-transition-duration: 1250ms;
+  transition-duration: 1250ms;
+}
+*/
 
 
 
