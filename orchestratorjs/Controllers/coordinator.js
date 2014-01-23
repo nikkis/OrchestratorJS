@@ -176,6 +176,9 @@ this.getDevices = function( req, res ) {
             tempDev[ 'name' ] = devModel.name;
             tempDev[ 'type' ] = devModel.type;
 
+            if(!devModel.capabilities)
+                continue;
+
             var capabilityNames = ( devModel.capabilities ).sort();
 
             tempDev[ 'capabilities' ] = [];

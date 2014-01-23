@@ -1,5 +1,5 @@
 
-    [class*="foundicon-"]:after { position: relative; top: -2px; left: 5px; color: #888; font-size: 100%; font-style: normal; }
+    [class*="foundicon-"]:after { position: relative; top: -2px; left: 5px; font-size: 100%; font-style: normal; }
 
     .foundicon-settings:after        { content: "settings"; }
     .foundicon-heart:after           { content: "heart"; }

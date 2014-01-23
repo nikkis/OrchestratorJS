@@ -5,7 +5,7 @@
 			,allow_resize: "y"
 			,allow_toggle: false
 			,language: "en"
-			,syntax: "python"	
+			,syntax: "javascript"	
 			,toolbar: "new_document, save, load, |, search, go_to_line, |, undo, redo, |, select_font, |, highlight, reset_highlight, |, help"
 			,load_callback: "my_load"
 			,save_callback: "my_save"
@@ -51,11 +51,13 @@
 		}
 		
 		function editAreaLoaded(id){
+			/*
 			if(id=="example_2")
 			{
 				open_file1();
 				open_file2();
 			}
+			*/
 		}
 		
 		function open_file1()

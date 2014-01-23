@@ -1,0 +1,86 @@
+
+
+<div class="pageTitle">
+    <h2>REST API</h2>
+</div>
+
+
+
+<div class="instructions_container">
+
+    <!-- ACTION stuff -->
+    <div class="headline">
+        ACTION
+    </div>
+
+	<div class="large-features">
+        <div class="feature">
+            <div class="row">
+                <div class="large-12 columns description">
+                    <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>POST new action</h3>
+                	<p>curl -i -X POST http://localhost:8080/api/1/action/MyAction  -H "Content-Type: application/xml" --data-binary @/Users/nikkis/Desktop/my_action.js</p>
+                </div>
+            </div>
+        </div>
+        <div class="feature">
+            <div class="row">
+                <div class="large-12 columns description">
+                    <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>DELETE action</h3>
+                    <p>curl -X DELETE http://localhost:8080/api/1/action/Monolog4</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTION INSTANCE stuff -->
+        <div class="headline">
+            ACTION INSTANCE
+        </div>
+
+        <div class="feature">
+            <div class="row">
+                <div class="large-12 columns description">
+                    <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>POST action instance ( trigger action )</h3>
+                    <p>curl -X POST http://localhost:8080/api/1/actioninstance -d '{"actionName": "Test", "parameters": [ "device:nikkis@s3mini" ] }' -H "Content-Type: application/json"</p>
+                </div>
+            </div>
+        </div>
+        <div class="feature">
+            <div class="row">
+                <div class="large-12 columns description">
+                    <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>DELETE action instance ( kill action )</h3>
+                    <p>curl -X DELETE http://localhost:8080/api/1/actioninstance/id1380019130039</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- DEVICE stuff -->
+        <div class="headline">
+            DEVICE
+        </div>
+        <div class="feature">
+            <div class="row">
+                <div class="large-12 columns description">
+                    <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>POST device information ( create / update )</h3>
+                    <p>curl -X POST http://localhost:8080/api/1/device -d '{ "identity": "nikkis@s3mini", "bluetoothMAC": "6C:F3:73:65:66:A3", "name": "nikkis", "type": "android", "capabilities": [ "TalkingDevice", "Apocalymbics", "PlayerDevice", "UrlScreen", "TestDevice" ] }' -H "Content-Type: application/json"</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- CAPABILITY stuff -->
+        <div class="headline">
+            CAPABILITY
+        </div>
+        <div class="feature">
+            <div class="row">
+                <div class="large-12 columns description">
+                    <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>POST capability ( create / update )</h3>
+                    <p>curl -i -X POST http://localhost:8080/api/1/capability/TalkingDevice  -H "Content-Type: application/xml" --data-binary @/Users/nikkis/Desktop/my_capability.js</p>
+                </div>
+            </div>
+        </div>                
+    </div>
+
+</div>
+

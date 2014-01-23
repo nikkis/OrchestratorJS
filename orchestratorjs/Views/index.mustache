@@ -1,48 +1,36 @@
 <!DOCTYPE html>
-<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 
 <head>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width">
-  	<title>{{title}}</title>
-  	<link rel="icon" type="image/png" href="img/ojs_logos/ojs/ojs-favicon.png">
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{{title}}</title>
+    <link rel="icon" type="image/png" href="img/ojs_logos/ojs/ojs-favicon.png">
 
-	<script src="js/jquery.min.js"></script>
+  <script src="js/jquery.min.js"></script>
 
-	<script src="js/mustache.js"></script>
-	<script src="js/require.js"></script>
+  <script src="js/jquery-migrate-1.2.1.js"></script>
+  <script src="js/jquery.ba-bbq.min.js"></script>
 
-	<script src="js/jquery-migrate-1.2.1.js"></script>
-	<script src="js/jquery.ba-bbq.min.js"></script>
+  <script src="js/foundation.min.js"></script>
 
-  	<script src="js/vendor/custom.modernizr.js"></script>
-	<script src="js/foundation.min.js"></script>
+  <script src="config.js"></script>
 
-	<script src="js/jquery-ui.js"></script>
-	<script src="js/foundation/foundation.tooltips.js"></script>
+  <script src="js/jquery.ba-hashchange.min.js"></script>
 
-	<link href="js/select2/select2.css" rel="stylesheet"/>
-	<script src="js/select2/select2.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
+  <!--<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">-->
+    
+  <script src="js/sequence/jquery.sequence-min.js"></script>
+  <script src="js/sequence/sequencejs-options.sliding-horizontal-parallax.js"></script>
 
-  	<script src="console.js"></script>
 
-  	<script src="js/edit_area/edit_area_full.js"></script>
-  	<script src="edit_area_handlers.js"></script>
-
-	<script src="js/jquery.ba-hashchange.min.js"></script>
-
-	<link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
-	<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">
-		
-	<script src="js/sequence/jquery.sequence-min.js"></script>
-	<script src="js/sequence/sequencejs-options.sliding-horizontal-parallax.js"></script>
-
-	<link rel="stylesheet" href="css/foundation.css">
-	<link rel="stylesheet" href="css/foundation_icons_general/stylesheets/general_foundicons.css">
-	<link rel="stylesheet" href="css/foundation_icons_general/stylesheets/myIcons.css">
-
-	<link rel="stylesheet" href="console.css">
+  <link rel="stylesheet" href="css/foundation.css">
+  <link rel="stylesheet" href="css/foundation_icons_general/stylesheets/general_foundicons.css">
+  <link rel="stylesheet" href="css/foundation_icons_general/stylesheets/myIcons.css">
+  
+  <link rel="stylesheet" href="console.css">
 
 
 <script>
@@ -60,50 +48,66 @@
 </head>
 <body>
 
-	<nav class="top-bar">
-	  <ul class="title-area">
-	    <!-- Title Area -->
-	    <li class="name">
-	      <h1><a href="/">{{title}}</a></h1>
-	    </li>
-	    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-	    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-	  </ul>
+  <nav class="top-bar">
+    <ul class="title-area">
+      <!-- Title Area -->
+      <li class="name">
+        <h1><a href="/">{{title}}</a></h1>
+      </li>
+      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
 
-	  <section class="top-bar-section">
-	    <!-- Left Nav Section -->
+    <section class="top-bar-section">
+      <!-- Left Nav Section -->
 
-	    <ul class="left">
-	      <li class="divider"></li>
-	      <li class="active"><a href="#actions" class="topMenuBtn2" onclick="showActions();">Apps</a></li>
-	      <li class="divider"></li>
-	      
-	      <li class="active"><a href="#capabilities" class="topMenuBtn">Capabilities</a></li>
-	      <li class="divider"></li>
+      <ul class="left">
+        <li class="divider"></li>
+        
+        <li><a href="#actions" class="topMenuBtn2" onclick="showActions();">Apps</a></li>
+        <li class="divider"></li>
+        
+        <li><a href="#capabilities" class="topMenuBtn">Capabilities</a></li>
+        <li class="divider"></li>
 
-	      <li class="active"><a href="#instances" class="topMenuBtn">Instances</a></li>
-	      <li class="divider"></li>
+        <li><a href="#instances" class="topMenuBtn">Instances</a></li>
+        <li class="divider"></li>
 
-	      <li class="active"><a href="#devices" class="topMenuBtn">Devices</a></li>
-	      <li class="divider"></li>
+        <li><a href="#devices" class="topMenuBtn">Devices</a></li>
+        <li class="divider"></li>
 
-	    </ul>
-
-
-	    <!-- Right Nav Section -->
-	    <!--
-	    <ul class="right">
-	      <li class="divider hide-for-small"></li>
-	      <li class="active"><a href="#download" class="topMenuBtn">Download</a></li>
-	    </ul>
-		-->
+      </ul>
 
 
-<a href="https://github.com/you">
-	<img style="position: absolute; top: 0; right: 0; border: 0; width: 149px; height: 149px; z-index: 11;" src="http://aral.github.com/fork-me-on-github-retina-ribbons/right-dusk-blue@2x.png" alt="Fork me on GitHub">
-</a>
-	  </section>
-	</nav>
+      <!-- Right Nav Section -->
+      
+      <ul class="right">
+        <li class="divider hide-for-small"></li>
+
+
+        <li class="has-dropdown">
+          <a href="#develop" class="">Develop</a>
+          <ul class="dropdown">
+            <li><a href="#develop">General instructions</a></li>
+            <li><a href="#develop+android">Develop for Android</a></li>
+            <li><a href="#develop+gadgeteer">Develop for .NET Gadgeteer</a></li>
+            <li><a href="#api">REST API</a></li>
+          </ul>
+        </li>
+
+        <li class="divider"></li>
+        <li><a href="#logIn" class="topMenuBtn">Log In</a></li>
+      </ul>
+    
+
+
+    <a class="marketingTag" href="https://github.com/you">
+      <img style="position: absolute; top: 0; right: 0; border: 0; width: 149px; height: 149px; z-index: 11;" src="img/fork_me_github.png" alt="Fork me on GitHub">
+    </a>
+
+
+    </section>
+  </nav>
 
 
 <!-- add here dynamically modal contents -->
@@ -112,73 +116,74 @@
 
 <div class="container">
 
-	<!-- for small screens -->
-	<div class="small_screen_logo">
-		<div class="row">
-	  		<center>
-	  			<img class="sObject0" src="img/ojs_logos/ojs/ojs-256.png" alt="" />
-	  			<h1>orchestrator.js</h1>
-	  		</center>
-		</div>
-	</div>
-
-
-	<!-- for big screens -->
-	<div id="sequence">
-		<img class="sequence-prev" src="img/sequence/bt-prev.png" alt="Previous" />
-		<img class="sequence-next" src="img/sequence/bt-next.png" alt="Next" />
-
-		<ul class="sequence-canvas">
-
-			<li>
-				<div class="sObject0_info">
-					<h2>orchestrator.js</h2>
-					<p>Coordinate Devices inside Mobile Clouds</p>
-				</div>
-				<img class="sObject0" src="img/ojs_logos/ojs/ojs-256.png" alt="" />
-				<img class="sBackground" src="img/sequence/background_blue.png" alt="" />
-			</li>
-
-			<li>
-				<div class="sObject2_info">
-					<h2>Action Oriented Programming Model</h2>
-					<p>Designed for ubiquitous mobile cloud environment</p>
-				</div>
-				<img class="sObject2" src="img/slides/acop.jpeg" alt="" />
-				<img class="sBackground" src="img/sequence/background_purple.png" alt="" />
-			</li>
-
-
-
-			<li>
-				<div class="sObject1_info">
-					<h2>Apocalympics</h2>
-					<h2>Built using orchestrator.js</h2>
-					<p>Entertaining zombie game for familiar strangers.</p>
-				</div>
-				<iframe class="sObject1" width="420" height="315" src="https://www.youtube.com/embed/n4U8ncSClIo" frameborder="0" allowfullscreen></iframe>
-				<img class="sBackground" src="img/sequence/background_violet.png" alt="" />
-			</li>
-
-
-		</ul>
-	</div>
-
-
+  <!-- for small screens -->
+  <div class="small_screen_logo">
     <div class="row">
-        <div class="large-4 columns">
-            <h3><a class="glyphicons soccer_ball"><i></i></a>Attempts to enrich interactions</h3>
-            <p>The aim of Social Devices is to increase, facilitate, and enrich social interactions between people in various kinds of co-located and face-to-face situations. For example, when people meet, the devices can greet each other aloud to help people to remember each others’ names. Also device-to-device interaction can be enriched: Social Devices can make otherwise invisible device interaction explicit to users.</p>
-        </div>
-        <div class="large-4 columns">
-            <h3><i class="glyphicons group"><i></i></i>Devices must be close to each other</h3>
-            <p>A precondition of Social Devices is the availability of computationally capable smart devices that are aware of and can interact with other devices and users in their proximity. The apps are started in a proactive manner without user initiation. Additionally, a user can start an app which then suggest to other users in the vicinity to take part to some interaction.</p>
-        </div>
-        <div class="large-4 columns">
-            <h3><i class="glyphicons cloud"><i></i></i>Cloud-based system</h3>
-            <p>The Social Devices Platform currently runs in Amazon cloud, consisting a number of cloud services. The infrastructure abstracts the differences of the devices. However, instead of hiding or ignoring the different resources of each device, Social Devices accents the differences by regarding them as capabilities, which describe what a device can do. The client side currently consists of Android devices and Python capable devices, such as Linux laptops and MeeGo phones.</p>
-        </div>        
+        <center>
+          <img class="sObject0" src="img/ojs_logos/ojs/ojs-256.png" alt="" />
+          <h1>orchestrator.js</h1>
+        </center>
     </div>
+  </div>
+
+
+  <!-- for big screens -->
+  <div id="sequence">
+    <img class="sequence-prev" src="img/sequence/bt-prev.png" alt="Previous" />
+    <img class="sequence-next" src="img/sequence/bt-next.png" alt="Next" />
+
+    <ul class="sequence-canvas">
+
+      <!-- slide 1 -->
+      <li>
+        <div class="sObject0_info">
+          <h2>orchestrator.js</h2>
+          <p>Coordinate Devices inside Mobile Clouds</p>
+        </div>
+        <img class="sObject0" src="img/ojs_logos/ojs/ojs-256.png" alt="" />
+        <img class="sBackground" src="img/sequence/background_blue.png" alt="" />
+      </li>
+
+      <!-- slide 2 -->
+      <li>
+        <div class="sObject2_info">
+          <h2>Action Oriented Programming Model</h2>
+          <p>Designed for ubiquitous mobile cloud environment</p>
+        </div>
+        <img class="sObject2" src="img/slides/acop.jpeg" alt="" />
+        <img class="sBackground" src="img/sequence/background_purple.png" alt="" />
+      </li>
+
+      <!-- slide 3 -->
+      <li>
+        <div class="sObject1_info">
+          <h2>Apocalympics</h2>
+          <h2>Built using orchestrator.js</h2>
+          <p>Entertaining zombie game for familiar strangers.</p>
+        </div>
+        <div class="sObject1">
+          <iframe  width="420" height="315" src="https://www.youtube.com/embed/n4U8ncSClIo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <img class="sBackground" src="img/sequence/background_violet.png" alt="" />
+      </li>
+    </ul>
+  </div>
+
+
+  <div class="row">
+    <div class="large-4 columns">
+      <h3><a class="glyphicons soccer_ball"><i></i></a>Attempts to enrich interactions</h3>
+      <p>The aim of Social Devices is to increase, facilitate, and enrich social interactions between people in various kinds of co-located and face-to-face situations. For example, when people meet, the devices can greet each other aloud to help people to remember each others’ names. Also device-to-device interaction can be enriched: Social Devices can make otherwise invisible device interaction explicit to users.</p>
+    </div>
+    <div class="large-4 columns">
+      <h3><i class="glyphicons group"><i></i></i>Devices must be close to each other</h3>
+      <p>A precondition of Social Devices is the availability of computationally capable smart devices that are aware of and can interact with other devices and users in their proximity. The apps are started in a proactive manner without user initiation. Additionally, a user can start an app which then suggest to other users in the vicinity to take part to some interaction.</p>
+    </div>
+    <div class="large-4 columns">
+      <h3><i class="glyphicons cloud"><i></i></i>Cloud-based system</h3>
+      <p>The Social Devices Platform currently runs in Amazon cloud, consisting a number of cloud services. The infrastructure abstracts the differences of the devices. However, instead of hiding or ignoring the different resources of each device, Social Devices accents the differences by regarding them as capabilities, which describe what a device can do. The client side currently consists of Android devices and Python capable devices, such as Linux laptops and MeeGo phones.</p>
+    </div>        
+  </div>
 
 
     <footer class="footer">
@@ -196,23 +201,23 @@
             <div class="small-4 columns">
                 <h4>Contact</h4>
                 <ul class="grove-list">
-                	<li><a href="http://social.cs.tut.fi">Social Devices Platform</a></li>
-                	<li><a href="http://www.cs.tut.fi/ihte/projects/CoSMo/">CoSMo</a></li>
-                	<li><a href="http://iki.fi/niko.makitalo">Niko Mäkitalo</a></li>
+                  <li><a href="http://social.cs.tut.fi">Social Devices Platform</a></li>
+                  <li><a href="http://www.cs.tut.fi/ihte/projects/CoSMo/">CoSMo</a></li>
+                  <li><a href="http://iki.fi/niko.makitalo">Niko Mäkitalo</a></li>
                 </ul>
             </div>
 
             <div class="small-4 columns">
                 <h4>Demos</h4>
                 <ul class="grove-list">
-                	<li><a href="https://www.youtube.com/watch?v=n4U8ncSClIo">Apocalympics</a></li>
-                	<li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI">Photo sharing</a></li>
-                	<li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI&t=1m8s">Car game</a></li>
+                  <li><a href="https://www.youtube.com/watch?v=n4U8ncSClIo">Apocalympics</a></li>
+                  <li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI">Photo sharing</a></li>
+                  <li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI&t=1m8s">Car game</a></li>
                 </ul>
             </div>
         </div>
     
-    	<div class="row">	        
+      <div class="row">         
             <div class="copyright">
                 <center>
                     <p>2014 orchestrator.js</p>
@@ -226,25 +231,46 @@
 </div> <!-- container -->
 
 
-<script>
-	document.write( '<script src=' +
-		( '__proto__' in {} ? '/js/vendor/zepto' : '/js/vendor/jquery' ) +
-		'.js><\/script>' );
-</script>
 
-<!-- <script src="js/foundation.min.js"></script> -->
+
+
+<script src="js/edit_area/edit_area_full.js"></script>
+<script src="edit_area_handlers.js"></script>
+
+<link href="js/select2/select2.css" rel="stylesheet"/>
+<script src="js/select2/select2.js"></script>
+
+<script src="js/mustache.js"></script>
+<script src="js/require.js"></script>
+
+<script src="console.js"></script>
+
 <script>
-	$( document ).foundation();
+  $( document ).foundation();
 </script>
 
 
 
 <script type="text/javascript">
-	$( window ).hashchange( function() {
-		showView( location.hash.substring( 1 ) );
-	} )
-	$( window ).hashchange();
+  $( window ).hashchange( function() {
+    showView( location.hash.substring( 1 ) );
+  } )
+  $( window ).hashchange();
 </script>
+
+
+
+<!-- if set to marketing mode show tags marked with marketingTag class -->
+<script type="text/javascript">
+  var marketingMode = {{marketingMode}};
+  if(marketingMode) {
+    console.log('marketing!!');
+    $('.marketingTag').show();
+  } else {
+    $('.marketingTag').hide();
+  }
+</script>
+
 
 
 

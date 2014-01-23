@@ -15,6 +15,7 @@ this.showIndexView = function( req, res ) {
 	res.render( 'index', {
 		'locals': {
 			'title': config.app_name,
+			'marketingMode': config.web_console.marketing_mode
 		}
 	} );
 };
@@ -127,6 +128,7 @@ this.getAction = function( req, res ) {
 	log( actionName );
 
 	fs.readFile( ROOT + '/resources/actions/' + actionName + '.js', 'binary', function( error, file ) {
+
 		if ( error ) {
 			res.writeHead( 500, {
 				'Content-Type': 'text/plain'

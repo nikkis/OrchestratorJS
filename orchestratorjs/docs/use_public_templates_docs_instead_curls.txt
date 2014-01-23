@@ -16,6 +16,16 @@ curl -X POST http://localhost:8080/api/1/device -d '{"identity": "nikkis@s3mini"
 # new action instance
 curl -X POST http://localhost:8080/api/1/actioninstance -d '{"actionName": "Test", "parameters": ["device:nikkis@s3mini"]}' -H "Content-Type: application/json"
 
+# e.g. Apocalympics
+
+timo@desire and nikkis@s3mini
+curl -X POST http://localhost:8080/api/1/actioninstance -d '{"actionName": "Apocalymbics", "parameters": [ ["device:nikkis@s3mini","device:timo@desire"] ]}' -H "Content-Type: application/json"
+
+curl -X POST http://localhost:8080/api/1/actioninstance -d '{"actionName": "Apocalymbics", "parameters": [ ["device:timo@s3mini","device:nikkis@acer"] ]}' -H "Content-Type: application/json"
+
+
+
+
 # delete action instance
 curl -X DELETE http://localhost:8080/api/1/actioninstance/id1380019130039
 

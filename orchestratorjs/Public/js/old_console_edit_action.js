@@ -79,8 +79,8 @@ function test_getSelectedText(id){
 function editAreaLoaded(id){
 	if(id=="example_2")
 	{
-		open_file1();
-		open_file2();
+		//open_file1();
+		//open_file2();
 	}
 }
 

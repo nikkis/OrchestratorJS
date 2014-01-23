@@ -1,5 +1,15 @@
+																					
 module.exports = {
 
-    test: function (arrayOfThings) {},
+
+    test: function (arrayOfThings) {
+        console.log( 'foo2' );
+    },
 
 };
+	
+	
+				
+				
+				
+				
