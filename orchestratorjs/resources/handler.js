@@ -3,7 +3,6 @@ HELPERS = require(ROOT+'/helpers/general.js');
 log = HELPERS.log
 var config = require(ROOT+'/config.json');
 
-require('js-methods');
 var fs = require('fs');
 
 var qs = require('querystring');
@@ -36,7 +35,7 @@ this.postAction = function(req, res) {
 	});
 
 	req.on('end', function () {
-	    var POST = body.trim().ltrim();
+	    var POST = body; //.trim().ltrim();
 	    HELPERS.saveFile(ROOT+config.resources.actions+actionName+'.js', POST);
 	});
 	res.send('OK');
