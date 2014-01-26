@@ -3,49 +3,50 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 
 <head>
+  
+
+  <title>{{title}}</title>
+  <link rel="icon" type="image/png" href="img/ojs_logos/ojs/ojs-favicon.png">
+
   <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>{{title}}</title>
-    <link rel="icon" type="image/png" href="img/ojs_logos/ojs/ojs-favicon.png">
-
-  <script src="js/jquery.min.js"></script>
-
-  <script src="js/jquery-migrate-1.2.1.js"></script>
-  <script src="js/jquery.ba-bbq.min.js"></script>
-
-  <script src="js/foundation.min.js"></script>
-
+  <meta name="viewport" content="width=device-width">
+  
+  <!-- WEB CONSOLE CONFIG FILE -->  
   <script src="config.js"></script>
 
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-1.2.1.js"></script>
+  <script src="js/jquery.ba-bbq.min.js"></script>
   <script src="js/jquery.ba-hashchange.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
-  <!--<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">-->
-    
   <script src="js/sequence/jquery.sequence-min.js"></script>
   <script src="js/sequence/sequencejs-options.sliding-horizontal-parallax.js"></script>
 
+  <script src="js/foundation.min.js"></script>
 
+  <link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
   <link rel="stylesheet" href="css/foundation.css">
-  <link rel="stylesheet" href="css/foundation_icons_general/stylesheets/general_foundicons.css">
-  <link rel="stylesheet" href="css/foundation_icons_general/stylesheets/myIcons.css">
-  
+  <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css">    
+<!--<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">-->
+
   <link rel="stylesheet" href="console.css">
 
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <!-- remove this, please! -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-46640474-1', 'orchestratorjs.org');
-  ga('send', 'pageview');
-
-</script>
-
+    ga('create', 'UA-46640474-1', 'orchestratorjs.org');
+    ga('send', 'pageview');
+  </script>
 
 </head>
+
+
+
 <body>
 
   <nav class="top-bar">
@@ -110,11 +111,14 @@
   </nav>
 
 
-<!-- add here dynamically modal contents -->
+<!-- modal contents goes here -->
 <div class="generalModalDiv"></div>
 
 
 <div class="container">
+
+
+  <!-- FRONT PAGE SLIDER -->
 
   <!-- for small screens -->
   <div class="small_screen_logo">
@@ -162,13 +166,17 @@
           <p>Entertaining zombie game for familiar strangers.</p>
         </div>
         <div class="sObject1">
-          <iframe  width="420" height="315" src="https://www.youtube.com/embed/n4U8ncSClIo" frameborder="0" allowfullscreen></iframe>
+          <iframe  style="width: 420px; height: 315px;" src="https://www.youtube.com/embed/n4U8ncSClIo" frameborder="0" allowfullscreen></iframe>
         </div>
         <img class="sBackground" src="img/sequence/background_violet.png" alt="" />
       </li>
     </ul>
   </div>
 
+  <!-- FRONT PAGE SLIDER - END -->
+
+
+  <!-- ORCHESTRATOR FEATURES -->
 
   <div class="row">
     <div class="large-4 columns">
@@ -184,72 +192,65 @@
       <p>The Social Devices Platform currently runs in Amazon cloud, consisting a number of cloud services. The infrastructure abstracts the differences of the devices. However, instead of hiding or ignoring the different resources of each device, Social Devices accents the differences by regarding them as capabilities, which describe what a device can do. The client side currently consists of Android devices and Python capable devices, such as Linux laptops and MeeGo phones.</p>
     </div>        
   </div>
+  
+  <!-- ORCHESTRATOR FEATURES - END -->
 
 
-    <footer class="footer">
-        <div class="row">
+  <!-- FOOTER -->
+  <footer class="footer">
+      <div class="row">
 
-            <div class="small-4 columns">
-                <h4>Links to older systems</h4>
-                <ul class="grove-list">
-                    <li><a href="http://social.cs.tut.fi/registry">Registry</a></li>
-                    <li><a href="http://social.cs.tut.fi:8889">Proximity Graph</a></li>
-                    <li><a href="http://social.cs.tut.fi:8000">Orchestrator version 1.0</a></li>
-                </ul>
-            </div>
+          <div class="small-4 columns">
+              <h4>Links to older systems</h4>
+              <ul class="grove-list">
+                  <li><a href="http://social.cs.tut.fi/registry">Registry</a></li>
+                  <li><a href="http://social.cs.tut.fi:8889">Proximity Graph</a></li>
+                  <li><a href="http://social.cs.tut.fi:8000">Orchestrator version 1.0</a></li>
+              </ul>
+          </div>
 
-            <div class="small-4 columns">
-                <h4>Contact</h4>
-                <ul class="grove-list">
-                  <li><a href="http://social.cs.tut.fi">Social Devices Platform</a></li>
-                  <li><a href="http://www.cs.tut.fi/ihte/projects/CoSMo/">CoSMo</a></li>
-                  <li><a href="http://iki.fi/niko.makitalo">Niko Mäkitalo</a></li>
-                </ul>
-            </div>
+          <div class="small-4 columns">
+              <h4>Contact</h4>
+              <ul class="grove-list">
+                <li><a href="http://social.cs.tut.fi">Social Devices Platform</a></li>
+                <li><a href="http://www.cs.tut.fi/ihte/projects/CoSMo/">CoSMo</a></li>
+                <li><a href="http://iki.fi/niko.makitalo">Niko Mäkitalo</a></li>
+              </ul>
+          </div>
 
-            <div class="small-4 columns">
-                <h4>Demos</h4>
-                <ul class="grove-list">
-                  <li><a href="https://www.youtube.com/watch?v=n4U8ncSClIo">Apocalympics</a></li>
-                  <li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI">Photo sharing</a></li>
-                  <li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI&t=1m8s">Car game</a></li>
-                </ul>
-            </div>
-        </div>
-    
-      <div class="row">         
-            <div class="copyright">
-                <center>
-                    <p>2014 orchestrator.js</p>
-                </center>
-            </div>
-        </div>
-    
-    </footer>
+          <div class="small-4 columns">
+              <h4>Demos</h4>
+              <ul class="grove-list">
+                <li><a href="https://www.youtube.com/watch?v=n4U8ncSClIo">Apocalympics</a></li>
+                <li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI">Photo sharing</a></li>
+                <li><a href="http://www.youtube.com/watch?v=DigLU_UjYSI&t=1m8s">Car game</a></li>
+              </ul>
+          </div>
+      </div>
+  
+    <div class="row">         
+      <div class="copyright">
+          <center>
+            <p>2014 orchestrator.js</p>
+          </center>
+      </div>
+    </div>
+  
+  </footer>
+  <!-- FOOTER - END -->  
 
 
 </div> <!-- container -->
 
 
-
-
-
-<script src="js/edit_area/edit_area_full.js"></script>
-<script src="edit_area_handlers.js"></script>
-
-<link href="js/select2/select2.css" rel="stylesheet"/>
-<script src="js/select2/select2.js"></script>
+<script>
+  $( document ).foundation();
+</script>
 
 <script src="js/mustache.js"></script>
 <script src="js/require.js"></script>
 
 <script src="console.js"></script>
-
-<script>
-  $( document ).foundation();
-</script>
-
-
 
 <script type="text/javascript">
   $( window ).hashchange( function() {
@@ -257,7 +258,6 @@
   } )
   $( window ).hashchange();
 </script>
-
 
 
 <!-- if set to marketing mode show tags marked with marketingTag class -->
@@ -271,6 +271,12 @@
   }
 </script>
 
+
+<script src="js/edit_area/edit_area_full.js"></script>
+<script src="edit_area_handlers.js"></script>
+
+<link href="js/select2/select2.css" rel="stylesheet"/>
+<script src="js/select2/select2.js"></script>
 
 
 

@@ -23,16 +23,16 @@ function editableCode() {
     editAreaLoader.execCommand('example_1', 'set_editable', !editAreaLoader.execCommand('example_1', 'is_editable'));    
     if (editAreaLoader.execCommand('example_1', 'is_editable')) {
         //$('.editStopEditLink').replaceWith('<a id="editStopEditLink" href="#" onclick="editableCode();" ><i class="foundicon-edit"></i></a>');
-        $('.myEditIcon').removeClass('foundicon-edit');
-        $('.myEditIcon').addClass('foundicon-lock');
+        $('.myEditIcon').removeClass('fi-page-edit');
+        $('.myEditIcon').addClass('fi-lock');
         
         $('.fileNameEdit').show();
         $('.myRemoveIcon').show();
         
     } else {
         //$('.editStopEditLink').replaceWith('<a id="editStopEditLink" href="#" onclick="editableCode();" ><i class="foundicon-lock"></i></a>');
-        $('.myEditIcon').removeClass('foundicon-lock');
-        $('.myEditIcon').addClass('foundicon-edit');
+        $('.myEditIcon').removeClass('fi-lock');
+        $('.myEditIcon').addClass('fi-page-edit');
         $('.fileNameEdit').hide();
         $('.myRemoveIcon').hide();
         
