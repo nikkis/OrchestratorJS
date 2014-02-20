@@ -1,9 +1,9 @@
 					
 // the body
-this.body = function (d1) {
+this.body = function (d1, line) {
     
 
-    d1.talkingDevice.say('hello david','david','1.2');
+    d1.talkingCapability.say( line,'david','1.2');
     
 
 };

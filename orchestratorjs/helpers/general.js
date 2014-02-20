@@ -61,6 +61,40 @@ this.deleteFile = function( filepath ) {
     } );
 };
 
+this.deleteFolderRecursive = function(path) {
+    var files = [];
+    if( fs.existsSync(path) ) {
+        files = fs.readdirSync(path);
+        files.forEach(function(file,index){
+            var curPath = path + "/" + file;
+            if(fs.statSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
+};
+
+
+this.saveFileNoRequire = function( filepath, data, callback, callbackParam ) {
+    fs.writeFile( filepath, data, function( err ) {
+        if ( err ) {
+            console.log( err );
+        } else {
+            console.log( "The file was saved!" );
+        }
+
+        // callback was given
+        if ( callback && callbackParam ) {
+            callback( callbackParam );
+        } else if ( callback ) {
+            callback( callbackParam );
+        }
+    } );
+}
+
 
 //this.saveFile = function(filepath, data) {
 this.saveFile = function( filepath, data, callback, callbackParam ) {

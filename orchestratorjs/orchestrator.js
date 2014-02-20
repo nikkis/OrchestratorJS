@@ -26,9 +26,20 @@ app.set( 'views', __dirname + '/Views' );
 
 
 
+
+////////// INITIALIZE SERVICES - START //////////
+var services = require(ROOT+'/Services/services.js')
+services.initializeServices();
+
+////////// INITIALIZE SERVICES - END   //////////
+
+
+
+
 ////////// MAIN CONSOLE HTML - START //////////
 var webconsole = require(ROOT+'/Controllers/console.js');
 app.get('/', function(req, res) { webconsole.showIndexView(req, res) });
+app.get('/console', function(req, res) { webconsole.showIndexView(req, res) });
 
 app.get('/api/'+config.api+'/action', function(req, res) { webconsole.getActions(req, res) });
 app.get('/api/'+config.api+'/action/:actionName', function(req, res) { webconsole.getAction(req, res) });
@@ -62,6 +73,10 @@ app.post('/api/'+config.api+'/device', function(req, res) { resourceHandler.post
 app.post('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.postCapability(req, res) });
 app.delete('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.deleteCapability(req, res) });
 
+
+app.post('/api/'+config.api+'/observer/:observerName', function(req, res) { resourceHandler.postObserverFile(req, res) });
+
+
 ////////// Resource Handler - END   //////////
 
 
@@ -71,8 +86,8 @@ app.delete('/api/'+config.api+'/capability/:capabilityName', function(req, res) 
 
 
 ////////// Orchestrator - START //////////
-var orchestrator = require(ROOT+'/Controllers/coordinator.js');
-orchestrator.initialize(app);
+var orchestrator = require( ROOT+'/Controllers/orchestratorCore.js' );
+orchestrator.initialize( app );
 
 app.delete('/api/'+config.api+'/actioninstance/:actioninstanceID', function(req, res) { orchestrator.deleteActionInstance(req, res) });
 app.post('/api/'+config.api+'/actioninstance', function(req, res) { orchestrator.postActionInstance(req, res) });
@@ -81,6 +96,23 @@ app.get('/api/'+config.api+'/actioninstances', function(req, res) { orchestrator
 app.get('/api/'+config.api+'/devices', function(req, res) { orchestrator.getDevices(req, res) });
 
 ////////// Orchestrator - END   //////////
+
+
+
+
+////////// Observers - START //////////
+var observerController = require( ROOT+'/Controllers/observers.js' );
+
+app.get('/api/'+config.api+'/observers', function(req, res) { observerController.getObservers(req, res) });
+
+app.get('/api/'+config.api+'/observer/:observerName', function(req, res) { observerController.getObserverFile(req, res) });
+app.post('/api/'+config.api+'/observer', function(req, res) { observerController.postObserverFile(req, res) });
+app.delete('/api/'+config.api+'/observer/:observerName', function(req, res) { observerController.deleteObserverFile(req, res) });
+
+app.post('/api/'+config.api+'/observer/:observerName/instance', function(req, res) { observerController.postObserverInstance(req, res) });
+app.delete('/api/'+config.api+'/observer/:observerName/instance', function(req, res) { observerController.deleteObserverInstance(req, res) });
+
+////////// Observers - END   //////////
 
 
 

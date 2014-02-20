@@ -1,4 +1,68 @@
 
+
+// for angular version
+function initEditor() {
+    editAreaLoader.init( {
+        id: "code_area",
+        start_highlight: true,
+        allow_resize: "y",
+        allow_toggle: false,
+        language: "en",
+        syntax: "js",
+        is_editable: false,
+        toolbar: "new_document, save, |, search, |, undo, redo, |, select_font, |, highlight, reset_highlight",
+        load_callback: "loadObserverFile",
+        save_callback: "saveObserverFile"
+    } );
+}
+
+
+
+// callback function for angular version
+function saveObserverFile(id, content){
+    saveWithMode('observer', content);
+}
+
+
+
+// callback function for angular version
+function saveWithMode(fileType, content){
+
+    var text = content;
+
+    var fileName = $('#fileNameInput').val();
+    if(fileName == '') {
+        alert('File name cannot be empty!');
+        return;
+    } else if(fileName.slice(-3) == '.js') {
+        alert('File name cannot contain .js');
+        return;
+    }
+
+    $.ajax({
+        url: '/api/1/'+fileType+'/'+fileName,    
+        data: text,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+
+    }).fail(function( resp ) { 
+        alert( resp.responseText );
+    }).done(function(resp){
+         return;
+    });
+}
+
+
+
+
+
+// old version begins here
+
+
+
+
 var currentMode = '';
 function loadFileToEditor(mode) {
     currentMode = mode;
@@ -10,12 +74,14 @@ function loadFileToEditor(mode) {
         ,language: "en"
         ,syntax: "js"
         ,is_editable: false	
-        ,toolbar: "new_document, save, load, |, search, go_to_line, |, undo, redo, |, select_font, |, highlight, reset_highlight, |, help"
+        ,toolbar: "new_document, save, |, search, go_to_line, |, undo, redo, |, select_font, |, highlight, reset_highlight"
         ,load_callback: "my_load"
         ,save_callback: "my_save"
 
     });
 }
+
+
 
 
 function editableCode() {
@@ -40,21 +106,7 @@ function editableCode() {
 }
 
 
-/*
-// initialisation
-editAreaLoader.init({
-    id: "example_1"	// id of the textarea to transform	
-    ,start_highlight: true	
-    ,allow_resize: "y"
-    ,allow_toggle: false
-    ,language: "en"
-    ,syntax: "js"
-    ,is_editable: false	
-    ,toolbar: "new_document, save, load, |, search, go_to_line, |, undo, redo, |, select_font, |, highlight, reset_highlight, |, help"
-    ,load_callback: "my_load"
-    ,save_callback: "my_save"
-});
-*/
+
 
 
 

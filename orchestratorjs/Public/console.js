@@ -22,11 +22,21 @@ $( function() {
 
 
 $( function() {
-    $( '.topMenuBtn' ).click( function( event ) {
+    /*$( '.topMenuBtn' ).click( function( event ) {
         var toShow = $.param.fragment( event.target.href );
         showView( toShow );
     } );
+*/
 } );
+
+
+$( function() {
+   /* $( '.aTopMenuBtn' ).click( function( event ) {
+        //event.preventDefault();
+    } );
+*/
+} );
+
 
 
 
@@ -40,6 +50,11 @@ function changeActivePage(newPage) {
 
 function showView( name ) {
    
+    console.log('name: '+name);
+    $('.non-angular-container').show();
+    $('.angular-container').hide();
+    
+
     switch ( name ) {
         case 'actions':
             showActions();
@@ -67,7 +82,10 @@ function showView( name ) {
             break;            
         case 'api':
             showAPI();
-            break;            
+            break;
+        //case 'observers':
+        //    showObservers();
+        //    break;            
         default:
             showHome();
             break;
@@ -82,6 +100,9 @@ function showView( name ) {
  *********************************************************************/
 
 function showActions() {
+
+console.log('showing actions..');
+
     $.getJSON( '/api/' + apiVersion + '/action', function( data ) {
         require( [ 'text!templates/fileNames.html' ], function( fileNamesTemplate ) {
           var templateData = {
@@ -90,7 +111,7 @@ function showActions() {
           };
           var html = Mustache.to_html( fileNamesTemplate, templateData );
           html = '<div class="row contents"><div class="large-9 columns actionCode"></div>' + html + '</div>';
-          $( '.container' ).html( html );
+          $( '.non-angular-container' ).html( html );
 
           changeActivePage('#actions');
         } );
@@ -265,16 +286,10 @@ function showCapabilities() {
           };
           var html = Mustache.to_html( fileNamesTemplate, templateData );
           html = '<div class="row contents"><div class="large-9 columns capabilityCode"></div>' + html + '</div>';
-          $( '.container' ).html( html );
+          $( '.non-angular-container' ).html( html );
 
           changeActivePage('#capabilities');
-        } );        
-/*
-        var template = '<ul class="side-nav">{{#capabilities}}<li class="capabilityNameLink capabilityName_{{.}}"><a href="#" onclick="showCapabilityCode(\'{{.}}\');">{{.}}</a></li>{{/capabilities}}</ul>';
-        var html = Mustache.to_html( template, data );
-        html = '<div class="row contents"><div class="large-9 columns capabilityCode"></div><div class="large-3 columns capabilityNames">' + html + '</div></div>';
-        $( '.container' ).html( html );
-*/
+        } );
     } );
 }
 
@@ -369,7 +384,7 @@ function showInstances() {
         require( [ 'text!templates/actioninstances.html' ], function( actioninstancesTemplate ) {
             var html = Mustache.to_html( actioninstancesTemplate, data );
             html = '<div class="row contents"><div class="large-12 columns">' + html + '</div></div>';
-            $( '.container' ).html( html );
+            $( '.non-angular-container' ).html( html );
         } );
     } );
 }
@@ -399,7 +414,7 @@ function showDevices() {
         require( [ 'text!templates/devices.html' ], function( devicesTemplate ) {
             var html = Mustache.to_html( devicesTemplate, data );
             html = '<div class="row contents"><div class="large-12 columns">' + html + '</div></div>';
-            $( '.container' ).html( html );
+            $( '.non-angular-container' ).html( html );
         } );
     } );
 }
@@ -416,7 +431,7 @@ function showDownloads() {
         console.log( data );
         require( [ 'text!templates/downloads.html' ], function( downloadsTemplate ) {
             var html = Mustache.to_html( downloadsTemplate, data );
-            $( '.container' ).html( html );
+            $( '.non-angular-container' ).html( html );
         } );
     } );
 }
@@ -434,7 +449,7 @@ function showDevelop() {
   require( [ 'text!templates/docs/developGeneral.html' ], function( template ) {
       var data = {};
       var html = Mustache.to_html( template, data );
-      $( '.container' ).html( html );
+      $( '.non-angular-container' ).html( html );
   } );
 }
 
@@ -443,7 +458,7 @@ function showDevelopAndroid() {
   require( [ 'text!templates/docs/developAndroid.html' ], function( template ) {
       var data = {};
       var html = Mustache.to_html( template, data );
-      $( '.container' ).html( html );
+      $( '.non-angular-container' ).html( html );
   } );
 }
 
@@ -452,7 +467,7 @@ function showDevelopGadgeteer() {
   require( [ 'text!templates/docs/developGadgeteer.html' ], function( template ) {
       var data = {};
       var html = Mustache.to_html( template, data );
-      $( '.container' ).html( html );
+      $( '.non-angular-container' ).html( html );
   } );
 }
 
@@ -462,7 +477,7 @@ function showAPI() {
   require( [ 'text!templates/docs/developAPI.html' ], function( template ) {
       var data = {};
       var html = Mustache.to_html( template, data );
-      $( '.container' ).html( html );
+      $( '.non-angular-container' ).html( html );
   } );
 }
 
@@ -470,5 +485,14 @@ function showAPI() {
 
 
 function showHome() {}
+
+
+
+
+
+
+
+
+
 
 

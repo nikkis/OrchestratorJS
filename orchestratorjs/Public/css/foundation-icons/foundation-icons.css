@@ -4,7 +4,7 @@
  * MIT License
  */
 
-[class*="fi-"]:after { position: relative; top: -22px; left: 20px; font-size: 100%; font-style: normal; }
+[class*="fi-"]:after { position: relative; left: 10px; font-size: 100%; font-style: normal; }
 
 
 @font-face {

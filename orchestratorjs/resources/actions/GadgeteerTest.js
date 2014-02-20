@@ -1,4 +1,3 @@
-
 module.exports = {
 
     exceptionHandler: function(action, device, exception_value) {
@@ -14,8 +13,14 @@ module.exports = {
     // the body
     body: function (d1) {
     
+    	var misc = require('./misc.js');
+    
         d1.multicolorLed.blue();
+        misc.sleep(2);
+        
         d1.multicolorLed.red();
+        misc.sleep(2);
+        
         d1.multicolorLed.green();
         
     }

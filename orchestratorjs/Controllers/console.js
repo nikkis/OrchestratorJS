@@ -59,36 +59,6 @@ this.getActionMetadata = function( req, res ) {
 
 
 
-this.test = function( req, res ) {
-	/*
-	var actionsPath = ROOT+'/resources/actions/';
-	fs.readdir(actionsPath, function(err, files) {
-		if(err) {
-			log(err);
-			res.writeHead(500, {'Content-Type': 'text/plain'}); 
-			res.write(err + '\n');
-			res.end();
-		} else {
-			
-			var fileNames = [];
-			for (var i = 0; i < files.length; i++) {
-				var file = files[i];
-				if(file[0] == '.' || file.slice(-3) != '.js') {
-					continue;
-				}
-				fileNames.push(file.replace('.js',''));	
-			}
-			res.writeHead(200, {"Content-Type": "application/json"});
-			res.write(
-				JSON.stringify({'actions': fileNames})
-			);
-			res.end();
-		}
-	});
-*/
-};
-
-
 this.getActions = function( req, res ) {
 	var actionsPath = ROOT + '/resources/actions/';
 	fs.readdir( actionsPath, function( err, files ) {
@@ -125,8 +95,6 @@ this.getActions = function( req, res ) {
 
 this.getAction = function( req, res ) {
 	var actionName = req.params.actionName;
-	log( actionName );
-
 	fs.readFile( ROOT + '/resources/actions/' + actionName + '.js', 'binary', function( error, file ) {
 
 		if ( error ) {
@@ -241,7 +209,6 @@ this.getDownloads = function( req, res ) {
 
 this.getDownload = function( req, res ) {
 	var clientName = req.params.clientName;
-	log( 'njoooooo ooooj' );
 	fs.readFile( ROOT + config.clients_path + clientName, 'binary', function( error, file ) {
 		if ( error ) {
 			res.writeHead( 500, {

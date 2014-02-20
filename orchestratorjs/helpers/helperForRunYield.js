@@ -6,8 +6,8 @@ log = HELPERS.log
 module.exports = {
     SLEEP_TIMEOUT: 'SLEEP_TIMEOUT',
     METHOD_CALL_RESPONSE: 'METHOD_CALL_RESPONSE',
-    SD_EVENT: 'SD_EVENT',
-    SD_EXECPTION: 'SD_EXECPTION',
+    OJS_EVENT: 'OJS_EVENT',
+    OJS_EXECPTION: 'OJS_EXECPTION',
 
 };
 
@@ -17,8 +17,8 @@ module.exports = {
 
 this.SLEEP_TIMEOUT = 'SLEEP_TIMEOUT';
 this.METHOD_CALL_RESPONSE = 'METHOD_CALL_RESPONSE';
-this.SD_EVENT = 'SD_EVENT';
-this.SD_EXCEPTION = 'SD_EXCEPTION';
+this.OJS_EVENT = 'OJS_EVENT';
+this.OJS_EXCEPTION = 'OJS_EXCEPTION';
 
 
 this.waitFor = function() {
@@ -35,9 +35,7 @@ this.waitFor = function() {
             }
         } catch ( e ) {}
     }
-    log( 'juukeli sentaan' );
-    log( runRetType );
-    log( 'paa lasista' );
+    //log( runRetType );
     return runRet[ 'runRetValue' ];
 };
 

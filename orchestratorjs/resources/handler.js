@@ -3,7 +3,8 @@ HELPERS = require(ROOT+'/helpers/general.js');
 log = HELPERS.log
 var config = require(ROOT+'/config.json');
 
-var fs = require('fs');
+//var fs = require('fs');
+var fs = require('node-fs');
 
 var qs = require('querystring');
 /// saves actions and capabilities
@@ -23,6 +24,29 @@ this.postDevice = function(req, res) {
 	res.send('OK\n');
 };
 
+
+this.postObserverFile = function( req, res ) {
+	var observerName = req.params.observerName;
+	var body = '';
+	var observerPath = ROOT + config.resources.observers + observerName + '/';
+	fs.mkdir( observerPath, 0777, true, function( err ) {
+		if ( err ) {
+			log( 'Cannot create folder: ' + observerPath );
+			throw new Error( 'Error while creting folder: ' + observerPath );
+		}
+
+		req.on( 'data', function( data ) {
+			body += data;
+		} );
+
+		req.on( 'end', function() {
+			var POST = body;
+			HELPERS.saveFileNoRequire( observerPath + observerName + '.js', POST );
+		} );
+		res.send( 'OK' );
+	} );
+
+};
 
 
 

@@ -53,10 +53,10 @@
     <ul class="title-area">
       <!-- Title Area -->
       <li class="name">
-        <h1><a href="/">{{title}}</a></h1>
+        <h1><a href="/" data-method="get">{{title}}</a></h1>
       </li>
       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      <li class="toggle-topbar menu-icon"><a href="/"><span>Menu</span></a></li>
     </ul>
 
     <section class="top-bar-section">
@@ -65,17 +65,21 @@
       <ul class="left">
         <li class="divider"></li>
         
-        <li><a href="#actions" class="topMenuBtn2" onclick="showActions();">Apps</a></li>
+        <li><a href="#/actions" class="topMenuBtn">Actions</a></li>
+        <li class="divider"></li>
+
+        <li><a href="#/capabilities" class="topMenuBtn">Capabilities</a></li>
         <li class="divider"></li>
         
-        <li><a href="#capabilities" class="topMenuBtn">Capabilities</a></li>
+        <li><a href="#/instances" class="topMenuBtn">Instances</a></li>
         <li class="divider"></li>
 
-        <li><a href="#instances" class="topMenuBtn">Instances</a></li>
+        <li><a href="#/devices" class="topMenuBtn">Devices</a></li>
         <li class="divider"></li>
 
-        <li><a href="#devices" class="topMenuBtn">Devices</a></li>
+        <li><a href="#/observers" class="aTopMenuBtn">Observers</a></li>
         <li class="divider"></li>
+
 
       </ul>
 
@@ -85,14 +89,13 @@
       <ul class="right">
         <li class="divider hide-for-small"></li>
 
-
         <li class="has-dropdown">
-          <a href="#develop" class="">Develop</a>
+          <a href="#/develop" class="">Develop</a>
           <ul class="dropdown">
-            <li><a href="#develop">General instructions</a></li>
-            <li><a href="#develop+android">Develop for Android</a></li>
-            <li><a href="#develop+gadgeteer">Develop for .NET Gadgeteer</a></li>
-            <li><a href="#api">REST API</a></li>
+            <li><a href="#/develop">General instructions</a></li>
+            <li><a href="#/develop/android">Develop for Android</a></li>
+            <li><a href="#/develop/gadgeteer">Develop for .NET Gadgeteer</a></li>
+            <li><a href="#/api">REST API</a></li>
           </ul>
         </li>
 
@@ -115,7 +118,7 @@
 <div class="generalModalDiv"></div>
 
 
-<div class="container">
+<div class="container non-angular-container">
 
 
   <!-- FRONT PAGE SLIDER -->
@@ -243,6 +246,14 @@
 </div> <!-- container -->
 
 
+<div class="container angular-container" >
+<div ng-app="ojsConsole">
+  <div ng-view></div>
+</div>
+</div>
+
+
+
 <script>
   $( document ).foundation();
 </script>
@@ -253,10 +264,12 @@
 <script src="console.js"></script>
 
 <script type="text/javascript">
+  /*
   $( window ).hashchange( function() {
     showView( location.hash.substring( 1 ) );
   } )
   $( window ).hashchange();
+  */
 </script>
 
 
@@ -278,6 +291,18 @@
 <link href="js/select2/select2.css" rel="stylesheet"/>
 <script src="js/select2/select2.js"></script>
 
+  <script src="app/lib/socket.io.js"></script>
+  <script src="app/lib/angular/angular.js"></script>
+  <script src="app/lib/angular/angular-route.js"></script>
+  <script src="app/js/app.js"></script>
+  <script src="app/js/services/services.js"></script>
+  <script src="app/js/services/socketIOService.js"></script>
+  <script src="app/js/controllers/controllers.js"></script>
+  <script src="app/js/controllers/observersController.js"></script>
+  <script src="app/js/controllers/devicesController.js"></script>
+
+  <script src="app/js/filters.js"></script>
+  <script src="app/js/directives.js"></script>
 
 
 </body>

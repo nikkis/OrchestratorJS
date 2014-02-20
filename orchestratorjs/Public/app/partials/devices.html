@@ -1,0 +1,49 @@
+<div class="row contents">
+	<div class="large-12 columns">
+
+		<center>
+		<div class="table-container">
+		  <table>
+		    <thead>
+		      <tr>
+		        <th width="120">Identity</th>
+		        <th width="130">Bluetooth MAC</th>
+		        <th width="120">Owner</th>
+		        <th width="100">Type</th>
+		        <th>Capabilities</th>
+		        <th ng-repeat="metadataTitle in metadataFields">{{metadataTitle}}</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="device in devices">
+		        <td style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><p>{{device.identity}}</p></td>
+		        <td><p>{{ ( device.bluetoothMAC ) ? device.bluetoothMAC : 'N/A' }}</p></td>
+		        <td><p>{{device.name}}</p></td>
+		        <td><p>{{device.type}}</p></td>
+		        <td>
+		        	<table>
+		        		<tr>
+		        			<td ng-repeat="capability in device.capabilities" class="has-tooltip" style="background-color: #{{capability.color}};" title="{{capability.name}}" ></td>
+		        		</tr>
+		        	</table>
+		        </td>
+		       	<td ng-repeat="metadataTitle in metadataFields">{{ ( !device.metadata[ metadataTitle ] ) ? 'N/A': device.metadata[metadataTitle] }}</td>
+
+		      </tr>
+		    </tbody>
+		  </table>
+		</div>
+<p>{{foo1}}</p>
+
+		</center>
+<!--
+		<hr>
+  	<table>
+  		<tr ng-repeat="(name, color) in capabilities">
+  			<td style="background-color: #{{color}};"></td>
+  			<td>{{name}}</td>
+  		</tr>
+  	</table>
+-->
+	</div>
+</div>
