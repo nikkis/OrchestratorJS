@@ -40,12 +40,27 @@ app.controller( 'ObserversController',
 
 	}
 );
-
 app.controller( 'ObserverEditController',
 	function( $scope, $http, $routeParams ) {
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
+
+
+		$scope.ensureDeleteFile = function( fileName ) {
+			var retVal = confirm( 'Are you sure you want to delete ' + fileName + '?' );
+			if ( retVal == true ) {
+
+//'/api/'+config.api+'/observer/:observerName
+
+				$http.delete( '/api/' + apiVersion + '/observer/' + observerName ).success( function( data, status, headers, config ) {
+					console.log( 'stop status: ' + data );
+					alert( data );
+				} );
+				//alert( "User wants to continue!" );
+				//return true;
+			}
+		};
 
 		$scope.enableCodeEdit = function() {
 			editAreaLoader.execCommand( 'code_area', 'set_editable', !editAreaLoader.execCommand( 'code_area', 'is_editable' ) );

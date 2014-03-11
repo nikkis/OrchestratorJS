@@ -4,9 +4,34 @@
 
 
 
-
 var app = angular.module( 'ojsConsole.controllers', [] );
 
+
+app.controller( 'HomeController',
+	function( $scope ) {
+
+console.log('asdfasdf');
+
+		$( '.non-angular-container' ).html( '' );
+		$( '.angular-container' ).show();
+
+		$( document ).ready( function() {
+			var options = {
+				autoPlay: true,
+				nextButton: true,
+				prevButton: true,
+				preloader: true,
+				navigationSkip: true,
+			};
+			var sequence = $( "#sequence" ).sequence( options ).data( "sequence" );
+
+			sequence.afterLoaded = function() {
+				$( ".sequence-prev, .sequence-next" ).fadeIn( 500 );
+			}
+		} );
+
+	}
+);
 
 
 app.controller( 'DocsController',
@@ -50,7 +75,7 @@ app.controller( 'ActionsController',
 		$( '.angular-container' ).hide();
 
 		showActions();
-		
+
 	}
 );
 
@@ -86,9 +111,3 @@ app.controller( 'CapabilitiesController',
 		showCapabilities();
 	}
 );
-
-
-
-
-
-

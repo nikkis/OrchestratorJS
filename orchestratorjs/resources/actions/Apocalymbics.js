@@ -37,7 +37,7 @@ module.exports = {
             player.number = parseInt(i);
             players.push(player);
 
-            player.device.apocalymbics.testLaunch();
+            player.device.apocalymbics.initGame();
         }
 
         for(i in players) {

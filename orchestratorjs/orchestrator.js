@@ -73,7 +73,7 @@ app.post('/api/'+config.api+'/device', function(req, res) { resourceHandler.post
 app.post('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.postCapability(req, res) });
 app.delete('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.deleteCapability(req, res) });
 
-
+// this is the right one!! not the one bellow
 app.post('/api/'+config.api+'/observer/:observerName', function(req, res) { resourceHandler.postObserverFile(req, res) });
 
 

@@ -145,10 +145,7 @@ this.initialize = function( app ) {
 
 
     socket.on( 'ojs_exception', function( actionId, methodCallId, device_id, exception_str ) {
-      log( 'ojs_exception' );
-
       log( 'ojs_exception for action: ' + actionId );
-
       log( 'exception_str:' );
       log( exception_str );
 
@@ -162,10 +159,7 @@ this.initialize = function( app ) {
 
 
     socket.on( 'ojs_event', function( actionId, device_id, event_value ) {
-      log( 'ojs_event' );
-
       log( 'ojs_event for action: ' + actionId );
-
       log( 'event_value:' );
       log( event_value );
 
@@ -179,14 +173,12 @@ this.initialize = function( app ) {
 
     // save changed metadata and emit to observers and browsers
     socket.on( 'ojs_context_data', function( actionId, deviceId, metadataDict ) {
-log('JAAJAA1');
       DEVICE_HANDLER.upsertMetadata( deviceId, metadataDict, function( err, devices ) {} );
     } );
 
 
     // rely the message ahead to browsers
     socket.on( 'ojs_log', function( actionId, deviceId, message ) {
-log( 'JIIIHAA' );
       if ( config.services.ojsConsole.enabled )
         ojsConsoleSocket.emit( 'ojs_log', actionId, deviceId, message );
 
@@ -768,12 +760,13 @@ function executeAction( res, actionName, deviceModels, parameters ) {
 
     replaceIdsWithDevices( parameters );
     for ( i in deviceStubs ) {
-      log( 'kakaa: ' + deviceStubs[ i ].deviceName );
+      
+      /*log( 'dev: ' + deviceStubs[ i ].deviceName );
       if ( deviceStubs[ i ] instanceof DeviceStub ) {
         log( 'juuu u' );
       } else {
         log( 'eee ii' );
-      }
+      }*/
 
 
       action.participants[ deviceStubs[ i ].identity ] = deviceStubs[ i ];

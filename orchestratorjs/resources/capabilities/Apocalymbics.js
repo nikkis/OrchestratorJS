@@ -1,6 +1,6 @@
 module.exports = {
     
-    testLaunch: function () {},
+    initGame: function () {},
 
     launchApplication: function (playerNumber) {},
 

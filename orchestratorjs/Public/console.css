@@ -68,7 +68,7 @@ body {
 footer {
   -webkit-box-shadow: rgb(32, 42, 50) 1px 3px 1px -2px inset;
   -webkit-font-smoothing: antialiased;
-  background-color: rgb(41, 53, 64);
+  background-color: rgb(17, 17, 17); /*rgb(41, 53, 64);*/
   background-repeat: repeat-x;
   box-shadow: rgb(32, 42, 50) 1px 3px 1px -2px inset;
   box-sizing: border-box;
@@ -86,12 +86,14 @@ h4 {
   color: rgb(255, 255, 255);
 }
 
+
 .feature, .feature h3 {
   -webkit-font-smoothing: antialiased !important;
   color: #5e5e5e;
   background-color: transparent;
 
 }
+
 
 
 
@@ -211,5 +213,144 @@ box-sizing: border-box;
 /*  instructions - end */
 
 
+.container {
+  margin-top: 28px;
+}
+
+
+
+
+
+
+/*  FRONTPAGE - begin */
+
+.ojs-console-frontpage {
+  margin-top: -28px;
+}
+
+.ojs-console-frontpage {
+
+  background: #222 url(img/ojs_logos/nyc.jpg) no-repeat center center;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+  background-attachment:fixed;
+}
+
+
+div.ojs-console-top-filter {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 5;
+}
+
+.ojs-console-top-logo {
+  -webkit-background-clip: border-box;
+  -webkit-background-origin: padding-box;
+  -webkit-background-size: auto;
+  -webkit-font-smoothing: antialiased;
+  background-attachment: scroll;
+  background-clip: border-box;
+
+  background-color: rgba(0, 0, 0, 0);
+
+  background-origin: padding-box;
+  background-size: auto;
+  box-sizing: border-box;
+
+  background: url(img/ojs_logos/png/ojs_colors_white_text-444.png) no-repeat center center;
+  z-index: 10;
+
+  height: 497px;
+
+}
+
+
+@media (min-width: 768px) {
+  .ojs-console-top-logo {
+    background: url(img/ojs_logos/png/ojs_colors_white_text-512.png) no-repeat center center;
+  }
+}
+/*
+@media (min-width: 992px) {
+  .ojs-console-top-logo {
+    max-width: 970px;
+  }
+}
+*/
+@media( min-width: 1300px) {
+  .ojs-console-top-logo {
+    height: 980px;
+  }
+
+  .ojs-console-frontpage {
+    background: #222 url(img/ojs_logos/nyc_highres.jpg) no-repeat center center;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    background-size: cover !important;
+    background-attachment:fixed;
+  }
+
+}
+
+
+
+
+.ojs-console-frontpage .features {
+
+  /*background-color: rgba(0,0,0,0.5);*/
+  background: #ECE9E9 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ECE9E9));
+  background: #ECE9E9 -moz-linear-gradient(top, #fff, #ECE9E9);
+
+  box-shadow: rgb(212, 211, 211) 1px 3px 1px -2px inset;
+  box-sizing: border-box;
+
+  width: 100%;
+}
+
+
+.ojs-console-frontpage .feature {
+  -webkit-font-smoothing: antialiased !important;
+}
+
+.ojs-console-frontpage .features .headline {
+  margin-top: 40px;
+  margin-left: 10%;
+  margin-right: 10%;
+
+  -webkit-font-smoothing: antialiased !important;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+
+.feature h3 {
+  -webkit-font-smoothing: antialiased !important;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.feature p {
+  -webkit-font-smoothing: antialiased !important;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+.top-logo-desc {
+  background-color: rgba(0,0,0,0.5);
+  margin-bottom: 40px;
+}
+
+.top-logo-desc h1, .top-logo-desc p {
+  color: #fff;
+}
+
+
+/*  FRONTPAGE - end */
 
 

@@ -172,42 +172,6 @@ this.getObserverFile = function( req, res ) {
 };
 
 
-/*
-var socket = require( 'socket.io' );
-this.initializePubSubService = function( app ) {
-
-	APP = app;
-	var server = APP.listen( config.observer_pubsub_service.port );
-	var io = socket.listen( server );
-
-	io.sockets.on( 'connection', function( socket ) {
-
-		// metadata changes
-		socket.on( 'ojs_metadata', function( metadataContents ) {
-			// emit for browsers
-			socket.broadcast.emit( 'ojs_metadata', metadataContents );
-
-			// ( emit for observers ? )
-		} );
-
-
-		// log messages
-		socket.on( 'ojs_log', function( actionId, deviceIdentity, messageStr ) {
-			// emit log message for browsers
-			socket.broadcast.emit( 'ojs_log_'+actionId, deviceIdentity, messageStr );
-		} );
-
-
-		socket.on( 'disconnect', function( deviceid ) {
-		} );
-
-
-	} );
-
-};
-*/
-
-
 
 
 

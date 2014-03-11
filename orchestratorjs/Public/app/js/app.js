@@ -14,6 +14,9 @@ angular.module('ojsConsole', [
 ]).
 config(['$routeProvider', function($routeProvider) {
 
+
+  $routeProvider.when('/', {templateUrl: 'app/partials/home.html', controller: 'HomeController'});
+
   // observers
   $routeProvider.when('/observers', {templateUrl: 'app/partials/observers.html', controller: 'ObserversController'});
   $routeProvider.when('/observer/:observerName', {templateUrl: 'app/partials/observerEdit.html', controller: 'ObserverEditController'});
