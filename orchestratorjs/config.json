@@ -1,6 +1,7 @@
 {
 
 	"app_name": "orchestrator.js",
+	"app_version": "0.0.1",
 
 	"web_console": {
 		"marketing_mode": false
@@ -8,8 +9,11 @@
 
 	"server" : {
 		"host" : "0.0.0.0",
-		"port" : 8080
+		"port" : 9000,
+		"socketio_debug": false
 	},
+
+	"database" : "socialDevicesOrchestratorDB",
 
 	"require_authentication" : true,
 	"admin_users" : ["admin", "nikkis"],
@@ -20,10 +24,27 @@
 	"resources" : {
 		"actions" :          "/resources/actions/",
 		"capabilities" :     "/resources/capabilities/",
-		"capability_stubs" : "/resources/capability_stubs/"
+		"capability_stubs" : "/resources/capability_stubs/",
+		"observers" : "/resources/observers/"
 	},
 
 	"clients_path" : "/../clients/app_clients/",
+
+	"services": {
+
+		"ojsDeviceRegistry" : {
+			"enabled": true,
+			"port" : 9002,
+			"debug": false
+		},
+
+		"ojsConsole": {
+			"enabled": true,			
+			"port" : 9001,
+			"debug": false
+		}
+	},
+
 
 
 	"api" : "1"
