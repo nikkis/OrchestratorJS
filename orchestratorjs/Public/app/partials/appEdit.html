@@ -17,7 +17,7 @@
 		</div>
 
 		<div style="display: none;" class="large-4 columns right fileNameEdit">
-			<input type="text" id="fileNameInput" value="{{fileName}}" />
+			<input ng-model="fileName" type="text" id="fileNameInput" />
 		</div>
 	</div>
 
@@ -30,14 +30,24 @@
 		</div>
 	</div>
 
-
-  <hr>          
+  <hr>
   <center>
-    <a ng-click="startObserver(fileName)" class="start-instance-btn">start</a>
-    <a ng-href="#/observers" style="margin-right: 2em; margin-left: 2em;" class="edit-instance-btn">observers</a>
-    <a ng-click="stopObserver(fileName)" class="start-instance-btn">stop</a>
+    <a ng-click="startApp(fileName)" class="start-instance-btn">start</a>
+    <a ng-href="#/apps" style="margin-right: 2em; margin-left: 2em;" class="edit-instance-btn">apps</a>
+    <a ng-click="stopApp(fileName)" class="start-instance-btn">stop</a>
   </center>
 
+
+<!--
+<script type="text/javascript">
+// Popup window code
+function newPopup(url) {
+	popupWindow = window.open(
+		url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+}
+</script>
+<a href="JavaScript:newPopup('http://www.quackit.com/html/html_help.cfm');">Open a popup window</a>
+-->
 
 </div>
 

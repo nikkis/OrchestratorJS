@@ -13,6 +13,10 @@
   
   <!-- WEB CONSOLE CONFIG FILE -->  
   <script src="config.js"></script>
+  <script type="text/javascript">
+    hostName   = '{{hostName}}';
+    pubsubPort = '{{pubsubPort}}';
+  </script>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-1.2.1.js"></script>
@@ -70,7 +74,7 @@
       <ul class="left">
         
         <li class="divider"></li>
-        <li><a href="#/observers" class="aTopMenuBtn">Apps</a></li>
+        <li><a href="#/apps" class="aTopMenuBtn">Apps</a></li>
         <li class="divider"></li>
 
         <li class="has-dropdown">
@@ -108,7 +112,7 @@
         </li>
 
         <li class="divider"></li>
-        <li><a href="#logIn" class="topMenuBtn">Log In</a></li>
+        <li><a href="#signIn" class="topMenuBtn">Sign in</a></li>
       </ul>
     
 
@@ -182,8 +186,9 @@
   <script src="app/js/services/services.js"></script>
   <script src="app/js/services/socketIOService.js"></script>
   <script src="app/js/controllers/controllers.js"></script>
-  <script src="app/js/controllers/observersController.js"></script>
+  <script src="app/js/controllers/appsController.js"></script>
   <script src="app/js/controllers/devicesController.js"></script>
+  <script src="app/js/controllers/usersController.js"></script>
 
   <script src="app/js/filters.js"></script>
   <script src="app/js/directives.js"></script>

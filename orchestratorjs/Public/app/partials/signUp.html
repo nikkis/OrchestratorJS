@@ -1,0 +1,46 @@
+<style type="text/css">
+	.css-form input.ng-invalid-pattern {
+    background-color: #FA787E;
+  }
+</style>
+
+<div ng-controller="SignUpController">
+	<div class="row contents">
+		<div class="large-3 large-centered columns">
+
+			<center>
+
+				<form novalidate class="css-form">
+				  <fieldset>
+				    <legend style="background: none;">Sign up</legend>
+
+				    <label>username
+				      <input type="text" ng-model="username" placeholder="Only letters and numbers allowed" ng-pattern="/^[A-Za-z0-9_]{3,10}$/" >
+				    </label>
+<!--
+				    <label>companion device name
+				      <input type="text" ng-model="companionDeviceName" placeholder="Only letters and numbers allowed" required ng-minlength="3" ng-maxlength="8" >
+				    </label>
+				    /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/
+-->
+				    <label>password
+				      <input type="password" ng-model="password" required ng-pattern="/^[A-Za-z0-9!@#$%^&*()_]{6,20}$/" >
+				    </label>
+
+				    <label>confirm password
+				      <input type="password" ng-model="confirmPassword" required data-password-verify="password" >
+				    </label>
+
+
+
+				    <a ng-click="singUpSubmit();">register</a>
+				  </fieldset>
+
+
+				</form>
+
+			</center>
+
+		</div>
+	</div>
+</div>

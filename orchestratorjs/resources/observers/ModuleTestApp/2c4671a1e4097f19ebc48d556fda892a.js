@@ -2,11 +2,11 @@ var httprequest = require('../../tools.js').httprequest;
 var pubsub      = require('../../tools.js').pubsub();
 
 
-module.exports = {
+var TheAppModule =  module.exports = {
 
-  settings: { coffeeMachineId: null },
+settings: {"coffeeMachineId":"nikkis@gadgeteer"},
 
-  logic: function() {
+logic: function () {
     
     console.log('naa naa naaaa');
     
@@ -48,4 +48,9 @@ module.exports = {
    });
      
   }
+
 };
+
+var settings = {"coffeeMachineId":"nikkis@gadgeteer"};
+
+TheAppModule.logic();

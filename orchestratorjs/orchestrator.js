@@ -74,7 +74,7 @@ app.post('/api/'+config.api+'/capability/:capabilityName', function(req, res) { 
 app.delete('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.deleteCapability(req, res) });
 
 // this is the right one!! not the one bellow
-app.post('/api/'+config.api+'/observer/:observerName', function(req, res) { resourceHandler.postObserverFile(req, res) });
+app.post('/api/'+config.api+'/app/:appName', function(req, res) { resourceHandler.postAppFile(req, res) });
 
 
 ////////// Resource Handler - END   //////////
@@ -100,19 +100,27 @@ app.get('/api/'+config.api+'/devices', function(req, res) { orchestrator.getDevi
 
 
 
-////////// Observers - START //////////
-var observerController = require( ROOT+'/Controllers/observers.js' );
+////////// Apps - START //////////
+var appController = require( ROOT+'/Controllers/apps.js' );
 
-app.get('/api/'+config.api+'/observers', function(req, res) { observerController.getObservers(req, res) });
+app.get('/api/'+config.api+'/apps', function(req, res) { appController.getApps(req, res) });
 
-app.get('/api/'+config.api+'/observer/:observerName', function(req, res) { observerController.getObserverFile(req, res) });
-app.post('/api/'+config.api+'/observer', function(req, res) { observerController.postObserverFile(req, res) });
-app.delete('/api/'+config.api+'/observer/:observerName', function(req, res) { observerController.deleteObserverFile(req, res) });
 
-app.post('/api/'+config.api+'/observer/:observerName/instance', function(req, res) { observerController.postObserverInstance(req, res) });
-app.delete('/api/'+config.api+'/observer/:observerName/instance', function(req, res) { observerController.deleteObserverInstance(req, res) });
 
-////////// Observers - END   //////////
+app.get('/api/'+config.api+'/app/:appName', function(req, res) { appController.getAppFile(req, res) });
+app.post('/api/'+config.api+'/app', function(req, res) { appController.postAppFile(req, res) });
+app.delete('/api/'+config.api+'/app/:appName', function(req, res) { appController.deleteAppFile(req, res) });
+
+app.post('/api/'+config.api+'/user/:username/app/:appName/instance', function(req, res) { appController.postAppInstance(req, res) });
+app.delete('/api/'+config.api+'/app/:appName/instance', function(req, res) { appController.deleteAppInstance(req, res) });
+
+// save app settings for a user
+app.post('/api/'+config.api+'/user/:username/app/:appName/settings', function(req, res) { appController.postAppSettings(req, res) });
+app.get( '/api/'+config.api+'/user/:username/app/:appName/settings', function(req, res) { appController.getAppSettings(req, res) });
+
+
+
+////////// Apps - END   //////////
 
 
 

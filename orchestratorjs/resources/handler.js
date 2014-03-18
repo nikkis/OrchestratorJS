@@ -25,14 +25,14 @@ this.postDevice = function(req, res) {
 };
 
 
-this.postObserverFile = function( req, res ) {
-	var observerName = req.params.observerName;
+this.postAppFile = function( req, res ) {
+	var appName = req.params.appName;
 	var body = '';
-	var observerPath = ROOT + config.resources.observers + observerName + '/';
-	fs.mkdir( observerPath, 0777, true, function( err ) {
+	var appPath = ROOT + config.resources.apps + appName + '/';
+	fs.mkdir( appPath, 0777, true, function( err ) {
 		if ( err ) {
-			log( 'Cannot create folder: ' + observerPath );
-			throw new Error( 'Error while creting folder: ' + observerPath );
+			log( 'Cannot create folder: ' + appPath );
+			throw new Error( 'Error while creting folder: ' + appPath );
 		}
 
 		req.on( 'data', function( data ) {
@@ -41,7 +41,7 @@ this.postObserverFile = function( req, res ) {
 
 		req.on( 'end', function() {
 			var POST = body;
-			HELPERS.saveFileNoRequire( observerPath + observerName + '.js', POST );
+			HELPERS.saveFileNoRequire( appPath + appName + '.js', POST );
 		} );
 		res.send( 'OK' );
 	} );
@@ -104,39 +104,12 @@ function generateCapabilityStub(capabilityName) {
 	var MyClass = HELPERS.reRequire(ROOT+config.resources.capabilities+capabilityName+'.js');
 	var lines = 'module.exports = {\n\n';
 	
-/*
-        var methodArguments = ['TestDevice', 'test', []];
-        return this.action.sendMethodCall(this.deviceId,methodArguments);
-*/
-
-
 	for(methodName in MyClass) {
-/*
-		var args = HELPERS.parseArgsFromString(MyClass[methodName].toString());
-		var line = '    '+ methodName + ': ' + 'function('+args.toString()+') {\n';
-		   line += "        this.socket.emit('methodcall', [this.actionId, '"+capabilityName+"', '"+methodName+"', ["+args.toString()+"]]);\n";
-
-		   line += '        this.action.alreadyReleased = true;\n';
-		   line += '        if(!this.Fiber.current) {\n';
-		   line += '            return undefined;\n';
-		   line += '        }\n';
-		   line += '        var c = this.Fiber.yield();\n';
-		   line += '        return c;\n';
-		   line += '    },\n';
-		lines += line;
-
-	}
-	lines += '};';
-	HELPERS.saveFile(ROOT+config.resources.capability_stubs+capabilityName+'.js', lines);
-*/
-
 
 
 		var args = HELPERS.parseArgsFromString(MyClass[methodName].toString());
 		var line = '    '+ methodName + ': ' + 'function('+args.toString()+') {\n';
 		   line += "        var methodArguments = ['"+capabilityName+"', '"+methodName+"', ["+args.toString()+"]];\n";
-
-		   //line += '        return this.action.sendMethodCall(this.deviceId,methodArguments);\n';
 		   line += '        return this.device.invoke(methodArguments);\n';
 		   line += '    },\n';
 		lines += line;

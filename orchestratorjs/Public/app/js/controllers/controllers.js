@@ -10,8 +10,6 @@ var app = angular.module( 'ojsConsole.controllers', [] );
 app.controller( 'HomeController',
 	function( $scope ) {
 
-console.log('asdfasdf');
-
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
 

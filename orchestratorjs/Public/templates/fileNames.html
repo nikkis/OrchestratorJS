@@ -1,9 +1,14 @@
 
 
+
 <div class="large-3 columns fileNames">
+
   <div class="fileNamesListing">
     <h3>{{type}} files</h3>
     <ul class="side-nav">
+
+<p style=""><a style="text-align: center;">NEW {{type}}</a></p>
+
       {{#filenames}}
       <li class="fileNameLink fileName_{{.}}">
         <a onclick="show{{type}}Code('{{.}}');">{{.}}</a>

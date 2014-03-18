@@ -1,0 +1,38 @@
+
+<div class="row">
+  <div class="large-12 columns">
+    <div class="row">
+    <!--
+      <div class="large-4 columns">
+        <center><img src="img/ojs_logos/png/ojs-128.png" ></center>
+      </div>
+    -->
+
+      <div class="large-4 columns ojs-new-app-btn">
+        <a ng-href="#/app/newApp">NEW<br/>APP</a>
+      </div>
+
+      <div ng-repeat="instance in appInstances" class="large-4 columns">
+        <div class="panel">
+          <h4>{{instance.name}}</h4>
+          <hr>
+          <!--<br/>-->
+          <!--<p><span style="font-weight:bold;">Description: </span>{{instance.desc}}</p>-->
+          <p><span style="font-weight:bold;">Author: </span>N/A</p>
+          <p><span style="font-weight:bold;">Description: </span>N/A</p>
+          <p><span style="font-weight:bold;">Running: </span>{{instance.running}}</p>
+          <hr>          
+          <center>
+            <a ng-click="startApp(instance.name)" class="start-instance-btn">start</a>
+            <a ng-href="#/app/{{instance.name}}" style="margin-right: 2em; margin-left: 2em;" class="edit-instance-btn">edit</a>
+            <a ng-click="stopApp(instance.name)" class="start-instance-btn">stop</a>
+          </center>
+        </div>
+        
+      </div>
+
+
+    </div>
+  </div>
+</div>
+

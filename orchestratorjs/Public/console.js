@@ -82,10 +82,7 @@ function showView( name ) {
             break;            
         case 'api':
             showAPI();
-            break;
-        //case 'observers':
-        //    showObservers();
-        //    break;            
+            break;         
         default:
             showHome();
             break;

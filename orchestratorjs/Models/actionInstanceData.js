@@ -41,9 +41,6 @@ module.exports = function actionInstanceDataHandler()
 
           next(err, data);
       });
-		
-
-
     };
 
 

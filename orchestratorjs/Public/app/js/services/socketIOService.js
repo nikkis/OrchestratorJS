@@ -1,10 +1,10 @@
 var app = angular.module( 'ojsConsole.services.SocketIOService', [] );
 
+
 var ojsDeviceRegistryServicePort = 9001;
 
 app.factory( 'socket', function( $rootScope ) {
-	var socket = io.connect( 'http://0.0.0.0:'+ojsDeviceRegistryServicePort );
-
+	var socket = io.connect( 'http://'+hostName+':'+pubsubPort );
 	return {
 		on: function( eventName, callback ) {
 			socket.on( eventName, function() {			

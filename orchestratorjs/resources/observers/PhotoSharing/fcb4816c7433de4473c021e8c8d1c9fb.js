@@ -1,15 +1,13 @@
 var httprequest = require( '../../tools.js' ).httprequest;
 var pubsub      = require( '../../tools.js' ).pubsub();
-var tools       = require( '../../tools.js' );
 var Fiber       = require( 'fibers' );
+var tools       = require( '../../tools.js' );
 
-module.exports = {
+var TheAppModule =  module.exports = {
 
-  settings: {
-    coffeeMachineId: null
-  },
+settings: {"coffeeMachineId":"jee"},
 
-  logic: function() {
+logic: function () {
 
       Fiber( function() {
 
@@ -25,4 +23,9 @@ module.exports = {
 
 
   }
+
 };
+
+var settings = {"coffeeMachineId":"jee"};
+
+TheAppModule.logic();

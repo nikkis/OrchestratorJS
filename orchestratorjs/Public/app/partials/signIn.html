@@ -1,0 +1,42 @@
+<style type="text/css">
+  .css-form input.ng-invalid.ng-dirty {
+    background-color: #FA787E;
+  }
+ 
+  .css-form input.ng-valid.ng-dirty {
+    background-color: #78FA89;
+  }
+</style>
+
+<div ng-controller="SignInController">
+	<div class="row contents">
+		<div class="large-3 large-centered columns">
+
+			<center>
+
+				<form novalidate class="css-form">
+
+				  <fieldset>
+				    <legend style="background: none;">Sign in</legend>
+
+				    <label>username
+				      <input type="email" ng-model="username" required>
+				      <!--<input type="text" placeholder="Only letters and numbers allowed">-->
+				    </label>
+
+				    <label>password
+				      <input type="password" ng-model="password">
+				    </label>
+
+				    <a ng-click="singInSubmit();">submit</a>
+				  </fieldset>
+
+				  <p>Not yet registered? <a href="#signUp">Sign up</a></p>
+
+				</form>
+
+			</center>
+
+		</div>
+	</div>
+</div>

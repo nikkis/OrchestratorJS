@@ -11,16 +11,16 @@ function initEditor() {
         syntax: "js",
         is_editable: false,
         toolbar: "new_document, save, |, search, |, undo, redo, |, select_font, |, highlight, reset_highlight",
-        load_callback: "loadObserverFile",
-        save_callback: "saveObserverFile"
+        load_callback: "loadAppFile",
+        save_callback: "saveAppFile"
     } );
 }
 
 
 
 // callback function for angular version
-function saveObserverFile(id, content){
-    saveWithMode('observer', content);
+function saveAppFile(id, content){
+    saveWithMode('app', content);
 }
 
 
@@ -34,6 +34,10 @@ function saveWithMode(fileType, content){
     if(fileName == '') {
         alert('File name cannot be empty!');
         return;
+    } else if(fileName == 'newApp') {
+        alert('newApp is reserved app name.\nPlease use another one.');
+        return;
+
     } else if(fileName.slice(-3) == '.js') {
         alert('File name cannot contain .js');
         return;
