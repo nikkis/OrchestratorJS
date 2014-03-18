@@ -246,6 +246,7 @@ this.getApps = function( req, res ) {
 			} );
 			res.write( err + '\n' );
 			res.end();
+			return;
 		} else {
 			var fileNames = [];
 			for ( var i = 0; i < files.length; i++ ) {
