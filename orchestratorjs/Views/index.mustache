@@ -62,10 +62,12 @@
     <ul class="title-area">
       <!-- Title Area -->
       <li class="name">
-        <h1><a href="/" data-method="get">{{title}}</a></h1>
+        <!--<h1><a href="/" data-method="get">{{title}}</a></h1>-->
+        <h1><a href="#/" >{{title}}</a></h1>
       </li>
       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-      <li class="toggle-topbar menu-icon"><a href="/"><span>Menu</span></a></li>
+      <!--<li class="toggle-topbar menu-icon"><a href="/"><span>Menu</span></a></li>-->
+      <li class="toggle-topbar menu-icon"><a href="#/"><span>Menu</span></a></li>
     </ul>
 
     <section class="top-bar-section">
@@ -112,9 +114,9 @@
         </li>
 
         <li class="divider"></li>
-        <li><a href="#signIn" class="topMenuBtn">Sign out</a></li>
+        <li class="userMenuItem"><a href="#/signIn" class="topMenuBtn">Sign in</a></li>
+        <!--<li ng-show="{{UserService.isLogged}}"><a href="#signOut" class="topMenuBtn">{{kissa}}</a></li>-->
       </ul>
-    
 
 
     <a class="marketingTag" href="https://github.com/you">
@@ -184,6 +186,8 @@
   <script src="app/lib/angular/angular-route.js"></script>
   <script src="app/js/app.js"></script>
   <script src="app/js/services/services.js"></script>
+
+<script src="app/js/services/userService.js"></script>
   <script src="app/js/services/socketIOService.js"></script>
   <script src="app/js/controllers/controllers.js"></script>
   <script src="app/js/controllers/appsController.js"></script>

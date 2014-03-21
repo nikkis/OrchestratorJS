@@ -8,7 +8,7 @@ var app = angular.module( 'ojsConsole.controllers', [] );
 
 
 app.controller( 'HomeController',
-	function( $scope ) {
+	function( $scope, $location, $http, UserService ) {
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
@@ -22,6 +22,14 @@ app.controller( 'HomeController',
 				navigationSkip: true,
 			};
 			var sequence = $( "#sequence" ).sequence( options ).data( "sequence" );
+
+
+if(UserService.isLogged) {
+	console.log('user logged');
+}
+else{
+	console.log('user NOOOT logged');
+}
 
 			sequence.afterLoaded = function() {
 				$( ".sequence-prev, .sequence-next" ).fadeIn( 500 );

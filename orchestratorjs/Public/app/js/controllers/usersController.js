@@ -1,38 +1,15 @@
 //var app = angular.module( 'ojsConsole.controllers.UsersController', [ 'ojsConsole.services', 'ojsConsole.services.SocketIOService' ] );
-var app = angular.module( 'ojsConsole.controllers.userControllers', [] );
+var app = angular.module( 'ojsConsole.controllers.userControllers', [ 'ojsConsole.services', 'ojsConsole.services.UserService' ] );
 
-app.controller( 'UsersController',
-	function( $scope, socket ) {
+app.controller( 'UserController',
+	function( $scope, $location, $http, UserService ) {
 
-
-		/*
-		// listen changes in metadata and update view accordingly
-		socket.on('ojs_context_data', function ( message ) {
-			for ( i in $scope.devices ) {
-				if ( $scope.devices[ i ].identity == message.deviceIdentity ) {
-					if( message.key == 'online' )
-						$scope.devices[ i ].online = message.value;
-					else
-						$scope.devices[ i ].metadata[ message.key ] = message.value;
-				}
-			}
-		});
-
-		socket.on('ojs_log_', function ( deviceIdentity, message ) {
-			console.log( deviceIdentity+': ' + message );
-		});
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
 
+		console.log( 'profile page for user: ' + UserService.username );
 
-		$.getJSON( '/api/' + apiVersion + '/devices', function( data ) {
-			$scope.capabilities = data.capabilities;
-			$scope.metadataFields = data.metadataFields;
-			$scope.devices = data.devices;
-			$scope.$apply();
-		} );
-*/
 
 
 	}
@@ -41,39 +18,103 @@ app.controller( 'UsersController',
 
 
 app.controller( 'SignInController',
-	function( $scope ) {
+	function( $scope, $location, $http, $rootScope, UserService ) {
+
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
-		console.log( 'in' );
-		$scope.singInSubmit = function() {
+
+		$scope.signInSubmit = function() {
 			console.log( 'submitting' );
-			console.log( $scope.username );
-			console.log( $scope.password );
+			console.log( $scope.user.username );
+			console.log( $scope.user.password );
+
+			$http.post( '/api/' + apiVersion + '/logIn/', {
+				username: $scope.user.username,
+				password: $scope.user.password
+			} ).success( function( data, status, headers, config ) {
+				console.log( 'succees: ' + data.user.username );
+
+
+				if ( status ) {
+
+					// succefull login
+					UserService.isLogged = true;
+					UserService.username = data.user.username;
+
+					$( '.userMenuItem' ).html( '<a href="#/signOut" class="topMenuBtn">Sign out</a>' );
+
+					console.log( 'logged in' );
+					console.log( UserService.username );
+
+					//$location.path( '/user/' + UserService.username );
+					$location.path( '/' );
+				} else {
+					UserService.isLogged = false;
+					UserService.username = '';
+					$location.path( '/signIn' );
+				}
+
+
+			} ).error( function( data, status, headers, config ) {
+
+				UserService.isLogged = false;
+				UserService.username = '';
+				$location.path( '/signIn' );
+
+			} );
+
 
 		};
 	}
 );
 
 
+
 app.controller( 'SignOutController',
-	function( $scope ) {
+	function( $scope, $location, $http, UserService ) {
+
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
+
 		console.log( 'out' );
+
+		if ( UserService.isLogged ) {
+			$http.post( '/api/' + apiVersion + '/logOut/', {
+				username: UserService.username,
+			} ).success( function( data, status, headers, config ) {} );
+
+
+			UserService.isLogged = false;
+			UserService.username = '';
+		}
+
+		$( '.userMenuItem' ).html( '<a href="#/signIn" class="topMenuBtn">Sign in</a>' );
+		$location.path( '/' );
+
 	}
 );
 
 
 app.controller( 'SignUpController',
-	function( $scope ) {
+	function( $scope, $location, $http, UserService ) {
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
 		console.log( 'up' );
 
-		$scope.singUpSubmit = function() {
-			console.log( 'submitting' );
-			console.log( $scope.username );
-			console.log( $scope.password );
+		$scope.signUpSubmit = function() {
+
+			$http.post( '/api/' + apiVersion + '/user/', {
+				username: $scope.user.username,
+				password: $scope.user.password
+			} ).success( function( data, status, headers, config ) {
+				console.log( 'succees: ' + data );
+
+				$location.path( '/user/' + $scope.user.username );
+
+			} ).error( function( data, status, headers, config ) {
+				console.log( 'error: ' + data );
+				alert( data );
+			} );
 
 		};
 

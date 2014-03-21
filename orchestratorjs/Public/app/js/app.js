@@ -6,6 +6,7 @@ angular.module('ojsConsole', [
   'ngRoute',
   'ojsConsole.filters',
   'ojsConsole.services',
+'ojsConsole.services.UserService',
   'ojsConsole.services.SocketIOService',
   'ojsConsole.directives',
   'ojsConsole.controllers',
@@ -26,6 +27,8 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/signIn',  {templateUrl: 'app/partials/signIn.html',  controller: 'SignInController'});
   $routeProvider.when('/signOut', {templateUrl: 'app/partials/signOut.html', controller: 'SignOutController'});
   $routeProvider.when('/signUp',  {templateUrl: 'app/partials/signUp.html',  controller: 'SignUpController'});
+
+  $routeProvider.when('/user/:username',  {templateUrl: 'app/partials/user.html',  controller: 'UserController'});
 
   // apps
   $routeProvider.when('/apps', {templateUrl: 'app/partials/apps.html', controller: 'AppsController'});

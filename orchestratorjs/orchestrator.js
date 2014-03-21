@@ -3,6 +3,13 @@ HELPERS = require( ROOT + '/helpers/general.js' );
 log = HELPERS.log
 
 
+
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+
+
+
 var config = require( ROOT + '/config.json' );
 log( "HOSTNAME: " + config.server.host );
 log( "    PORT: " + config.server.port );
@@ -18,6 +25,14 @@ var socket = require( 'socket.io' );
 app.configure( function() {
 	app.use( express.static( ROOT + '/' ) );
 } );
+
+
+
+app.use( express.cookieParser() );
+app.use(express.session({ secret: 'ojsbottomsecret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use( express.static( ROOT + '/Public' ) );
 app.engine( 'mustache', mu2express.engine );
@@ -58,7 +73,84 @@ app.get('/test', function(req, res) { webconsole.test(req, res) });
 //////////  MAIN CONSOLE HTML - END  //////////
 
 
+////////// Users Controller - START //////////
 
+
+
+var mongoose = require( 'mongoose' );
+var db = mongoose.connection;
+db.on( 'error', console.error.bind( console, 'Cannot connect to mongodb:' ) );
+mongoose.connect( 'mongodb://localhost/' + config.database );
+
+
+var userSchema = mongoose.Schema( {
+  username: {
+    type: String,
+    unique: true
+  },
+  password: {
+    type: String
+  },
+  edited: {
+    type: Date,
+    default: Date.now
+  },
+} );
+
+
+var userController = require(ROOT+'/Controllers/users.js');
+
+
+
+passport.use(userController.getAuthStrategy());
+
+
+/*
+passport.serializeUser(userController.userSerializer());
+passport.deserializeUser(userController.userDeserializer());
+*/
+
+
+passport.serializeUser(function(user, done) {
+  done(null, user.username);
+});
+
+passport.deserializeUser(function(id, done) {
+  /*User.findById(id, function (err, user) {
+    done(err, user);
+  });*/
+});
+
+
+
+
+/*
+app.post('/api/'+config.api+'/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })
+);
+
+*/
+
+
+
+
+
+app.get('/api/'+config.api+'/user/:username', function(req, res) { userController.getUser(req, res) });
+
+// log in and out
+app.post('/api/'+config.api+'/login',  function(req, res) { userController.login(req, res) });
+app.post('/api/'+config.api+'/logout', function(req, res) { userController.logout(req, res) });
+
+// post is for registering, put is for editing
+app.post('/api/'+config.api+'/user', function(req, res) { userController.postUser(req, res) });
+// put is for editing, post is for registering
+app.put('/api/'+config.api+'/user/:username', function(req, res) { userController.putUser(req, res) });
+app.delete('/api/'+config.api+'/user/:username', function(req, res) { userController.deleteUser(req, res) });
+
+
+////////// Users Controller - END   //////////
 
 
 
