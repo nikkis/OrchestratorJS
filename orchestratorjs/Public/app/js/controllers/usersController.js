@@ -109,7 +109,8 @@ app.controller( 'SignUpController',
 			} ).success( function( data, status, headers, config ) {
 				console.log( 'succees: ' + data );
 
-				$location.path( '/user/' + $scope.user.username );
+				//$location.path( '/user/' + $scope.user.username );
+				$location.path( '/' );
 
 			} ).error( function( data, status, headers, config ) {
 				console.log( 'error: ' + data );

@@ -17,7 +17,7 @@
 				
 				<form novalidate name="form" class="css-form">
 				  <fieldset>
-				    <legend style="background: none;">sign up</legend>
+				    <legend style="background: none;">sign in</legend>
 
 				    <label>username
 				      <input type="text" ng-model="user.username" name="username" placeholder="Only letters and numbers allowed" ng-pattern="/^[A-Za-z0-9_]{3,10}$/" >
@@ -29,6 +29,8 @@
 				    
 				    <a ng-click="signInSubmit();" ng-show="form.$valid">sign in</a>
 				  </fieldset>
+
+				  <p>Not yet registered? <a href="#/signUp">Sign up</a></p>
 
 
 				</form>
