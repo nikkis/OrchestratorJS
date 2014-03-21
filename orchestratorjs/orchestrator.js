@@ -35,8 +35,15 @@ app.use(passport.session());
 
 
 app.use( express.static( ROOT + '/Public' ) );
-app.engine( 'mustache', mu2express.engine );
-app.set( 'view engine', 'mustache' );
+//app.engine( 'mustache', mu2express.engine );
+//app.set( 'view engine', 'mustache' );
+
+app.set('view engine', 'ejs');
+app.set('view options', {
+    layout: false
+});
+
+
 app.set( 'views', __dirname + '/Views' );
 
 

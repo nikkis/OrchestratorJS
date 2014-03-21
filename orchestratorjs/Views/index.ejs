@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app="ojsConsole"> <!--<![endif]-->
 
 <head>
   
 
-  <title>{{title}}</title>
+  <title><%= title %></title>
   <link rel="icon" type="image/png" href="img/ojs_logos/png/ojs-32.png">
 
   <meta charset="utf-8">
@@ -14,8 +14,8 @@
   <!-- WEB CONSOLE CONFIG FILE -->  
   <script src="config.js"></script>
   <script type="text/javascript">
-    hostName   = '{{hostName}}';
-    pubsubPort = '{{pubsubPort}}';
+    hostName   = '<%= hostName %>';
+    pubsubPort = '<%= pubsubPort %>';
   </script>
 
   <script src="js/jquery.min.js"></script>
@@ -63,7 +63,7 @@
       <!-- Title Area -->
       <li class="name">
         <!--<h1><a href="/" data-method="get">{{title}}</a></h1>-->
-        <h1><a href="#/" >{{title}}</a></h1>
+        <h1><a href="#/" ><%= title %></a></h1>
       </li>
       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
       <!--<li class="toggle-topbar menu-icon"><a href="/"><span>Menu</span></a></li>-->
@@ -114,8 +114,23 @@
         </li>
 
         <li class="divider"></li>
-        <li class="userMenuItem"><a href="#/signIn" class="topMenuBtn">Sign in</a></li>
-        <!--<li ng-show="{{UserService.isLogged}}"><a href="#signOut" class="topMenuBtn">{{kissa}}</a></li>-->
+
+        <span ng-controller="SignInController">
+          <!-- sign in -->
+          <li ng-show='!UserService.isLogged' >
+            <a href="#/signIn" class="topMenuBtn" >Sign in</a>
+          </li>
+
+          <!-- user profile / sign out -->
+          <li class="has-dropdown" ng-show='UserService.isLogged' >
+            <a href="#/user/{{UserService.username}}" ng-bind='UserService.username'></a>
+            <ul class="dropdown">
+              <li><a href="#/user/{{UserService.username}}" ng-bind='UserService.username'></a></li>
+              <li><a href="#/signOut">Sign out</a></li>
+            </ul>        
+          </li>
+        </span>
+
       </ul>
 
 
@@ -137,7 +152,7 @@
 
 
 <div class="container angular-container" >
-  <div ng-app="ojsConsole">
+  <!--<div ng-app="ojsConsole">-->
     <div ng-view></div>
   </div>
 </div>
@@ -165,7 +180,7 @@
 
 <!-- if set to marketing mode show tags marked with marketingTag class -->
 <script type="text/javascript">
-  var marketingMode = {{marketingMode}};
+  var marketingMode = <%= marketingMode %>;
   if(marketingMode) {
     console.log('marketing!!');
     $('.marketingTag').show();

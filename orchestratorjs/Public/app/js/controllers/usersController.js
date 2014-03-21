@@ -1,6 +1,15 @@
 //var app = angular.module( 'ojsConsole.controllers.UsersController', [ 'ojsConsole.services', 'ojsConsole.services.SocketIOService' ] );
 var app = angular.module( 'ojsConsole.controllers.userControllers', [ 'ojsConsole.services', 'ojsConsole.services.UserService' ] );
 
+
+var MenuItem_userProfile = '<a href="#/signOut" class="">usernamehere</a>'
+          +'<ul class="dropdown">'
+            +'<li><a href="#/signOut">sign out</a></li>'
+          +'</ul>';
+
+
+var MenuItem_singIn = '<a href="#/signIn" class="topMenuBtn">Sign in</a>';
+
 app.controller( 'UserController',
 	function( $scope, $location, $http, UserService ) {
 
@@ -19,6 +28,16 @@ app.controller( 'UserController',
 
 app.controller( 'SignInController',
 	function( $scope, $location, $http, $rootScope, UserService ) {
+
+
+console.log( 'SignInController' );
+
+$scope.UserService = UserService;
+
+
+//$scope.kissa = false;
+//$rootScope.kissa = 'marsu';
+console.log( 'SignInController 222222' );
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
@@ -41,7 +60,9 @@ app.controller( 'SignInController',
 					UserService.isLogged = true;
 					UserService.username = data.user.username;
 
-					$( '.userMenuItem' ).html( '<a href="#/signOut" class="topMenuBtn">Sign out</a>' );
+					//$( '.userMenuItem' ).html( MenuItem_userProfile );
+//$scope.kissa = 'marsu';
+//$rootScope.kissa = 'marsu';
 
 					console.log( 'logged in' );
 					console.log( UserService.username );
@@ -88,7 +109,7 @@ app.controller( 'SignOutController',
 			UserService.username = '';
 		}
 
-		$( '.userMenuItem' ).html( '<a href="#/signIn" class="topMenuBtn">Sign in</a>' );
+		$( '.userMenuItem' ).html( MenuItem_singIn );
 		$location.path( '/' );
 
 	}

@@ -12,6 +12,8 @@
 		"mongojs": "0.7.17",
 		"winston": ">= 0.7.2",
 		"mu2express": "0.x.x",
+"ejs": ">= 0.0.1",
+
 		"colors": "0.x.x",
 		"forever-monitor": "1.2.3",
 		"node-fs": ">= 0.1.7",

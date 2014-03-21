@@ -20,6 +20,11 @@ this.showIndexView = function( req, res ) {
 			'pubsubPort': config.services.ojsConsole.port,
 		}
 	} );
+
+
+
+
+	
 };
 
 
