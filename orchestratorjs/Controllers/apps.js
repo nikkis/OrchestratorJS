@@ -243,7 +243,7 @@ this.postAppFile = function( req, res ) {
 
 	APPS.findApp( appName, function( err, appModel ) {
 
-		if ( appModel && appModel.username != username ) {
+		if ( appModel && appModel.author != username ) {
 			res.send( 422, 'reserved app name' );
 			return;
 		}
