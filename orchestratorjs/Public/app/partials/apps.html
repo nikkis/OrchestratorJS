@@ -17,7 +17,10 @@
 
 <div class="row ojs-app-top" >
   
-  <div class="large-4 columns"><img class="ojs-app-img" src="http://placehold.it/200/218bc0/000000/&amp;text=[{{instance.name}}]"></div>
+  <div class="large-4 columns">
+    <img class="ojs-app-img" src="http://placehold.it/200/{{ ( !instance.color ) ? '218bc0': instance.color }}/000000/&amp;text=[{{instance.name}}]">
+    <!--<img class="ojs-app-img" src="http://placehold.it/200/218bc0/000000/&amp;text=[{{instance.name}}]">-->
+  </div>
   <div class="large-8 columns" ><h4 class="ojs-app-name">{{instance.name}}</h4></div>
 
 </div>
@@ -33,11 +36,16 @@
 </div>
 
 <div class="row">
-  <div class="large-12 columns">...</div>
+  <div class="large-12 columns">
+    {{ ( !instance.desc ) ? '...': instance.desc }}
+  </div>
 </div>
 
 <div class="row">
-  <div class="large-12 columns"><span style="font-weight:bold;">Author: </span>N/A</div>
+  <div class="large-12 columns">
+    <span style="font-weight:bold;">Author: </span>
+    {{ ( !instance.author ) ? 'N/A': instance.author }}
+  </div>
 </div>
 <!--
           <p><span style="font-weight:bold;">Running: </span>{{instance.running}}</p>

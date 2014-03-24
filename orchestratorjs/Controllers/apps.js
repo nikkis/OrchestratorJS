@@ -8,6 +8,9 @@ var util = require( 'util' );
 var AppSettingsHandler = require( ROOT + '/Models/appSettings.js' );
 var APP_SETTINGS = new AppSettingsHandler();
 
+var AppsHandler = require( ROOT + '/Models/app.js' );
+var APPS = new AppsHandler();
+
 //var fs = require('fs');
 var fs = require( 'node-fs' );
 var forever = require( 'forever-monitor' );
@@ -214,8 +217,8 @@ this.deleteAppFile = function( req, res ) {
 	log( 'Deleting app file..' );
 
 	var appName = req.params.appName;
-	if( appName == 'newApp' ) {
-		res.send('OK');
+	if ( appName == 'newApp' ) {
+		res.send( 'OK' );
 		return;
 	}
 
@@ -234,25 +237,49 @@ this.deleteAppFile = function( req, res ) {
 
 this.postAppFile = function( req, res ) {
 	var username = req.params.username;
-	log(username + ' posting ne app');
+	log( username + ' posting ne app' );
 	var appName = req.params.appName;
-	var body = '';
-	var appPath = ROOT + config.resources.apps + appName + '/';
-	fs.mkdir( appPath, 0777, true, function( err ) {
-		if ( err ) {
-			log( 'Cannot create folder: ' + appPath );
-			throw new Error( 'Error while creting folder: ' + appPath );
+
+
+	APPS.findApp( appName, function( err, appModel ) {
+
+		if ( appModel && appModel.username != username ) {
+			res.send( 422, 'reserved app name' );
+			return;
 		}
 
-		req.on( 'data', function( data ) {
-			body += data;
+
+
+		APPS.createApp( appName, username, function( err, user ) {
+
+			if ( err ) {
+				res.send( 500, 'error while creating user: ' + err );
+				return;
+			}
+
+			var body = '';
+			var appPath = ROOT + config.resources.apps + appName + '/';
+			fs.mkdir( appPath, 0777, true, function( err ) {
+				if ( err ) {
+					log( 'Cannot create folder: ' + appPath );
+					throw new Error( 'Error while creting folder: ' + appPath );
+				}
+
+				req.on( 'data', function( data ) {
+					body += data;
+				} );
+
+				req.on( 'end', function() {
+					var POST = body;
+					HELPERS.saveFileNoRequire( appPath + appName + '.js', POST );
+				} );
+				res.send( 'OK' );
+			} );
+
+
 		} );
 
-		req.on( 'end', function() {
-			var POST = body;
-			HELPERS.saveFileNoRequire( appPath + appName + '.js', POST );
-		} );
-		res.send( 'OK' );
+
 	} );
 
 };
@@ -264,52 +291,71 @@ this.getApps = function( req, res ) {
 	var resApps = [];
 	var appsPath = ROOT + config.resources.apps;
 
-	fs.readdir( appsPath, function( err, files ) {
-		if ( err ) {
-			log( err );
-			res.writeHead( 500, {
-				'Content-Type': 'text/plain'
-			} );
-			res.write( err + '\n' );
-			res.end();
-			return;
-		} else {
-			var fileNames = [];
-			for ( var i = 0; i < files.length; i++ ) {
-				var file = files[ i ];
-				try {
-					if ( fs.lstatSync( appsPath + file ).isDirectory() &&
-						fs.lstatSync( appsPath + file + '/' + file + '.js' ).isFile() ) {
 
-						var appName = file;
-						if ( appName == 'newApp' )
-							continue;
+	APPS.findAllApps( function( err, appModels ) {
 
-						var o = {
-							name: appName,
-							running: false
-						};
+		fs.readdir( appsPath, function( err, files ) {
+			if ( err ) {
+				log( err );
+				res.writeHead( 500, {
+					'Content-Type': 'text/plain'
+				} );
+				res.write( err + '\n' );
+				res.end();
+				return;
+			} else {
+				var fileNames = [];
+				for ( var i = 0; i < files.length; i++ ) {
+					var file = files[ i ];
+					try {
+						if ( fs.lstatSync( appsPath + file ).isDirectory() &&
+							fs.lstatSync( appsPath + file + '/' + file + '.js' ).isFile() ) {
 
-						if ( apps[ appName ] )
-							o.running = true;
+							var appName = file;
+							if ( appName == 'newApp' )
+								continue;
 
-						resApps.push( o );
-					}
-				} catch ( err ) {}
+							var o = {
+								name: appName,
+								running: false
+							};
+
+							if ( apps[ appName ] )
+								o.running = true;
+
+							// load app details
+							for ( k in appModels ) {
+								if( appModels[ k ].appname == appName ) {
+									o.desc = appModels[ k ].desc;
+									o.author = appModels[ k ].author;
+									o.color = appModels[ k ].color;
+									o.img = appModels[ k ].img;
+								}
+							}
+
+
+							resApps.push( o );
+						}
+					} catch ( err ) {}
+				}
 			}
-		}
 
-		res.writeHead( 200, {
-			"Content-Type": "application/json"
+			res.writeHead( 200, {
+				"Content-Type": "application/json"
+			} );
+			res.write(
+				JSON.stringify( {
+					"apps": resApps
+				} )
+			);
+			res.end();
+
 		} );
-		res.write(
-			JSON.stringify( {
-				"apps": resApps
-			} )
-		);
-		res.end();
+
 
 	} );
+
+
 }
 
 

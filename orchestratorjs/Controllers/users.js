@@ -70,8 +70,10 @@ module.exports = {
 
 		USERS.findUser( username, function( err, user ) {
 
-			if ( !user )
+			if ( !user ) {
 				res.send( 404, 'cannot find user ' + username );
+				return;
+			}
 
 			res.writeHead( 200, {
 				"Content-Type": "application/json"
@@ -96,13 +98,17 @@ module.exports = {
 
 		USERS.findUser( username, function( err, user ) {
 
-			if ( user )
+			if ( user ) {
 				res.send( 422, 'reserved username' );
+				return;
+			}
 
 			USERS.createUser( username, password, function( err, user ) {
 
-				if ( err )
+				if ( err ) {
 					res.send( 500, 'error while creating user: ' + err );
+					return;
+				}
 
 
 				res.writeHead( 200, {

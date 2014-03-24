@@ -48,20 +48,25 @@ module.exports = function appHandler() {
   };
 
 
-  this.createApp = function( appname, author, desc, img, next ) {
+//  this.createApp = function( appname, author, desc, img, next ) {
+  this.createApp = function( appname, author, next ) {
     var color = HELPERS.hexColor( appname );
     var edited = new Date();
     var app = {
       appname: appname,
       author: author,
-      desc: desc,
+      desc: '',
       color: color,
-      img: img,
+      img: '',
       edited: edited
     };
 
     appModel.create( app, next );
 
+  };
+
+  this.findAllApps = function( callback ) {
+    appModel.find( callback );
   };
 
 
