@@ -41,6 +41,26 @@ this.getUniqueId = function() {
 
 
 
+this.hexColor = function( str ) {
+  function intToARGB( i ) {
+    return ( ( i >> 24 ) & 0xFF ).toString( 16 ) +
+      ( ( i >> 16 ) & 0xFF ).toString( 16 ) +
+      ( ( i >> 8 ) & 0xFF ).toString( 16 ) +
+      ( i & 0xFF ).toString( 16 );
+  }
+
+  var hash = 0;
+  for ( var i = 0; i < str.length; i++ ) {
+    hash = str.charCodeAt( i ) + ( ( hash << 5 ) - hash );
+  }
+  var r = intToARGB( hash ).slice( 2 );
+
+  while ( r.length < 6 )
+    r = r + '0';
+  return r;
+}
+
+
 this.hashCode = function( str ) {
   function intToARGB( i ) {
     return ( ( i >> 24 ) & 0xFF ).toString( 16 ) +

@@ -370,3 +370,15 @@ div.ojs-console-top-filter {
 
 
 /* Apps - end */
+
+
+
+.user-logo-small {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin-right: 5px;
+  list-style-type: none;
+  width: 20px; 
+  height: 20px; 
+}

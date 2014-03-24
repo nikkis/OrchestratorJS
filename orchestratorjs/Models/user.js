@@ -20,6 +20,9 @@ var userSchema = mongoose.Schema( {
   password: {
     type: String
   },
+  color: {
+    type: String
+  },  
   edited: {
     type: Date,
     default: Date.now
@@ -46,11 +49,12 @@ module.exports = function UserHandler() {
   };
 
   this.createUser = function( username, password, next ) {
-
+    var color = HELPERS.hexColor( username );
     var edited = new Date();
     var user = {
       username: username,
       password: password,
+      color: color,
       edited: edited
     };
 

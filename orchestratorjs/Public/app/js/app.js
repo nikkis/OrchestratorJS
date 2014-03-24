@@ -30,7 +30,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/signOut', {templateUrl: 'app/partials/signOut.html', controller: 'SignOutController', access: { isFree: true }});
   $routeProvider.when('/signUp',  {templateUrl: 'app/partials/signUp.html',  controller: 'SignUpController', access: { isFree: true }});
 
-  $routeProvider.when('/user/:username',  {templateUrl: 'app/partials/user.html',  controller: 'UserController', access: { isFree: true }});
+  $routeProvider.when('/user/:username',  {templateUrl: 'app/partials/user.html',  controller: 'UserController', access: { isFree: false }});
 
   // apps
   $routeProvider.when('/apps', {templateUrl: 'app/partials/apps.html', controller: 'AppsController', access: { isFree: true } });

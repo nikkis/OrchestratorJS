@@ -1,15 +1,10 @@
 //var app = angular.module( 'ojsConsole.controllers.UsersController', [ 'ojsConsole.services', 'ojsConsole.services.SocketIOService' ] );
 var app = angular.module( 'ojsConsole.controllers.userControllers', [ 'ojsConsole.services', 'ojsConsole.services.UserService', 'ojsConsole.services.AuthService' ] );
 
-
-var MenuItem_userProfile = '<a href="#/signOut" class="">usernamehere</a>' + '<ul class="dropdown">' + '<li><a href="#/signOut">sign out</a></li>' + '</ul>';
-
-
-var MenuItem_singIn = '<a href="#/signIn" class="topMenuBtn">Sign in</a>';
-
 app.controller( 'UserController',
 	function( $scope, $location, $http, UserService ) {
 
+		$scope.UserService = UserService;
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
@@ -32,6 +27,17 @@ app.controller( 'SignInController',
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
 
+
+		$scope.keyPressed = function( e ) {
+			var code = ( e.keyCode ? e.keyCode : e.which );
+
+			if ( code == 13 ) { // 'Enter' keycode
+				$scope.signInSubmit();
+				e.preventDefault();
+			}
+		}
+
+
 		$scope.signInSubmit = function() {
 			console.log( 'submitting' );
 			console.log( $scope.user.username );
@@ -41,12 +47,13 @@ app.controller( 'SignInController',
 				username: $scope.user.username,
 				password: $scope.user.password
 			} ).success( function( data, status, headers, config ) {
-				
+
 				if ( status ) {
 
 					// succefull login
 					UserService.isLogged = true;
 					UserService.username = data.user.username;
+					UserService.color = data.user.color;
 
 					if ( $rootScope.nextPath ) {
 						$location.path( $rootScope.nextPath );
@@ -58,7 +65,8 @@ app.controller( 'SignInController',
 				} else {
 					UserService.isLogged = false;
 					UserService.username = '';
-					$location.path( '/signIn' );
+					//$location.path( '/signIn' );
+					alert( 'wrong username and/or password!' );
 				}
 
 
@@ -66,7 +74,8 @@ app.controller( 'SignInController',
 
 				UserService.isLogged = false;
 				UserService.username = '';
-				$location.path( '/signIn' );
+				//$location.path( '/signIn' );
+				alert( 'wrong username and/or password!' );
 
 			} );
 
@@ -102,9 +111,19 @@ app.controller( 'SignOutController',
 
 app.controller( 'SignUpController',
 	function( $scope, $location, $http, UserService ) {
+
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
-		console.log( 'up' );
+
+
+		$scope.keyPressed = function( e ) {
+			var code = ( e.keyCode ? e.keyCode : e.which );
+
+			if ( code == 13 ) {
+				$scope.signUpSubmit();
+				e.preventDefault();
+			}
+		}
 
 		$scope.signUpSubmit = function() {
 
@@ -115,7 +134,7 @@ app.controller( 'SignUpController',
 				console.log( 'succees: ' + data );
 
 				//$location.path( '/user/' + $scope.user.username );
-				$location.path( '/' );
+				$location.path( '/signIn' );
 
 			} ).error( function( data, status, headers, config ) {
 				console.log( 'error: ' + data );

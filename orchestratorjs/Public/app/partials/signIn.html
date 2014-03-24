@@ -20,11 +20,11 @@
 				    <legend style="background: none;">sign in</legend>
 
 				    <label>username
-				      <input type="text" ng-model="user.username" name="username" placeholder="username" ng-pattern="/^[A-Za-z0-9_]{3,10}$/" >
+				      <input type="text" ng-model="user.username" name="username" placeholder="username" ng-pattern="/^[A-Za-z0-9_]{3,10}$/" ng-keypress='keyPressed($event)'>
 				    </label>
 
 				    <label>password
-				      <input data-ng-model='user.password' type="password" name='password' placeholder='password' ng-pattern="/^[A-Za-z0-9!@#$%^&*()_]{6,20}$/" required>
+				      <input data-ng-model='user.password' type="password" name='password' placeholder='password' ng-pattern="/^[A-Za-z0-9!@#$%^&*()_]{6,20}$/" required ng-keypress='keyPressed($event)'>
 				    </label>
 				    
 				    <a ng-click="signInSubmit();" ng-show="form.$valid">sign in</a>

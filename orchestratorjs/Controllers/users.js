@@ -15,40 +15,13 @@ var passport = require( 'passport' ),
 
 function userReturnObject( userModel ) {
 	return {
-		username: userModel.username
+		username: userModel.username,
+		color: userModel.color
 	};
 }
 
 
 module.exports = {
-
-	userSerializer: function(user, done) {
-  	done(null, 'user.id');
-	},
-
-	userDeserializer: function( username, next ) {
-
-		USERS.findUser( username, function( err, user ) {
-			next( err, user );
-		} );
-	},
-
-
-	getAuthStrategy: function() {
-
-		return new LocalStrategy( function( username, password, next ) {
-
-			USERS.verifyUser( username, password, function( err, user ) {
-				if ( !user )
-					return next( null, false, {
-						message: 'cannot authenticate.'
-					} );
-				else
-					return next( null, user );
-			} );
-		} );
-	},
-
 
 
 	login: function( req, res ) {
@@ -58,8 +31,10 @@ module.exports = {
 
 		USERS.verifyUser( username, password, function( err, user ) {
 
-			if ( !user )
+			if ( user == null || !user || !user.username || user.username != username ) {
 				res.send( 401, 'unauthorized' );
+				return;
+			}
 
 			// initialize session
 

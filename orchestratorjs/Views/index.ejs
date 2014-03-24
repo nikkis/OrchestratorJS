@@ -118,12 +118,14 @@
         <span ng-controller="SignInController">
           <!-- sign in -->
           <li ng-show='!UserService.isLogged' >
+
             <a href="#/signIn" class="topMenuBtn" >Sign in</a>
           </li>
 
           <!-- user profile / sign out -->
-          <li class="has-dropdown" ng-show='UserService.isLogged' >
-            <a href="#/user/{{UserService.username}}" ng-bind='UserService.username'></a>
+          <li class="has-dropdown user-menu-controls" style="display:none;" ng-show='UserService.isLogged' >
+
+            <a href="#/user/{{UserService.username}}" ><div class="user-logo-small" style="background-color: #{{UserService.color}};" ></div>{{UserService.username}}</a>
             <ul class="dropdown">
               <li><a href="#/user/{{UserService.username}}" ng-bind='UserService.username'></a></li>
               <li><a href="#/signOut">Sign out</a></li>

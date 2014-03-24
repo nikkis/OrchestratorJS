@@ -27,7 +27,7 @@
 				    <div ng-show="form.username.$error.pattern">only letters and numbers allowed</div>
 
 				    <label>confirm password
-				      <input ng-model='user.password_verify' type="password" name='confirm_password' placeholder='confirm password' required data-password-verify="user.password">
+				      <input ng-model='user.password_verify' type="password" name='confirm_password' placeholder='confirm password' required data-password-verify="user.password" ng-keypress='keyPressed($event)'>
 				    </label>
 				    <div ng-show="form.confirm_password.$error.passwordVerify">passwords do not match!</div>
 

@@ -1,3 +1,27 @@
-<center>
-	<h2>Under construction</h2>
-</center>
+
+<div class="pageTitle">
+    <h2>Profile: {{UserService.username}}</h2>
+</div>
+
+
+
+<div class="instructions_container">
+
+
+	<div class="large-features">
+        <div class="feature">
+            <div class="row">
+                <div class="large-3 columns image">
+                	<!--<img src="http://placehold.it/350/aefac5/000000/&amp;text=[{{UserService.username}}]">-->
+                	<img src="http://placehold.it/200/{{UserService.color}}/000000/&amp;text=[{{UserService.username}}]">
+                </div>
+                <div class="large-9 columns description">
+                    <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>{{UserService.username}}</h3>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

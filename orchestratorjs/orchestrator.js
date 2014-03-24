@@ -109,25 +109,14 @@ var userController = require(ROOT+'/Controllers/users.js');
 
 
 
-passport.use(userController.getAuthStrategy());
-
-
 /*
-passport.serializeUser(userController.userSerializer());
-passport.deserializeUser(userController.userDeserializer());
-*/
-
-
 passport.serializeUser(function(user, done) {
   done(null, user.username);
 });
 
 passport.deserializeUser(function(id, done) {
-  /*User.findById(id, function (err, user) {
-    done(err, user);
-  });*/
 });
-
+*/
 
 
 
