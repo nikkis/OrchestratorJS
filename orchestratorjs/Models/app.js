@@ -28,7 +28,7 @@ var appSchema = mongoose.Schema( {
   },
   img: {
     type: String
-  },    
+  },
   edited: {
     type: Date,
     default: Date.now
@@ -48,10 +48,43 @@ module.exports = function appHandler() {
   };
 
 
-//  this.createApp = function( appname, author, desc, img, next ) {
+  //  this.createApp = function( appname, author, desc, img, next ) {
   this.createApp = function( appname, author, next ) {
+
+
     var color = HELPERS.hexColor( appname );
     var edited = new Date();
+
+    /////
+
+
+    var query = {
+      appname: appname
+    };
+    appModel.findOneAndUpdate( query, {
+      $set: {
+        appname: appname,
+        author: author,
+        desc: '',
+        color: color,
+        img: '',
+        edited: edited
+      }
+    }, {
+      upsert: true
+    }, function( err, data ) {
+      if ( !err ) {
+        log( 'found or created' );
+      } else {
+        log( 'error while userting app: ' + err );
+      }
+
+      next( err, data );
+    } );
+
+    /////
+
+/*
     var app = {
       appname: appname,
       author: author,
@@ -62,8 +95,9 @@ module.exports = function appHandler() {
     };
 
     appModel.create( app, next );
-
+*/
   };
+
 
   this.findAllApps = function( callback ) {
     appModel.find( callback );

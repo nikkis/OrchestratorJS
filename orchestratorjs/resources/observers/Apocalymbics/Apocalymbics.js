@@ -2,6 +2,7 @@ var httprequest = require( '../../tools.js' ).httprequest;
 var pubsub      = require( '../../tools.js' ).pubsub();
 
 
+
 module.exports = {
 
   settings: { companionDeviceId: null },

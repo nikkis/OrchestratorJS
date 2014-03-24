@@ -253,7 +253,7 @@ this.postAppFile = function( req, res ) {
 		APPS.createApp( appName, username, function( err, user ) {
 
 			if ( err ) {
-				res.send( 500, 'error while creating user: ' + err );
+				res.send( 500, 'cannot save app: ' + err );
 				return;
 			}
 
