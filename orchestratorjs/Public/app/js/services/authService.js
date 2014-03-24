@@ -10,16 +10,16 @@ app.factory( 'AuthService', [ '$rootScope', '$location', '$templateCache', 'User
 
 			if ( currRoute && currRoute.$$route.access && !currRoute.$$route.access.isFree && !UserService.isLogged ) {
 
-
 				var currentPageTemplate = currRoute.loadedTemplateUrl;
-				console.log( currentPageTemplate );
 				$templateCache.remove( currentPageTemplate );
 
 				// save path for redirecting after login
-				$rootScope.nextPath = currRoute.$$route.originalPath;
+				var op = currRoute.$$route.originalPath;
+				for ( paramName in currRoute.pathParams )
+					op = op.replace(':'+paramName, currRoute.pathParams[paramName]);
+				$rootScope.nextPath = op;
 
 				$location.path( '/signIn' );
-
 			}
 
 		} );
