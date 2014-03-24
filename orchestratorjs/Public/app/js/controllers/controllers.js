@@ -7,8 +7,15 @@
 var app = angular.module( 'ojsConsole.controllers', [] );
 
 
+app.controller( 'AppController',
+	// initializes auth service
+	function( $scope, AuthService ) {}
+);
+
+
+
 app.controller( 'HomeController',
-	function( $scope, $location, $http, UserService ) {
+	function( $scope, $location, $http, UserService, AuthService ) {
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
@@ -24,12 +31,11 @@ app.controller( 'HomeController',
 			var sequence = $( "#sequence" ).sequence( options ).data( "sequence" );
 
 
-if(UserService.isLogged) {
-	console.log('user logged');
-}
-else{
-	console.log('user NOOOT logged');
-}
+			if ( UserService.isLogged ) {
+				console.log( 'user logged' );
+			} else {
+				console.log( 'user NOOOT logged' );
+			}
 
 			sequence.afterLoaded = function() {
 				$( ".sequence-prev, .sequence-next" ).fadeIn( 500 );
@@ -47,31 +53,6 @@ app.controller( 'DocsController',
 	}
 );
 
-
-/*
-// moved to its own file
-app.controller( 'DevicesController',
-	function( $scope ) {
-
-		// non-angular version
-		//$( '.non-angular-container' ).html( '' );
-		//$( '.angular-container' ).hide();
-		//showDevices();
-
-		$( '.non-angular-container' ).html( '' );
-		$( '.angular-container' ).show();
-
-
-		$.getJSON( '/api/' + apiVersion + '/devices', function( data ) {
-			$scope.capabilities = data.capabilities;
-			$scope.metadataFields = data.metadataFields;
-			$scope.devices = data.devices;
-			$scope.$apply();
-		} );
-
-	}
-);
-*/
 
 
 app.controller( 'ActionsController',

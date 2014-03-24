@@ -1,11 +1,8 @@
 //var app = angular.module( 'ojsConsole.controllers.UsersController', [ 'ojsConsole.services', 'ojsConsole.services.SocketIOService' ] );
-var app = angular.module( 'ojsConsole.controllers.userControllers', [ 'ojsConsole.services', 'ojsConsole.services.UserService' ] );
+var app = angular.module( 'ojsConsole.controllers.userControllers', [ 'ojsConsole.services', 'ojsConsole.services.UserService', 'ojsConsole.services.AuthService' ] );
 
 
-var MenuItem_userProfile = '<a href="#/signOut" class="">usernamehere</a>'
-          +'<ul class="dropdown">'
-            +'<li><a href="#/signOut">sign out</a></li>'
-          +'</ul>';
+var MenuItem_userProfile = '<a href="#/signOut" class="">usernamehere</a>' + '<ul class="dropdown">' + '<li><a href="#/signOut">sign out</a></li>' + '</ul>';
 
 
 var MenuItem_singIn = '<a href="#/signIn" class="topMenuBtn">Sign in</a>';
@@ -19,8 +16,6 @@ app.controller( 'UserController',
 
 		console.log( 'profile page for user: ' + UserService.username );
 
-
-
 	}
 );
 
@@ -30,14 +25,9 @@ app.controller( 'SignInController',
 	function( $scope, $location, $http, $rootScope, UserService ) {
 
 
-console.log( 'SignInController' );
+		console.log( 'SignInController' );
 
-$scope.UserService = UserService;
-
-
-//$scope.kissa = false;
-//$rootScope.kissa = 'marsu';
-console.log( 'SignInController 222222' );
+		$scope.UserService = UserService;
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
@@ -51,24 +41,20 @@ console.log( 'SignInController 222222' );
 				username: $scope.user.username,
 				password: $scope.user.password
 			} ).success( function( data, status, headers, config ) {
-				console.log( 'succees: ' + data.user.username );
-
-
+				
 				if ( status ) {
 
 					// succefull login
 					UserService.isLogged = true;
 					UserService.username = data.user.username;
 
-					//$( '.userMenuItem' ).html( MenuItem_userProfile );
-//$scope.kissa = 'marsu';
-//$rootScope.kissa = 'marsu';
+					if ( $rootScope.nextPath ) {
+						$location.path( $rootScope.nextPath );
+					} else {
+						$location.path( '/' );
+					}
 
-					console.log( 'logged in' );
-					console.log( UserService.username );
 
-					//$location.path( '/user/' + UserService.username );
-					$location.path( '/' );
 				} else {
 					UserService.isLogged = false;
 					UserService.username = '';
@@ -96,8 +82,6 @@ app.controller( 'SignOutController',
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
-
-		console.log( 'out' );
 
 		if ( UserService.isLogged ) {
 			$http.post( '/api/' + apiVersion + '/logOut/', {

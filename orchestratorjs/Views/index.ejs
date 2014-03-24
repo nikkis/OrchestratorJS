@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app="ojsConsole"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app="ojsConsole", ng-controller="AppController" > <!--<![endif]-->
 
 <head>
   
@@ -76,7 +76,7 @@
       <ul class="left">
         
         <li class="divider"></li>
-        <li><a href="#/apps" class="aTopMenuBtn">Apps</a></li>
+        <li><a href="#/apps" class="aTopMenuBtn" check-user="1" >Apps</a></li>
         <li class="divider"></li>
 
         <li class="has-dropdown">
@@ -199,11 +199,14 @@
   <script src="app/lib/socket.io.js"></script>
   <script src="app/lib/angular/angular.js"></script>
   <script src="app/lib/angular/angular-route.js"></script>
+  
   <script src="app/js/app.js"></script>
-  <script src="app/js/services/services.js"></script>
 
-<script src="app/js/services/userService.js"></script>
+  <script src="app/js/services/services.js"></script>
+  <script src="app/js/services/userService.js"></script>
+  <script src="app/js/services/authService.js"></script>
   <script src="app/js/services/socketIOService.js"></script>
+
   <script src="app/js/controllers/controllers.js"></script>
   <script src="app/js/controllers/appsController.js"></script>
   <script src="app/js/controllers/devicesController.js"></script>
