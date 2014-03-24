@@ -24,7 +24,7 @@ this.postDevice = function(req, res) {
 	res.send('OK\n');
 };
 
-
+/*
 this.postAppFile = function( req, res ) {
 	var appName = req.params.appName;
 	var body = '';
@@ -47,7 +47,7 @@ this.postAppFile = function( req, res ) {
 	} );
 
 };
-
+*/
 
 
 this.postAction = function(req, res) {

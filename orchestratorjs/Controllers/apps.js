@@ -232,6 +232,32 @@ this.deleteAppFile = function( req, res ) {
 };
 
 
+this.postAppFile = function( req, res ) {
+	var username = req.params.username;
+	log(username + ' posting ne app');
+	var appName = req.params.appName;
+	var body = '';
+	var appPath = ROOT + config.resources.apps + appName + '/';
+	fs.mkdir( appPath, 0777, true, function( err ) {
+		if ( err ) {
+			log( 'Cannot create folder: ' + appPath );
+			throw new Error( 'Error while creting folder: ' + appPath );
+		}
+
+		req.on( 'data', function( data ) {
+			body += data;
+		} );
+
+		req.on( 'end', function() {
+			var POST = body;
+			HELPERS.saveFileNoRequire( appPath + appName + '.js', POST );
+		} );
+		res.send( 'OK' );
+	} );
+
+};
+
+
 
 this.getApps = function( req, res ) {
 

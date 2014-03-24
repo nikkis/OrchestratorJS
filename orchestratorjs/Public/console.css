@@ -368,6 +368,56 @@ div.ojs-console-top-filter {
 }
 
 
+.ojs-app-img {
+  display: block;
+  margin: 0 auto;
+}
+
+.ojs-app-name {
+  text-align: center;
+}
+
+/* tablet */
+@media (min-width: 768px) {
+  .ojs-app-img {
+    display: inline;
+    margin: none;
+  }
+
+  .ojs-app-name {
+    text-align: left;
+    position: relative;
+    top: 14px;
+  }
+} 
+@media (min-width: 992px) {
+  .ojs-app-img {
+    display: inline;
+    margin: none;
+  }
+
+  .ojs-app-name {
+    text-align: left;
+    position: relative;
+    top: 15px;
+  }
+}
+@media( min-width: 1200px) {
+  .ojs-app-img {
+    display: inline;
+    margin: none;
+  }
+
+  .ojs-app-name {
+    text-align: left;
+    position: relative;
+    top: 17px;
+  }
+}
+
+
+
+
 
 /* Apps - end */
 

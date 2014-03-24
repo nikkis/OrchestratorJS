@@ -83,7 +83,7 @@ app.get('/test', function(req, res) { webconsole.test(req, res) });
 ////////// Users Controller - START //////////
 
 
-
+/*
 var mongoose = require( 'mongoose' );
 var db = mongoose.connection;
 db.on( 'error', console.error.bind( console, 'Cannot connect to mongodb:' ) );
@@ -103,7 +103,7 @@ var userSchema = mongoose.Schema( {
     default: Date.now
   },
 } );
-
+*/
 
 var userController = require(ROOT+'/Controllers/users.js');
 
@@ -161,9 +161,6 @@ app.post('/api/'+config.api+'/device', function(req, res) { resourceHandler.post
 app.post('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.postCapability(req, res) });
 app.delete('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.deleteCapability(req, res) });
 
-// this is the right one!! not the one bellow
-app.post('/api/'+config.api+'/app/:appName', function(req, res) { resourceHandler.postAppFile(req, res) });
-
 
 ////////// Resource Handler - END   //////////
 
@@ -196,11 +193,13 @@ app.get('/api/'+config.api+'/apps', function(req, res) { appController.getApps(r
 
 
 app.get('/api/'+config.api+'/app/:appName', function(req, res) { appController.getAppFile(req, res) });
-app.post('/api/'+config.api+'/app', function(req, res) { appController.postAppFile(req, res) });
+
 app.delete('/api/'+config.api+'/app/:appName', function(req, res) { appController.deleteAppFile(req, res) });
+//app.post('/api/'+config.api+'/app/:appName', function(req, res) { appController.postAppFile(req, res) });
+app.post('/api/'+config.api+'/user/:username/app/:appName', function(req, res) { appController.postAppFile(req, res) });
 
 app.post('/api/'+config.api+'/user/:username/app/:appName/instance', function(req, res) { appController.postAppInstance(req, res) });
-app.delete('/api/'+config.api+'/app/:appName/instance', function(req, res) { appController.deleteAppInstance(req, res) });
+app.delete('/api/'+config.api+'/user/:username/app/:appName/instance', function(req, res) { appController.deleteAppInstance(req, res) });
 
 // save app settings for a user
 app.post('/api/'+config.api+'/user/:username/app/:appName/settings', function(req, res) { appController.postAppSettings(req, res) });

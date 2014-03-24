@@ -1,5 +1,13 @@
 
 
+authUsername = '';
+authToken = '';
+// for angular version
+function initAuthTokens(username, token) {
+    authUsername = username;
+    authToken = token;
+}
+
 // for angular version
 function initEditor() {
     editAreaLoader.init( {
@@ -43,8 +51,15 @@ function saveWithMode(fileType, content){
         return;
     }
 
+    if( !authUsername ) {
+        alert('You must sign in first!\nNot saved!');
+        return;
+    }
+
+console.log('auth username' + authUsername);
+
     $.ajax({
-        url: '/api/1/'+fileType+'/'+fileName,    
+        url: '/api/1/user/'+authUsername+'/'+fileType+'/'+fileName,    
         data: text,
         cache: false,
         contentType: false,

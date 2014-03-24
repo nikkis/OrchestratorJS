@@ -2,9 +2,9 @@ var app = angular.module( 'ojsConsole.controllers.AppsController', [ 'ojsConsole
 
 
 
-function startApp( $http, $scope, appName ) {
+function startApp( $http, $scope, appName, UserService ) {
 
-	var username = 'nikkis';
+	var username = UserService.username;
 
 	//var appName = $scope.fileName;
 	if( appName == 'newApp' ) {
@@ -52,9 +52,8 @@ function startApp( $http, $scope, appName ) {
 };
 
 
-function stopApp( $http, $scope, appName ) {
-	$http.delete( '/api/' + apiVersion + '/apps/' + appName + '/instance' ).success( function( data, status, headers, config ) {
-		console.log( 'stop status: ' + data );
+function stopApp( $http, $scope, appName, UserService ) {
+	$http.delete( '/api/' + apiVersion + '/user/' + UserService.username + '/app/' + appName + '/instance' ).success( function( data, status, headers, config ) {
 		for ( i in $scope.appInstances ) {
 			if ( $scope.appInstances[ i ].name == appName )
 				$scope.appInstances[ i ].running = false;
@@ -64,13 +63,13 @@ function stopApp( $http, $scope, appName ) {
 
 
 app.controller( 'AppsController',
-	function( $scope, $http ) {
+	function( $scope, $http, UserService ) {
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
 
-		console.log( 'AppsController' );
-
+		
+		$scope.UserService = UserService;
 
 		$.getJSON( '/api/' + apiVersion + '/apps', function( data ) {
 			$scope.editType = 'app';
@@ -81,19 +80,13 @@ app.controller( 'AppsController',
 
 
 			$scope.stopApp = function( appName ) {
-				stopApp( $http, $scope, appName );
+				stopApp( $http, $scope, appName, UserService );
 			};
 
 
 			$scope.startApp = function( appName ) {
-				startApp( $http, $scope, appName );
+				startApp( $http, $scope, appName, UserService );
 			};
-
-			$scope.editApp = function( appName ) {
-
-			};
-
-
 
 			$scope.$apply();
 		} );
@@ -103,12 +96,13 @@ app.controller( 'AppsController',
 
 
 app.controller( 'AppEditController',
-	function( $scope, $http, $routeParams ) {
+	function( $scope, $http, $routeParams, UserService ) {
 
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
 
-
+		$scope.UserService = UserService;
+		
 		$scope.ensureDeleteFile = function( fileName ) {
 
 			if( fileName == 'newApp' )
@@ -144,6 +138,9 @@ app.controller( 'AppEditController',
 			}
 		};
 
+token = 'diipaa';
+initAuthTokens( UserService.username, token );
+
 		var appName = $routeParams.appName;
 		console.log( appName );
 		$.ajax( {
@@ -157,13 +154,13 @@ app.controller( 'AppEditController',
 			initEditor();
 
 			$scope.stopApp = function( appName ) {
-				stopApp( $http, $scope, appName );
+				stopApp( $http, $scope, appName, UserService );
 			};
 
 
 			$scope.startApp = function( appName ) {
 				var appName = $scope.fileName;
-				startApp( $http, $scope, appName );
+				startApp( $http, $scope, appName, UserService );
 			};
 
 			$scope.$apply();
