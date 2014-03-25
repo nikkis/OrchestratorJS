@@ -19,6 +19,7 @@
 		"node-fs": ">= 0.1.7",
 		"socket.io-client": ">= 0.0.1",
 		"crypto": ">= 0.0.1",
+		"request": ">= 0.0.1",
 		"passport": ">=0.0.1",
 		"passport-local": ">=0.0.1"
 	}

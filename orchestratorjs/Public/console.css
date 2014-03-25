@@ -311,6 +311,12 @@ div.ojs-console-top-filter {
   width: 100%;
 }
 
+.ojs-console-frontpage .features-margin {
+  margin-top: 100px;
+  padding-bottom: 100px;
+}
+
+
 
 .ojs-console-frontpage .feature {
   -webkit-font-smoothing: antialiased !important;

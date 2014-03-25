@@ -23,7 +23,7 @@ angular.module('ojsConsole', [
 config(['$routeProvider', function($routeProvider) {
 
 
-  $routeProvider.when('/', {templateUrl: 'app/partials/home.html', controller: 'HomeController', access: { isFree: true }});
+  $routeProvider.when('/', {templateUrl: 'app/partials/newhome.html', controller: 'HomeController', access: { isFree: true }});
 
 
   $routeProvider.when('/signIn',  {templateUrl: 'app/partials/signIn.html',  controller: 'SignInController', access: { isFree: true }});
