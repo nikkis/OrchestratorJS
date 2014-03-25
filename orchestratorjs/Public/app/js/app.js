@@ -34,7 +34,7 @@ config(['$routeProvider', function($routeProvider) {
 
   // apps
   $routeProvider.when('/apps', {templateUrl: 'app/partials/apps.html', controller: 'AppsController', access: { isFree: true } });
-  $routeProvider.when('/app/:appName', {templateUrl: 'app/partials/appEdit.html', controller: 'AppEditController', access: { isFree: true }});
+  $routeProvider.when('/app/:appName', {templateUrl: 'app/partials/appEdit.html', controller: 'AppEditController', access: { isFree: false }});
 
   $routeProvider.when('/instances', {templateUrl: 'app/partials/empty.html', controller: 'ActionInstancesController', access: { isFree: true }});
   $routeProvider.when('/devices', {templateUrl: 'app/partials/devices.html', controller: 'DevicesController', access: { isFree: false }});
