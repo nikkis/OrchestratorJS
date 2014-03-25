@@ -20,6 +20,18 @@ var APPS_PATH = ROOT + config.resources.apps;
 var apps = {};
 
 
+// Not for app SETTINGS! and not for app INSTANCE!!
+function appInfoReturnDict( appModel ) {
+	return {
+		appName: appModel.appName,
+		author: appModel.author,
+		color: appModel.color,
+		img: appModel.img,
+		desc: appModel.desc
+	};
+}
+
+
 this.postAppInstance = function( req, res ) {
 
 	log( 'Starting new app..' );
@@ -111,6 +123,61 @@ this.postAppInstance = function( req, res ) {
 };
 
 
+
+this.getAppInfo = function( req, res ) {
+
+	var author = req.params.username;
+	var appName = req.params.appName;
+
+	APPS.findApp( appName, function( err, data ) {
+		if ( err ) {
+			res.send( 500, 'Error: ' + err );
+			return;
+		}
+
+		res.writeHead( 200, {
+			"Content-Type": "application/json"
+		} );
+		res.write(
+			JSON.stringify( 
+				appInfoReturnDict( data )
+			)
+		);
+		res.end();
+
+	} );
+};
+
+
+this.postAppInfo = function( req, res ) {
+
+	var author = req.params.username;
+	var appName = req.params.appName;
+	var appDesc = req.body[ 'appDesc' ];
+	log('appDesc: ' + appDesc);
+
+	// yet only modifies desc..
+	APPS.modifyApp( appName, author, appDesc, function( err, data ) {
+		if ( err ) {
+			res.send( 500, 'Error: ' + err );
+			return;
+		}
+
+		res.writeHead( 200, {
+			"Content-Type": "application/json"
+		} );
+		res.write(
+			JSON.stringify( 
+				appInfoReturnDict( data )
+			)
+		);
+		res.end();
+
+	} );
+};
+
+
+
 this.postAppSettings = function( req, res ) {
 
 	var username = req.params.username;
@@ -118,8 +185,10 @@ this.postAppSettings = function( req, res ) {
 	var settings = req.body[ 'settings' ];
 
 	APP_SETTINGS.upsertAppSettings( username, appName, settings, function( err, data ) {
-		if ( err )
+		if ( err ) {
 			res.send( 500, 'Error: ' + err );
+			return;
+		}
 
 		var returnDict = {
 			appName: data.appName,

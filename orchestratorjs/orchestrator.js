@@ -192,18 +192,22 @@ app.get('/api/'+config.api+'/apps', function(req, res) { appController.getApps(r
 
 
 
-app.get('/api/'+config.api+'/app/:appName', function(req, res) { appController.getAppFile(req, res) });
+app.get('/api/'+config.api+'/user/:username/app/:appName', function(req, res) { appController.getAppFile(req, res) });
 
 app.delete('/api/'+config.api+'/app/:appName', function(req, res) { appController.deleteAppFile(req, res) });
 //app.post('/api/'+config.api+'/app/:appName', function(req, res) { appController.postAppFile(req, res) });
 app.post('/api/'+config.api+'/user/:username/app/:appName', function(req, res) { appController.postAppFile(req, res) });
 
-app.post('/api/'+config.api+'/user/:username/app/:appName/instance', function(req, res) { appController.postAppInstance(req, res) });
+app.post( '/api/'+config.api+'/user/:username/app/:appName/instance', function(req, res) { appController.postAppInstance(req, res) });
 app.delete('/api/'+config.api+'/user/:username/app/:appName/instance', function(req, res) { appController.deleteAppInstance(req, res) });
 
 // save app settings for a user
 app.post('/api/'+config.api+'/user/:username/app/:appName/settings', function(req, res) { appController.postAppSettings(req, res) });
 app.get( '/api/'+config.api+'/user/:username/app/:appName/settings', function(req, res) { appController.getAppSettings(req, res) });
+
+
+app.post('/api/'+config.api+'/user/:username/app/:appName/info', function(req, res) { appController.postAppInfo(req, res) });
+app.get( '/api/'+config.api+'/user/:username/app/:appName/info', function(req, res) { appController.getAppInfo(req, res) });
 
 
 

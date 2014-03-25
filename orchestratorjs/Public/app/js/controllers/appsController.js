@@ -7,8 +7,8 @@ function startApp( $http, $scope, appName, UserService ) {
 	var username = UserService.username;
 
 	//var appName = $scope.fileName;
-	if( appName == 'newApp' ) {
-		alert('You need to save your app first!\n( name newApp is reserved )');
+	if ( appName == 'newApp' ) {
+		alert( 'You need to save your app first!\n( name newApp is reserved )' );
 		return;
 	}
 
@@ -20,11 +20,10 @@ function startApp( $http, $scope, appName, UserService ) {
 			for ( key in data.settings ) {
 				var oldValue = data.settings[ key ];
 				var temp = prompt( "Please parameter " + key, oldValue );
-				if( !temp ) {
-					alert('All settings need to be given!');
+				if ( !temp ) {
+					alert( 'All settings need to be given!' );
 					return;
-				}
-				else {
+				} else {
 					settings[ key ] = temp;
 				}
 			}
@@ -47,8 +46,8 @@ function startApp( $http, $scope, appName, UserService ) {
 
 		}
 	} ).error( function() {
-		alert('Cannot find module '+appName+'. Have you saved already?');
-	});
+		alert( 'Cannot find module ' + appName + '. Have you saved already?' );
+	} );
 };
 
 
@@ -68,7 +67,7 @@ app.controller( 'AppsController',
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
 
-		
+
 		$scope.UserService = UserService;
 
 		$.getJSON( '/api/' + apiVersion + '/apps', function( data ) {
@@ -102,22 +101,20 @@ app.controller( 'AppEditController',
 		$( '.angular-container' ).show();
 
 		$scope.UserService = UserService;
-		
+
 		$scope.ensureDeleteFile = function( fileName ) {
 
-			if( fileName == 'newApp' )
+			if ( fileName == 'newApp' )
 				return;
 
 			var retVal = confirm( 'Are you sure you want to delete ' + fileName + '?' );
 			if ( retVal == true ) {
 
 
-				$http.delete( '/api/' + apiVersion + '/app/' + fileName ).success( function( data, status, headers, config ) {
+				$http.delete( '/api/' + apiVersion + '/user/' + UserService.username + '/app/' + fileName ).success( function( data, status, headers, config ) {
 					console.log( 'stop status: ' + data );
 					alert( data );
 				} );
-				//alert( "User wants to continue!" );
-				//return true;
 			}
 		};
 
@@ -138,32 +135,40 @@ app.controller( 'AppEditController',
 			}
 		};
 
-token = 'diipaa';
-initAuthTokens( UserService.username, token );
+		token = 'diipaa';
+		initAuthTokens( UserService.username, token );
 
 		var appName = $routeParams.appName;
 		console.log( appName );
 		$.ajax( {
 			type: 'GET',
-			url: '/api/' + apiVersion + '/app/' + appName,
+			url: '/api/' + apiVersion + '/user/' + UserService.username + '/app/' + appName,
 		} ).done( function( data ) {
 
-			$scope.fileName = appName;
-			$scope.code = data;
 
-			initEditor();
+			$.ajax( {
+				type: 'GET',
+				url: '/api/' + apiVersion + '/user/' + UserService.username + '/app/' + appName + '/info',
+			} ).done( function( appInfoData ) {
 
-			$scope.stopApp = function( appName ) {
-				stopApp( $http, $scope, appName, UserService );
-			};
+				$scope.appDesc  = appInfoData.desc;
+				$scope.fileName = appName;
+				$scope.code = data;
+
+				initEditor();
+
+				$scope.stopApp = function( appName ) {
+					stopApp( $http, $scope, appName, UserService );
+				};
 
 
-			$scope.startApp = function( appName ) {
-				var appName = $scope.fileName;
-				startApp( $http, $scope, appName, UserService );
-			};
+				$scope.startApp = function( appName ) {
+					var appName = $scope.fileName;
+					startApp( $http, $scope, appName, UserService );
+				};
 
-			$scope.$apply();
+				$scope.$apply();
+			} );
 		} );
 
 

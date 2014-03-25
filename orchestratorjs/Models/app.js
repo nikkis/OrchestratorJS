@@ -48,14 +48,10 @@ module.exports = function appHandler() {
   };
 
 
-  //  this.createApp = function( appname, author, desc, img, next ) {
   this.createApp = function( appname, author, next ) {
-
 
     var color = HELPERS.hexColor( appname );
     var edited = new Date();
-
-    /////
 
 
     var query = {
@@ -82,21 +78,42 @@ module.exports = function appHandler() {
       next( err, data );
     } );
 
-    /////
-
-/*
-    var app = {
-      appname: appname,
-      author: author,
-      desc: '',
-      color: color,
-      img: '',
-      edited: edited
-    };
-
-    appModel.create( app, next );
-*/
   };
+
+
+
+  // currently only modifies desc :-(
+  this.modifyApp = function( appname, author, desc, next ) {
+
+    var edited = new Date();
+
+    var query = {
+      appname: appname,
+      author: author
+    };
+    
+    appModel.findOneAndUpdate( query, {
+      $set: {
+        desc: desc,
+        edited: edited
+      }
+    }, {
+      upsert: true
+    }, function( err, data ) {
+      if ( !err ) {
+        log( 'found or created' );
+      } else {
+        log( 'error editing app: ' + err );
+      }
+
+      next( err, data );
+    } );
+
+  };
+
+
+
+
 
 
   this.findAllApps = function( callback ) {

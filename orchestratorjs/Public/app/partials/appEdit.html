@@ -1,3 +1,6 @@
+
+<form id="formi" name="form" class="css-form">
+
 <div class="large-12 columns codeEditContainer">
 	<div class="row">
 		<div class="large-1 columns">
@@ -17,18 +20,34 @@
 		</div>
 
 		<div style="display: none;" class="large-4 columns right fileNameEdit">
-			<input ng-model="fileName" type="text" id="fileNameInput" />
+			
+			<div class="row">
+				<div class="large-12 columns">
+					<input ng-model="fileName" type="text" id="fileNameInput" />
+				</div>
+			</div>
+
 		</div>
+
+
 	</div>
 
 	<div class="row">
 		<div class="large-12 columns editCode">
-			<form id="formi">
+			
 				<textarea id="code_area" style="height: 450px; width: 100%;" name="file_content">{{code}}</textarea>
 				<input type="hidden" name="web_console" value="True" />
-			</form>
+			
 		</div>
 	</div>
+
+
+	<div style="display: none;" class="row fileNameEdit">
+		<div class="large-12 columns">
+			<input ng-model="appDesc" type="text" id="appDescriptionInput" placeholder="Write your app description here and hit save." ng-maxlength="150" name="appDesc" />
+		</div>
+	</div>
+
 
   <hr>
   <center>
@@ -51,3 +70,4 @@ function newPopup(url) {
 
 </div>
 
+</form>
