@@ -52,6 +52,9 @@ body {
   background-repeat: no-repeat;
   color: #555;
   -webkit-font-smoothing: antialiased;
+
+  /* because of fixed topbar */
+  /*padding-top: 45px;*/
 }
 
 .oTitle {
@@ -75,17 +78,38 @@ footer {
   color: rgb(255, 255, 255);
   display: block;
   font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
+  font-size: 9px;
   height: 100%;
   line-height: 20px;
   width: 100%;
   font-family:'Open Sans', sans-serif;
 }
 
-h4 {
+footer h4 {
+  /*color: rgb(255, 255, 255);*/
+
   color: rgb(255, 255, 255);
+  font-family: 'Helvetica Neue', Helvetica, Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+  height: 26px;
+  line-height: 26.162500381469727px;
+  margin-bottom: 9.34375px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
+footer ul {
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  
+}
 
 .feature, .feature h3 {
   -webkit-font-smoothing: antialiased !important;
@@ -214,7 +238,7 @@ box-sizing: border-box;
 
 
 .container {
-  margin-top: 28px;
+  margin-top: 30px;
 }
 
 
@@ -225,7 +249,7 @@ box-sizing: border-box;
 /*  FRONTPAGE - begin */
 
 .ojs-console-frontpage {
-  margin-top: -28px;
+  margin-top: -30px;
 }
 
 .ojs-console-frontpage {
@@ -312,8 +336,15 @@ div.ojs-console-top-filter {
 }
 
 .ojs-console-frontpage .features-margin {
-  margin-top: 100px;
   padding-bottom: 100px;
+}
+
+.ojs-console-frontpage .features-margin-top {
+  margin-top: 100px;
+}
+
+.sequence-canvas {
+  margin: 0;
 }
 
 
@@ -323,7 +354,7 @@ div.ojs-console-top-filter {
 }
 
 .ojs-console-frontpage .features .headline {
-  margin-top: 40px;
+  margin-top: 0px;
   margin-left: 10%;
   margin-right: 10%;
 
@@ -349,7 +380,7 @@ div.ojs-console-top-filter {
 
 .top-logo-desc {
   background-color: rgba(0,0,0,0.5);
-  margin-bottom: 40px;
+  margin-bottom: 180px;
 }
 
 .top-logo-desc h1, .top-logo-desc p {
@@ -381,10 +412,22 @@ div.ojs-console-top-filter {
 
 .ojs-app-name {
   text-align: center;
+  top: 24px;
 }
+
+.ojs-app-info-h {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.ojs-app-desc-text {
+  height: 50px;
+  font-size: 0.7em;
+}
+
 
 /* tablet */
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .ojs-app-img {
     display: inline;
     margin: none;
@@ -393,10 +436,12 @@ div.ojs-console-top-filter {
   .ojs-app-name {
     text-align: left;
     position: relative;
-    top: 14px;
+    top: 34px;
   }
 } 
-@media (min-width: 992px) {
+
+/* laptop */
+@media (min-width: 1025px) {
   .ojs-app-img {
     display: inline;
     margin: none;
@@ -405,10 +450,12 @@ div.ojs-console-top-filter {
   .ojs-app-name {
     text-align: left;
     position: relative;
-    top: 15px;
+    top: 17px;
   }
 }
-@media( min-width: 1200px) {
+
+/* big screen */
+@media( min-width: 1440px) {
   .ojs-app-img {
     display: inline;
     margin: none;

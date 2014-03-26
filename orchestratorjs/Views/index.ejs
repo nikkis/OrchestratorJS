@@ -27,8 +27,11 @@
   <!--<script src="js/sequence/sequencejs-options.sliding-horizontal-parallax.js"></script>-->
 
   <script src="js/foundation.min.js"></script>
+<script src="js/foundation/foundation.dropdown.js"></script>
+<script src="js/foundation/foundation.topbar.js"></script>
 
   <link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
+  <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/foundation.css">
   <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css">    
   
@@ -57,93 +60,88 @@
 
 <body>
 
-<div class="fixed">
-  <nav class="top-bar">
-    <ul class="title-area">
-      <!-- Title Area -->
-      <li class="name">
-        <!--<h1><a href="/" data-method="get">{{title}}</a></h1>-->
-        <h1><a href="#/" ><%= title %></a></h1>
-      </li>
-      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-      <!--<li class="toggle-topbar menu-icon"><a href="/"><span>Menu</span></a></li>-->
-      <li class="toggle-topbar menu-icon"><a href="#/"><span>Menu</span></a></li>
-    </ul>
+  <div class="fixed">
 
-    <section class="top-bar-section">
-      <!-- Left Nav Section -->
-
-      <ul class="left">
-        
-        <li class="divider"></li>
-        <li><a href="#/apps" class="aTopMenuBtn" check-user="1" >Apps</a></li>
-        <li class="divider"></li>
-
-        <li class="has-dropdown">
-          <a href="#/actions" class="">Actions</a>
-          <ul class="dropdown">
-            <li><a href="#/actions">Definitions</a></li>
-            <li><a href="#/instances">Instances</a></li>
-          </ul>
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="#/" ><%= title %></a></h1>
+      </li>    
+      <li class="toggle-topbar menu-icon"><a><span>Menu</span>
+            </a>
         </li>
-        <li class="divider"></li>
-
-        <li><a href="#/capabilities" class="topMenuBtn">Capabilities</a></li>
-        <li class="divider"></li>
-
-        <li><a href="#/devices" class="topMenuBtn">Devices</a></li>
-        <li class="divider"></li>
-
-
       </ul>
 
+      <section class="top-bar-section">
 
-      <!-- Right Nav Section -->
-      
-      <ul class="right">
-        <li class="divider hide-for-small"></li>
+        <!-- Left Nav Section -->
+        <ul class="left">
+          
+          <li class="divider"></li>
+          <li><a href="#/apps" class="aTopMenuBtn" check-user="1" >Apps</a></li>
+          <li class="divider"></li>
 
-        <li class="has-dropdown">
-          <a href="#/develop" class="">Develop</a>
-          <ul class="dropdown">
-            <li><a href="#/develop">General instructions</a></li>
-            <li><a href="#/develop/android">Develop for Android</a></li>
-            <li><a href="#/develop/gadgeteer">Develop for .NET Gadgeteer</a></li>
-            <li><a href="#/api">REST API</a></li>
-          </ul>
-        </li>
-
-        <li class="divider"></li>
-
-        <span ng-controller="SignInController">
-          <!-- sign in -->
-          <li ng-show='!UserService.isLogged' >
-
-            <a href="#/signIn" class="topMenuBtn" >Sign in</a>
-          </li>
-
-          <!-- user profile / sign out -->
-          <li class="has-dropdown user-menu-controls" style="display:none;" ng-show='UserService.isLogged' >
-
-            <a href="#/user/{{UserService.username}}" ><div class="user-logo-small" style="background-color: #{{UserService.color}};" ></div>{{UserService.username}}</a>
+          <li class="has-dropdown">
+            <a href="#/actions" class="">Actions</a>
             <ul class="dropdown">
-              <li><a href="#/user/{{UserService.username}}" ng-bind='UserService.username'></a></li>
-              <li><a href="#/signOut">Sign out</a></li>
-            </ul>        
+              <li><a href="#/actions">Definitions</a></li>
+              <li><a href="#/instances">Instances</a></li>
+            </ul>
           </li>
-        </span>
+          <li class="divider"></li>
 
-      </ul>
+          <li><a href="#/capabilities" class="topMenuBtn">Capabilities</a></li>
+          <li class="divider"></li>
+
+          <li><a href="#/devices" class="topMenuBtn">Devices</a></li>
+          <li class="divider"></li>
+
+        </ul>
 
 
-    <a class="marketingTag" href="https://github.com/you">
-      <img style="position: absolute; top: 0; right: 0; border: 0; width: 149px; height: 149px; z-index: 11;" src="img/fork_me_github.png" alt="Fork me on GitHub">
-    </a>
+
+        <!-- Right Nav Section -->
+        
+        <ul class="right">
+          <li class="divider hide-for-small"></li>
+
+          <li class="has-dropdown">
+            <a href="#/develop" class="">Develop</a>
+            <ul class="dropdown">
+              <li><a href="#/develop">General instructions</a></li>
+              <li><a href="#/develop/android">Develop for Android</a></li>
+              <li><a href="#/develop/gadgeteer">Develop for .NET Gadgeteer</a></li>
+              <li><a href="#/api">REST API</a></li>
+            </ul>
+          </li>
+
+          <li class="divider"></li>
+
+          <span ng-controller="SignInController">
+            <!-- sign in -->
+            <li ng-show='!UserService.isLogged' >
+
+              <a href="#/signIn" class="topMenuBtn" >Sign in</a>
+            </li>
+
+            <!-- user profile / sign out -->
+            <li class="has-dropdown user-menu-controls" style="display:none;" ng-show='UserService.isLogged' >
+
+              <a href="#/user/{{UserService.username}}" ><div class="user-logo-small" style="background-color: #{{UserService.color}};" ></div>{{UserService.username}}</a>
+              <ul class="dropdown">
+                <li><a href="#/user/{{UserService.username}}" ng-bind='UserService.username'></a></li>
+                <li><a href="#/signOut">Sign out</a></li>
+              </ul>        
+            </li>
+          </span>
+
+        </ul>
+      </section>
+    </nav>
 
 
-    </section>
-  </nav>
-</div>
+  </div><!-- fixed -->
+
 
 <!-- modal contents goes here -->
 <div class="generalModalDiv"></div>
