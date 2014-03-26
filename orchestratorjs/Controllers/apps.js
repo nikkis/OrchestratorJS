@@ -22,6 +22,9 @@ var apps = {};
 
 // Not for app SETTINGS! and not for app INSTANCE!!
 function appInfoReturnDict( appModel ) {
+	if( !appModel )
+		return {};
+
 	return {
 		appName: appModel.appName,
 		author: appModel.author,

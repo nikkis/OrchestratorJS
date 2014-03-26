@@ -140,6 +140,7 @@ app.controller( 'AppEditController',
 
 		var appName = $routeParams.appName;
 		console.log( appName );
+		console.log( UserService.username );
 		$.ajax( {
 			type: 'GET',
 			url: '/api/' + apiVersion + '/user/' + UserService.username + '/app/' + appName,

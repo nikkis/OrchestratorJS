@@ -23,22 +23,27 @@ angular.module('ojsConsole', [
 config(['$routeProvider', function($routeProvider) {
 
 
-  $routeProvider.when('/', {templateUrl: 'app/partials/newhome.html', controller: 'HomeController', access: { isFree: true }});
+  $routeProvider.when('/', {templateUrl: 'app/partials/home/newhome.html', controller: 'HomeController', access: { isFree: true }});
 
 
-  $routeProvider.when('/signIn',  {templateUrl: 'app/partials/signIn.html',  controller: 'SignInController', access: { isFree: true }});
-  $routeProvider.when('/signOut', {templateUrl: 'app/partials/signOut.html', controller: 'SignOutController', access: { isFree: true }});
-  $routeProvider.when('/signUp',  {templateUrl: 'app/partials/signUp.html',  controller: 'SignUpController', access: { isFree: true }});
+  $routeProvider.when('/signIn',  {templateUrl: 'app/partials/account/signIn.html',  controller: 'SignInController', access: { isFree: true }});
+  $routeProvider.when('/signOut', {templateUrl: 'app/partials/account/signOut.html', controller: 'SignOutController', access: { isFree: true }});
+  $routeProvider.when('/signUp',  {templateUrl: 'app/partials/account/signUp.html',  controller: 'SignUpController', access: { isFree: true }});
 
-  $routeProvider.when('/user/:username',  {templateUrl: 'app/partials/user.html',  controller: 'UserController', access: { isFree: false }});
+  $routeProvider.when('/user/:username',  {templateUrl: 'app/partials/account/user.html',  controller: 'UserController', access: { isFree: false }});
 
   // apps
-  $routeProvider.when('/apps', {templateUrl: 'app/partials/apps.html', controller: 'AppsController', access: { isFree: true } });
-  $routeProvider.when('/app/:appName', {templateUrl: 'app/partials/appEdit.html', controller: 'AppEditController', access: { isFree: false }});
+  $routeProvider.when('/apps',         {templateUrl: 'app/partials/apps/apps.html', controller: 'AppsController', access: { isFree: true } });
+  $routeProvider.when('/app/:appName', {templateUrl: 'app/partials/apps/appEdit.html', controller: 'AppEditController', access: { isFree: false }});
 
-  $routeProvider.when('/instances', {templateUrl: 'app/partials/empty.html', controller: 'ActionInstancesController', access: { isFree: true }});
+  // devices
   $routeProvider.when('/devices', {templateUrl: 'app/partials/devices.html', controller: 'DevicesController', access: { isFree: false }});
+
+  // actions
+  $routeProvider.when('/instances', {templateUrl: 'app/partials/empty.html', controller: 'ActionInstancesController', access: { isFree: true }});
   $routeProvider.when('/actions', {templateUrl: 'app/partials/empty.html', controller: 'ActionsController', access: { isFree: true }});
+  
+  // capabilities
   $routeProvider.when('/capabilities', {templateUrl: 'app/partials/empty.html', controller: 'CapabilitiesController', access: { isFree: true }});
 
   // instructions
