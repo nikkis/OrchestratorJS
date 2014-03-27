@@ -96,6 +96,26 @@ function pushCodeToCloud( $scope ) {
 app.controller( 'ActionEditController',
 	function( $scope, $http, AuthService, UserService ) {
 
+    $.getJSON( '/api/' + apiVersion + '/capabilities/info', function( data ) {
+
+    	var completionList = [];
+    	for( capabilityName in data ) {
+    		completionList = completionList.concat( data[ capabilityName ].codeCompletionLines );
+    	}
+			// load capability methods completion
+			var orig = CodeMirror.hint.javascript;
+			CodeMirror.hint.javascript = function(cm) {
+			  var inner = orig(cm) || {from: cm.getCursor(), to: cm.getCursor(), list: []};
+			  inner.list = completionList;
+			  //inner.list.push("talkingCapability.say( line, voice, pitch );");
+			  return inner;
+			};
+
+    } );
+
+
+
+
 		$scope.UserService = UserService;
 		$scope.type = 'Action';
 		$scope.prevParamCheckbox = false;
@@ -225,10 +245,22 @@ function loadDeviceParameters() {
 app.controller( 'CapabilityEditController',
 	function( $scope, $http, AuthService, UserService ) {
 
+
+
+		var orig = CodeMirror.hint.javascript;
+		CodeMirror.hint.javascript = function(cm) {
+		  var inner = orig(cm) || {from: cm.getCursor(), to: cm.getCursor(), list: []};
+		  inner.list = [];
+		  inner.list.push("module.exports = {\n\n};");
+		  inner.list.push("methodName: function ( param1, param2 ) {},");
+		  return inner;
+		};
+
+
 		$scope.UserService = UserService;
 		$scope.type = 'Capability';
 		
-loadFilesList( $scope );
+		loadFilesList( $scope );
 
 		$scope.showCapabilityCode = function( fileName ) {
 			loadCodeToEditor( fileName, $scope );

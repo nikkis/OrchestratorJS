@@ -12,6 +12,10 @@ var qs = require('querystring');
 var DeviceHandler = require(ROOT+'/Models/devicesHandler');
 var DEVICE_HANDLER = new DeviceHandler();
 
+var CapabilityInfoHandler = require(ROOT+'/Models/capabilityInfo');
+var CAPABILITY_INFO_HANDLER = new CapabilityInfoHandler();
+
+
 
 this.postDevice = function(req, res) {
 	var identity =     req.body['identity'];
@@ -84,10 +88,9 @@ this.postCapability = function(req, res) {
 	});
 
 	req.on('end', function () {
-	    var POST = body;
-	    log('foo');
-	    var mauri = this.generateCapabilityStub;
-	    HELPERS.saveFile(ROOT+config.resources.capabilities+capabilityName+'.js', POST, generateCapabilityStub, capabilityName);
+    var POST = body;
+    this.generateCapabilityStub;
+    HELPERS.saveFile(ROOT+config.resources.capabilities+capabilityName+'.js', POST, generateCapabilityStub, capabilityName);
 	});
 	res.send('OK');
 };
@@ -104,23 +107,77 @@ function generateCapabilityStub(capabilityName) {
 	var MyClass = HELPERS.reRequire(ROOT+config.resources.capabilities+capabilityName+'.js');
 	var lines = 'module.exports = {\n\n';
 	
+	var codeCompletionLines = [];
+	codeCompletionLines.push( capabilityName[ 0 ].toLowerCase() + capabilityName.slice( 1 ) );
+
 	for(methodName in MyClass) {
-
-
 		var args = HELPERS.parseArgsFromString(MyClass[methodName].toString());
 		var line = '    '+ methodName + ': ' + 'function('+args.toString()+') {\n';
 		   line += "        var methodArguments = ['"+capabilityName+"', '"+methodName+"', ["+args.toString()+"]];\n";
 		   line += '        return this.device.invoke(methodArguments);\n';
 		   line += '    },\n';
 		lines += line;
+
+		codeCompletionLines.push( generateCodeCompletionLine( capabilityName, methodName, args ) );
+
+		generateAndroidStub( capabilityName, methodName, args );
+		generateGadgeteerStub( capabilityName, methodName, args );
 	}
 	lines += '};';
 	HELPERS.saveFile(ROOT+config.resources.capability_stubs+capabilityName+'.js', lines);
+
+	CAPABILITY_INFO_HANDLER.upsertCapabilityInfo( 'authronamehere', capabilityName, codeCompletionLines );
+
+};
+
+
+function generateCodeCompletionLine( capabilityName, methodName, args ) {
+	if ( !args || args.length == 0 )
+		args = '';
+	else
+		args = args.toString().split(',').join(', ');
+
+	var codeCompletionLine = capabilityName[ 0 ].toLowerCase() + capabilityName.slice( 1 ) + '.' + methodName;
+	if( args )
+		codeCompletionLine += '( ' + args.toString() + ' );';
+	else
+		codeCompletionLine += '();';
+
+	log('completion line: ' + codeCompletionLine);
+	return codeCompletionLine;
+}
+
+this.getCapabilityInfo = function ( req, res ) {
+
+	CAPABILITY_INFO_HANDLER.findAll( function( err, data ) {
+
+		var returnObject = {};
+
+		for( i in data ) {
+			returnObject[ data[ i ].capabilityName ] = { codeCompletionLines: data[ i ].codeCompletionLines };
+		}
+
+		res.writeHead( 200, {
+			"Content-Type": "application/json"
+		} );
+		res.write(
+			JSON.stringify( 
+				returnObject
+			)
+		);
+		res.end();
+
+
+	});
+
+
 
 };
 
 
 
+function generateAndroidStub( capabilityName, methodName, args ) {}
+function generateGadgeteerStub( capabilityName, methodName, args ) {}
 
 
 

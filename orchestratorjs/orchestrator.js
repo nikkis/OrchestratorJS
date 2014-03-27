@@ -162,6 +162,7 @@ app.post(  '/api/'+config.api+'/device', function(req, res) { resourceHandler.po
 app.post(  '/api/'+config.api+'/user/:username/capability/:capabilityName', function(req, res) { resourceHandler.postCapability(req, res) });
 app.delete('/api/'+config.api+'/user/:username/capability/:capabilityName', function(req, res) { resourceHandler.deleteCapability(req, res) });
 
+app.get(   '/api/'+config.api+'/capabilities/info', function(req, res) { resourceHandler.getCapabilityInfo(req, res) });
 
 ////////// Resource Handler - END   //////////
 

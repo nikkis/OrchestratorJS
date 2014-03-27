@@ -101,6 +101,15 @@ app.controller( 'AppEditController',
 		$( '.non-angular-container' ).html( '' );
 		$( '.angular-container' ).show();
 
+
+		var orig = CodeMirror.hint.javascript;
+		CodeMirror.hint.javascript = function(cm) {
+		  var inner = orig(cm) || {from: cm.getCursor(), to: cm.getCursor(), list: []};
+		  inner.list = [];
+		  //inner.list.push("talkingCapabilityt.say( line, voice, pitch );");
+		  return inner;
+		};
+
 		$scope.UserService = UserService;
 
 		$scope.ensureDeleteApp = function() {
