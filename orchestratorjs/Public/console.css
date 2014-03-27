@@ -333,7 +333,7 @@ box-sizing: border-box;
     background-origin: padding-box;
     background-size: auto;
     box-sizing: border-box;
-    
+
     background: url(img/ojs_logos/png/ojs_colors_white_text-512.png) no-repeat center center;
   }
 
@@ -512,6 +512,7 @@ box-sizing: border-box;
     text-align: left;
     position: relative;
     top: 17px;
+
   }
 }
 
@@ -532,3 +533,9 @@ box-sizing: border-box;
   width: 20px; 
   height: 20px; 
 }
+
+textarea {
+  text-shadow: none !important;
+}
+
+

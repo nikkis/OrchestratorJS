@@ -91,7 +91,8 @@ this.getActions = function( req, res ) {
 			} );
 			res.write(
 				JSON.stringify( {
-					'actions': fileNames.sort()
+					//'actions': fileNames.sort()
+					'files': fileNames.sort()
 				} )
 			);
 			res.end();
@@ -147,7 +148,8 @@ this.getCapabilities = function( req, res ) {
 			} );
 			res.write(
 				JSON.stringify( {
-					'capabilities': fileNames.sort()
+					//'capabilities': fileNames.sort()
+					'files': fileNames.sort()
 				} )
 			);
 			res.end();

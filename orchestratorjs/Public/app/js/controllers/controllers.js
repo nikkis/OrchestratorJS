@@ -7,6 +7,7 @@
 var app = angular.module( 'ojsConsole.controllers', [] );
 
 
+// The whole web app controller, not for managing AcOP apps
 app.controller( 'AppController',
 	// initializes auth service
 	function( $scope, AuthService ) {}

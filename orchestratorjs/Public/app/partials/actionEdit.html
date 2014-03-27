@@ -1,0 +1,114 @@
+<div class="row">
+
+
+<div class="large-9 columns actionCode">
+	<div class="row">
+		<div class="large-2 columns">
+			<p>
+				<a class="editStopEditLink" ng-click="pushToCloud(fileName)" >
+					<i class="fi-upload-cloud myEditIcon"></i>
+				</a>
+			</p>
+		</div>
+
+		<div class="large-2 columns">
+			<p>
+				<a ng-click="ensureDeleteAction()" >
+					<i class="fi-trash myRemoveIcon"></i>
+				</a>
+			</p>
+		</div>
+
+		<div  class="large-4 columns right fileNameEdit">
+			<input type="text" id="fileNameInput" value="{{fileName}}" />
+		</div>
+
+	</div>
+	<div class="row" height="1000">
+		<div class="large-12 columns fileCode">
+			<form id="formi">
+
+				<textarea id="code" >
+				</textarea>
+
+				<input type="hidden" name="web_console" value="True" />
+			</form>
+		</div>
+	</div>
+
+	
+	<div class="row">
+		<form class="custom triggerActionForm">
+			<div class="large-10 columns">
+				<label for="checkbox2" class="has-tooltip" title="currently not working">
+					<input ng-change="showPreviousParams()" type="checkbox" id="prevParamCheckbox" ng-model="prevParamCheckbox">
+					<span class="custom checkbox">
+					</span> Use previous arguments</label>
+			</div>
+			<div class="large-2 columns right">
+				<a class="triggerLink" href="javascript:void(0)" ng-click="triggerAction()" >trigger</a>
+			</div>
+		</div>
+
+		<div class="row newActionParams">
+			<div class="large-10 columns">
+				<input type="text" id="paramLine" style="width:100%;" placeholder='usage: "string" or "device:username@devicename" or number, and then hit enter'/>
+			</div>
+		</form>
+	</div>
+
+
+</div>
+
+
+
+<div class="large-3 columns fileNames">
+
+  <div class="fileNamesListing">
+    <h3>{{type}} files</h3>
+    <ul class="side-nav">
+
+			<p style=""><a style="text-align: center;" ng-click="newFile()" >NEW {{type}}</a></p>
+
+      
+      <li class="fileNameLink fileName_{{.}}" ng-repeat="filename in filenames">
+        <a ng-click="showActionCode(filename)">{{filename}}</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+</div><!-- row -->
+
+
+
+
+<script>
+  editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true,
+    extraKeys: {"Ctrl-Space": "autocomplete"},
+    mode: {name: "javascript", globalVars: true},
+    theme: 'monokai'
+  } );
+	
+	editor.setSize('100%', '450px');
+
+	var orig = CodeMirror.hint.javascript;
+
+	CodeMirror.hint.javascript = function(cm) {
+	  var inner = orig(cm) || {from: cm.getCursor(), to: cm.getCursor(), list: []};
+	  inner.list = [];
+	  inner.list.push("module.exports = {\n\n};");
+	  inner.list.push("methodName: function ( param1, param2 ) {},");
+	  return inner;
+	};
+
+</script>
+
+
+
+
+
+

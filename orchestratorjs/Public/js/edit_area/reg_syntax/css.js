@@ -30,7 +30,9 @@ editAreaLoader.load_syntax["css"] = {
 			'pause', 'pitch', 'pitch-range',  'play-during', 'position', 'quotes',
 			'richness', 'right', 'size', 'speak-header', 'speak-numeral', 'speak-punctuation',
 			'speak', 'speech-rate', 'stress', 'table-layout', 'text-align', 'text-decoration',
-			'text-indent', 'text-shadow', 'text-transform', 'top', 'unicode-bidi',
+			'text-indent', 
+			//'text-shadow', 
+			'text-transform', 'top', 'unicode-bidi',
 			'vertical-align', 'visibility', 'voice-family', 'volume', 'white-space', 'widows',
 			'width', 'word-spacing', 'z-index', 'bottom', 'left'
 		]

@@ -153,13 +153,14 @@ app.delete('/api/'+config.api+'/user/:username', function(req, res) { userContro
 ////////// Resource Handler - START //////////
 var resourceHandler = require(ROOT+'/resources/handler.js');
 
-app.post('/api/'+config.api+'/action/:actionName', function(req, res) { resourceHandler.postAction(req, res) });
-app.delete('/api/'+config.api+'/action/:actionName', function(req, res) { resourceHandler.deleteAction(req, res) });
+app.post(  '/api/'+config.api+'/user/:username/action/:actionName', function(req, res) { resourceHandler.postAction(req, res) });
+app.delete('/api/'+config.api+'/user/:username/action/:actionName', function(req, res) { resourceHandler.deleteAction(req, res) });
 
-app.post('/api/'+config.api+'/device', function(req, res) { resourceHandler.postDevice(req, res) });
+app.post(  '/api/'+config.api+'/device', function(req, res) { resourceHandler.postDevice(req, res) });
 
-app.post('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.postCapability(req, res) });
-app.delete('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.deleteCapability(req, res) });
+//app.post('/api/'+config.api+'/capability/:capabilityName', function(req, res) { resourceHandler.postCapability(req, res) });
+app.post(  '/api/'+config.api+'/user/:username/capability/:capabilityName', function(req, res) { resourceHandler.postCapability(req, res) });
+app.delete('/api/'+config.api+'/user/:username/capability/:capabilityName', function(req, res) { resourceHandler.deleteCapability(req, res) });
 
 
 ////////// Resource Handler - END   //////////

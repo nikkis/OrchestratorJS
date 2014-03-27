@@ -583,6 +583,7 @@
 .fi-unlink:before { content: "\f209"; }
 .fi-unlock:before { content: "\f20a"; }
 .fi-upload-cloud:before { content: "\f20b"; }
+.fi-upload-cloud:after { content: "push"; }
 .fi-upload:before { content: "\f20c"; }
 .fi-usb:before { content: "\f20d"; }
 .fi-video:before { content: "\f20e"; }

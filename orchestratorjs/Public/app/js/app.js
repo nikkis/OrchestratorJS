@@ -14,6 +14,8 @@ angular.module('ojsConsole', [
   'ojsConsole.directives',
   
   'ojsConsole.controllers',
+  //'ojsConsole.controllers.CapabilityControllers',
+  'ojsConsole.controllers.ActionAndCapabilityControllers',
   'ojsConsole.controllers.AppsController',
   'ojsConsole.controllers.DevicesController',
   'ojsConsole.controllers.userControllers',
@@ -41,10 +43,14 @@ config(['$routeProvider', function($routeProvider) {
 
   // actions
   $routeProvider.when('/instances', {templateUrl: 'app/partials/empty.html', controller: 'ActionInstancesController', access: { isFree: true }});
-  $routeProvider.when('/actions', {templateUrl: 'app/partials/empty.html', controller: 'ActionsController', access: { isFree: true }});
+  
+  //$routeProvider.when('/actions', {templateUrl: 'app/partials/empty.html', controller: 'ActionsController', access: { isFree: true }});
+  $routeProvider.when('/actions', {templateUrl: 'app/partials/actionEdit.html', controller: 'ActionEditController', access: { isFree: true }});
   
   // capabilities
-  $routeProvider.when('/capabilities', {templateUrl: 'app/partials/empty.html', controller: 'CapabilitiesController', access: { isFree: true }});
+  
+  $routeProvider.when('/capabilities', {templateUrl: 'app/partials/capabilityEdit.html', controller: 'CapabilityEditController', access: { isFree: true }});
+  $routeProvider.when('/capabilitiesOld', {templateUrl: 'app/partials/empty.html', controller: 'CapabilitiesController', access: { isFree: true }});
 
   // instructions
   $routeProvider.when('/develop', {templateUrl: 'app/partials/docs/developGeneral.html', controller: 'DocsController', access: { isFree: true }});
