@@ -107,7 +107,11 @@ app.controller( 'ActionEditController',
 			CodeMirror.hint.javascript = function(cm) {
 			  var inner = orig(cm) || {from: cm.getCursor(), to: cm.getCursor(), list: []};
 			  inner.list = completionList;
-			  //inner.list.push("talkingCapability.say( line, voice, pitch );");
+
+				// TODO: improve this feature
+				//console.log( 'CodeMirror' );
+				//console.log( cm.getCursor() );
+
 			  return inner;
 			};
 
