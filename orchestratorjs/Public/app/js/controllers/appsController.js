@@ -151,7 +151,21 @@ app.controller( 'AppEditController',
 		    alert( resp.responseText );
 		  } ).done( function( resp ) {
 		  	alert( fileName+ ' saved!' );
-		  	loadFilesList( $scope );
+				  	
+				// save also app description
+		    var appDesc = $( '#appDescriptionInput' ).val();
+
+		    var pp = {};
+		    pp[ 'appDesc' ] = appDesc;
+
+		    $.ajax( {
+		        type: 'POST',
+		        url: '/api/1/user/' + authUsername + '/app/' + fileName + '/info',
+		        contentType: 'application/json',
+		        data: JSON.stringify( pp ),
+		    } ).done( function( msg ) {
+		    } );
+
 		  } );
 
 		};
