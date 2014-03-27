@@ -5,21 +5,21 @@
 	<div class="row">
 		<div class="large-1 columns">
 			<p>
-				<a class="editStopEditLink" ng-click="enableCodeEdit()" >
-					<i class="fi-page-edit myEditIcon"></i>
+				<a class="editStopEditLink" ng-click="pushToCloud()" >
+					<i class="fi-upload-cloud myEditIcon"></i>
 				</a>
 			</p>
 		</div>
 
 		<div class="large-2 columns">
 			<p>
-				<a ng-click="ensureDeleteFile(fileName)" >
-					<i class="fi-trash myRemoveIcon" style="display: none;" ></i>
+				<a ng-click="ensureDeleteApp()" >
+					<i class="fi-trash myRemoveIcon"></i>
 				</a>
 			</p>
 		</div>
 
-		<div style="display: none;" class="large-4 columns right fileNameEdit">
+		<div class="large-4 columns right fileNameEdit">
 			
 			<div class="row">
 				<div class="large-12 columns">
@@ -35,7 +35,8 @@
 	<div class="row">
 		<div class="large-12 columns editCode">
 			
-				<textarea id="code_area" style="height: 450px; width: 100%;" name="file_content">{{code}}</textarea>
+				<!--<textarea id="code_area" style="height: 450px; width: 100%;" name="file_content">{{code}}</textarea>-->
+				<textarea id="code" ></textarea>
 				<input type="hidden" name="web_console" value="True" />
 			
 		</div>
@@ -56,18 +57,35 @@
     <a ng-click="stopApp(fileName)" class="start-instance-btn">stop</a>
   </center>
 
-
-<!--
-<script type="text/javascript">
-// Popup window code
-function newPopup(url) {
-	popupWindow = window.open(
-		url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
-}
-</script>
-<a href="JavaScript:newPopup('http://www.quackit.com/html/html_help.cfm');">Open a popup window</a>
--->
-
 </div>
 
 </form>
+
+
+
+
+
+<script>
+  editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true,
+    extraKeys: {"Ctrl-Space": "autocomplete"},
+    mode: {name: "javascript", globalVars: true},
+    theme: 'monokai'
+  } );
+	
+	editor.setSize('100%', '450px');
+
+	var orig = CodeMirror.hint.javascript;
+
+	CodeMirror.hint.javascript = function(cm) {
+	  var inner = orig(cm) || {from: cm.getCursor(), to: cm.getCursor(), list: []};
+	  inner.list = [];
+	  //inner.list.push("module.exports = {\n\n};");
+	  //inner.list.push("methodName: function ( param1, param2 ) {},");
+	  return inner;
+	};
+
+</script>
+
+
+

@@ -131,11 +131,11 @@ app.controller( 'ActionEditController',
         $.getJSON( '/api/' + apiVersion + '/action/' + fileName + '/metadata', function( data ) {
           var preLoadData = [];
           for ( i in data.args ) {
-              var temp = data.args[ i ];
-              preLoadData.push( {
-                  id: "p" + i,
-                  text: JSON.stringify( temp )
-              } );
+            var temp = data.args[ i ];
+            preLoadData.push( {
+              id: "p" + i,
+              text: JSON.stringify( temp )
+            } );
           }
           $( "input#paramLine" ).select2( 'data', preLoadData );
         } );
@@ -151,10 +151,10 @@ app.controller( 'ActionEditController',
 	    var actionParameters = [];
 	    var divs = $( "#paramLine" ).select2( "container" ).children().find( '.select2-search-choice' ).find( 'div' );
 	    for ( var i = 0; i < divs.length; i++ ) {
-	        var div = divs[ i ];
-	        var param = $( div ).text();
-	        var object = JSON.parse( param );
-	        actionParameters.push( object );
+        var div = divs[ i ];
+        var param = $( div ).text();
+        var object = JSON.parse( param );
+        actionParameters.push( object );
 	    };
 
 	    var pp = {};
@@ -162,13 +162,13 @@ app.controller( 'ActionEditController',
 	    pp[ 'parameters' ] = actionParameters;
 
 	    $.ajax( {
-	        type: 'POST',
-	        url: '/api/' + apiVersion + '/actioninstance',
-	        contentType: 'application/json',
-	        data: JSON.stringify( pp ),
+	       type: 'POST',
+	       url: '/api/' + apiVersion + '/actioninstance',
+	       contentType: 'application/json',
+	       data: JSON.stringify( pp ),
 	    } ).done( function( msg ) {
-	        alert( msg );
-	        console.log( msg );
+	       alert( msg );
+	       console.log( msg );
 	    } );
     };
 		

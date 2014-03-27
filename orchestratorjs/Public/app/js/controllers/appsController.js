@@ -6,9 +6,10 @@ function startApp( $http, $scope, appName, UserService ) {
 
 	var username = UserService.username;
 
-	//var appName = $scope.fileName;
-	if ( appName == 'newApp' ) {
-		alert( 'You need to save your app first!\n( name newApp is reserved )' );
+	
+	//if ( appName == 'newApp' ) {
+	if ( !appName ) {
+		alert( 'You need to save your app first!\n' );
 		return;
 	}
 
@@ -102,9 +103,9 @@ app.controller( 'AppEditController',
 
 		$scope.UserService = UserService;
 
-		$scope.ensureDeleteFile = function( fileName ) {
-
-			if ( fileName == 'newApp' )
+		$scope.ensureDeleteApp = function() {
+			var fileName = $( '#fileNameInput' ).val();
+			if ( !fileName )
 				return;
 
 			var retVal = confirm( 'Are you sure you want to delete ' + fileName + '?' );
@@ -118,22 +119,44 @@ app.controller( 'AppEditController',
 			}
 		};
 
-		$scope.enableCodeEdit = function() {
-			editAreaLoader.execCommand( 'code_area', 'set_editable', !editAreaLoader.execCommand( 'code_area', 'is_editable' ) );
-			if ( editAreaLoader.execCommand( 'code_area', 'is_editable' ) ) {
-				$( '.myEditIcon' ).removeClass( 'fi-page-edit' );
-				$( '.myEditIcon' ).addClass( 'fi-lock' );
+		$scope.pushToCloud = function() {
 
-				$( '.fileNameEdit' ).show();
-				$( '.myRemoveIcon' ).show();
 
-			} else {
-				$( '.myEditIcon' ).removeClass( 'fi-lock' );
-				$( '.myEditIcon' ).addClass( 'fi-page-edit' );
-				$( '.fileNameEdit' ).hide();
-				$( '.myRemoveIcon' ).hide();
-			}
+		  var text = editor.getValue();
+
+		  var fileName = $( '#fileNameInput' ).val();
+		  if ( fileName == '' ) {
+		    alert( 'File name cannot be empty!' );
+		    return;
+
+		  } else if ( fileName.slice( -3 ) == '.js' ) {
+		    alert( 'File name cannot contain .js' );
+		    return;
+		  }
+
+		  if ( !$scope.UserService.isLogged ) {
+		    alert( 'You must sign in first!\nNot saved!' );
+		    return;
+		  }
+
+		  $.ajax( {
+		    url: '/api/1/user/' + $scope.UserService.username + '/app/' + fileName,
+		    data: text,
+		    cache: false,
+		    contentType: false,
+		    processData: false,
+		    type: 'POST',
+
+		  } ).fail( function( resp ) {
+		    alert( resp.responseText );
+		  } ).done( function( resp ) {
+		  	alert( fileName+ ' saved!' );
+		  	loadFilesList( $scope );
+		  } );
+
 		};
+
+
 
 		token = 'diipaa';
 		initAuthTokens( UserService.username, token );
@@ -153,10 +176,11 @@ app.controller( 'AppEditController',
 			} ).done( function( appInfoData ) {
 
 				$scope.appDesc  = appInfoData.desc;
-				$scope.fileName = appName;
-				$scope.code = data;
+				if( appName != 'newApp' )
+					$scope.fileName = appName;
+				
+				editor.setValue(data);
 
-				initEditor();
 
 				$scope.stopApp = function( appName ) {
 					stopApp( $http, $scope, appName, UserService );
