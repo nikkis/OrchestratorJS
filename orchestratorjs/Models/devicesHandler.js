@@ -31,6 +31,7 @@ var deviceSchema = mongoose.Schema( {
     type: String,
     unique: true
   },
+  username: String,
   bluetoothMAC: String,
   name: String,
   type: String,

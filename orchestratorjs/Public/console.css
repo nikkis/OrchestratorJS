@@ -473,6 +473,27 @@ box-sizing: border-box;
 }
 
 
+
+
+.app-instance-btns {
+  padding-bottom: 1em;
+}
+
+.start-instance-btn {
+  float: left;
+  padding-left: 1em;
+}
+
+.stop-instance-btn {
+  float: right;
+  padding-right: 1em;
+}
+
+.edit-instance-btn {
+  margin-right: 2em; 
+  margin-left: 2em;
+}
+
 /* tablet */
 @media (min-width: 640px) {
   .ojs-app-img {

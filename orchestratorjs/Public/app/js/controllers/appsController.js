@@ -6,8 +6,11 @@ function startApp( $http, $scope, appName, UserService ) {
 
 	var username = UserService.username;
 
+	if ( !UserService.isLogged ) {
+		alert( 'You need to sign in first!\n' );
+		return;
+	}
 	
-	//if ( appName == 'newApp' ) {
 	if ( !appName ) {
 		alert( 'You need to save your app first!\n' );
 		return;
@@ -53,6 +56,12 @@ function startApp( $http, $scope, appName, UserService ) {
 
 
 function stopApp( $http, $scope, appName, UserService ) {
+	
+	if ( !UserService.isLogged ) {
+		alert( 'You need to sign in first!\n' );
+		return;
+	}
+
 	$http.delete( '/api/' + apiVersion + '/user/' + UserService.username + '/app/' + appName + '/instance' ).success( function( data, status, headers, config ) {
 		for ( i in $scope.appInstances ) {
 			if ( $scope.appInstances[ i ].name == appName )

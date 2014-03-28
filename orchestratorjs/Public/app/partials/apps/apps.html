@@ -52,10 +52,10 @@
           <hr>
 
           <!-- start/edit/stop -->      
-          <center ng-show='UserService.isLogged'>
+          <center class="app-instance-btns" >
             <a ng-click="startApp(instance.name)" class="start-instance-btn">start</a>
-            <a ng-href="#/app/{{instance.name}}" style="margin-right: 2em; margin-left: 2em;" class="edit-instance-btn">edit</a>
-            <a ng-click="stopApp(instance.name)" class="start-instance-btn">stop</a>
+            <a ng-show='UserService.isLogged' ng-href="#/app/{{instance.name}}" class="edit-instance-btn">edit</a>
+            <a ng-click="stopApp(instance.name)" class="stop-instance-btn">stop</a>
           </center>
         </div>          
 
