@@ -204,7 +204,7 @@ this.getDevices = function( req, res ) {
       tempDev[ 'identity' ] = devModel.identity;
       tempDev[ 'bluetoothMAC' ] = devModel.bluetoothMAC;
       tempDev[ 'lastSeen' ] = devModel.lastSeen;
-      tempDev[ 'name' ] = devModel.name;
+      tempDev[ 'username' ] = devModel.username;
       tempDev[ 'type' ] = devModel.type;
       tempDev[ 'metadata' ] = ( devModel.metadata ) ? devModel.metadata : {};
 
@@ -390,7 +390,7 @@ function createDevices( deviceModels, actionId, action ) {
   var deviceStubs = [];
   for ( i in deviceModels ) {
     var deviceId = deviceModels[ i ].identity;
-    var deviceName = deviceModels[ i ].name;
+    var deviceName = deviceModels[ i ].username;
 
     var deviceStub = new DeviceStub( deviceId, deviceName, action );
     if ( !CONNECTION_POOL[ deviceId ] ) {

@@ -21,7 +21,7 @@ this.postDevice = function(req, res) {
 	var identity =     req.body['identity'];
 	var bluetoothMAC = req.body['bluetoothMAC'];
 	var type = req.body['type'];
-	var name = req.body['name'];
+	var username = req.body['username'];
 	var capabilities = req.body['capabilities'];
 
 	DEVICE_HANDLER.updateOrCreateDevice(identity, bluetoothMAC, name, type, capabilities);

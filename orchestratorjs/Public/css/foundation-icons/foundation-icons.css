@@ -468,6 +468,7 @@
 .fi-play-video:before { content: "\f197"; }
 .fi-play:before { content: "\f198"; }
 .fi-plus:before { content: "\f199"; }
+.fi-plus:after { content: "add"; }
 .fi-pound:before { content: "\f19a"; }
 .fi-power:before { content: "\f19b"; }
 .fi-previous:before { content: "\f19c"; }

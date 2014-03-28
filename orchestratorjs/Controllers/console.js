@@ -149,7 +149,8 @@ this.getCapabilities = function( req, res ) {
 			res.write(
 				JSON.stringify( {
 					//'capabilities': fileNames.sort()
-					'files': fileNames.sort()
+					'files': fileNames.sort(),
+					'capabilities': fileNames.sort()
 				} )
 			);
 			res.end();

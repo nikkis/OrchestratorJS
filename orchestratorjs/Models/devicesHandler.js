@@ -84,7 +84,7 @@ module.exports = function DeviceHandler() {
     }, callback );
   };
 
-  this.updateOrCreateDevice = function( identity, bluetoothMAC, name, type, capabilities ) {
+  this.updateOrCreateDevice = function( identity, bluetoothMAC, username, type, capabilities ) {
 
     var lastSeen = new Date();
     var query = {
@@ -94,7 +94,7 @@ module.exports = function DeviceHandler() {
     DeviceModel.findOneAndUpdate( query, {
       $set: {
         bluetoothMAC: bluetoothMAC,
-        name: name,
+        username: username,
         type: type,
         capabilities: capabilities,
         lastSeen: lastSeen
