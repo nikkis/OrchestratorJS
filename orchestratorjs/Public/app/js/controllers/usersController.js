@@ -37,7 +37,6 @@ app.controller( 'SignInController',
 			}
 		}
 
-
 		$scope.signInSubmit = function() {
 			console.log( 'submitting' );
 			console.log( $scope.user.username );
@@ -78,8 +77,6 @@ app.controller( 'SignInController',
 				alert( 'wrong username and/or password!' );
 
 			} );
-
-
 		};
 	}
 );
