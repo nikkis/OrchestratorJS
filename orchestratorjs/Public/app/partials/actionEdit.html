@@ -88,11 +88,12 @@
 <script>
   editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     lineNumbers: true,
+    indentWithTabs: false,
+		tabSize: 2,
     extraKeys: {"Ctrl-Space": "autocomplete"},
     mode: {name: "javascript", globalVars: true},
     theme: 'monokai'
   } );
-	
 	editor.setSize('100%', '450px');
 </script>
 

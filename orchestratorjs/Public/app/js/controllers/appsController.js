@@ -189,10 +189,6 @@ app.controller( 'AppEditController',
 		};
 
 
-
-		token = 'diipaa';
-		initAuthTokens( UserService.username, token );
-
 		var appName = $routeParams.appName;
 		console.log( appName );
 		console.log( UserService.username );

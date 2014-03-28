@@ -14,10 +14,22 @@ var passport = require( 'passport' ),
 
 
 function userReturnObject( userModel ) {
-	return {
-		username: userModel.username,
-		color: userModel.color
-	};
+
+	var retObject = {};
+	if( userModel ) {
+		retObject = {
+			username: userModel.username,
+			color: userModel.color
+		};
+	}
+
+	if( config.admin_users.indexOf( userModel.username ) != -1 ) {
+		retObject.admin = true;
+	} else {
+		retObject.admin = false;
+	}
+
+	return retObject;
 }
 
 

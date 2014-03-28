@@ -52,10 +52,10 @@
 
 
   <hr>
-  <center>
-    <a ng-click="startApp(fileName)" class="start-instance-btn">start</a>
+  <center style="padding-bottom: 2em;">
+    <a ng-click="startApp(fileName)" class="">start</a>
     <a ng-href="#/apps" style="margin-right: 2em; margin-left: 2em;" class="edit-instance-btn">apps</a>
-    <a ng-click="stopApp(fileName)" class="start-instance-btn">stop</a>
+    <a ng-click="stopApp(fileName)" class="">stop</a>
   </center>
 
 </div>
@@ -69,6 +69,8 @@
 <script>
   editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     lineNumbers: true,
+    indentWithTabs: false,
+		tabSize: 2,
     extraKeys: {"Ctrl-Space": "autocomplete"},
     mode: {name: "javascript", globalVars: true},
     theme: 'monokai'

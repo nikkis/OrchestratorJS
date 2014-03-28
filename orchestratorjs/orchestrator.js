@@ -83,54 +83,8 @@ app.get('/test', function(req, res) { webconsole.test(req, res) });
 ////////// Users Controller - START //////////
 
 
-/*
-var mongoose = require( 'mongoose' );
-var db = mongoose.connection;
-db.on( 'error', console.error.bind( console, 'Cannot connect to mongodb:' ) );
-mongoose.connect( 'mongodb://localhost/' + config.database );
-
-
-var userSchema = mongoose.Schema( {
-  username: {
-    type: String,
-    unique: true
-  },
-  password: {
-    type: String
-  },
-  edited: {
-    type: Date,
-    default: Date.now
-  },
-} );
-*/
 
 var userController = require(ROOT+'/Controllers/users.js');
-
-
-
-/*
-passport.serializeUser(function(user, done) {
-  done(null, user.username);
-});
-
-passport.deserializeUser(function(id, done) {
-});
-*/
-
-
-
-/*
-app.post('/api/'+config.api+'/login',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: true })
-);
-
-*/
-
-
-
 
 
 app.get('/api/'+config.api+'/user/:username', function(req, res) { userController.getUser(req, res) });

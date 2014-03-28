@@ -14,7 +14,6 @@ angular.module('ojsConsole', [
   'ojsConsole.directives',
   
   'ojsConsole.controllers',
-  //'ojsConsole.controllers.CapabilityControllers',
   'ojsConsole.controllers.ActionAndCapabilityControllers',
   'ojsConsole.controllers.AppsController',
   'ojsConsole.controllers.DevicesController',
