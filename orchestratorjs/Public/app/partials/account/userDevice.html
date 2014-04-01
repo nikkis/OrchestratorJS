@@ -1,0 +1,112 @@
+<form novalidate name="form">
+<div class="row contents">
+	<div class="small-12 medium-6 large-6 columns">
+	
+
+		<fieldset>
+	    <legend style="background: none;">Required Settings</legend>
+
+	    <label>Device Identity
+	      <p>{{device.username}}@{{device.deviceName}}</p>
+	    </label>
+
+	    <label>Username
+	      <input type="text" ng-disabled="true" ng-model="device.username" placeholder="owner of the device" >
+	    </label>
+
+	    <label>Device name
+	      <input type="text" ng-model="device.deviceName" name="deviceName" placeholder="nickname that is used within actions" ng-pattern="/^[A-Za-z0-9]{1,20}$/" required >
+	    </label>
+	    <div ng-show="form.deviceName.$error.pattern">Only letters and numbers allowed!</div>  
+
+	    <div class="row" ng-repeat="deviceTypeName in device.deviceTypeNames" >
+				<div class="small-12 medium-12 large-12 columns" >
+					
+					<label>
+						<input type="radio" name="devType" class="ojs-capability-enable-cb" value="{{deviceTypeName}}" ng-model="$parent.device.deviceType" ><span class="ojs-capability-enable-desc"><i class="fi-social-{{deviceTypeName == 'gadgeteer' ? 'windows' : deviceTypeName }} ojs-device-icon"></i>{{deviceTypeName}}</span>
+					</lable>
+				</div>
+	    </div>
+
+	  </fieldset>
+
+
+
+		<fieldset>
+	    <legend style="background: none;">Optional Settings</legend>
+
+	    <label><i class="fi-bluetooth ojs-device-icon"></i>Bluetooth MAC
+	      <input type="text" name="deviceBT" ng-model="device.bluetoothMAC" ng-pattern="/^[A-Fa-f0-9:]{1,17}$/" placeholder="for detecting proximity" >
+	    </label>
+	    <div ng-show="form.deviceBT.$error.pattern">Not a valid MAC address!</div>
+		</fieldset>
+	  
+
+
+	</div>
+
+	<div class="small-12 medium-6 large-6 columns">
+	
+		<fieldset>
+	    <legend style="background: none;">Device Capabilities</legend>
+
+	    <div class="row" ng-repeat="(capabilityName, capabilityValue) in device.capabilities" >
+				<div class="small-12 medium-12 large-12 columns" >
+					
+					<label>
+						<input type="checkbox" class="ojs-capability-enable-cb" ng-model="device.capabilities[ capabilityName ]" ><span class="ojs-capability-enable-desc">{{capabilityName}}</span>
+					</lable>
+				</div>
+	    </div>
+
+	  </fieldset>
+
+	</div>
+
+
+	
+
+	<div class="small-12 medium-6 large-6 columns">
+	
+		<fieldset>
+				<a style="float: right;" ng-click="submitDevice();" ng-show="form.$valid"><i class="fi-upload-cloud myEditIcon"></i></a>
+				<a style="float: left;" ng-click="removeDevice();" ng-show="form.$valid"><i class="fi-trash myRemoveIcon"></i></a>
+	  </fieldset>
+
+	</div>
+
+
+
+</div>
+</form>
+
+
+
+
+
+
+	<!--
+		<fieldset>
+	    <legend style="background: none;">Device Capabilities</legend>
+	    <div class="row" ng-repeat="(name, color) in capabilities" >
+				<div class="small-12 medium-12 large-12 columns" >
+					
+					<label>
+						<input type="checkbox" class="ojs-capability-enable-cb" ng-model="device.capabilities" ><span class="ojs-capability-enable-desc">{{name}}</span>
+					</lable>
+				</div>
+	    </div>
+
+	  </fieldset>
+-->	  
+
+
+<!--
+		<hr>
+  	<table>
+  		<tr ng-repeat="(name, color) in capabilities">
+  			<td style="background-color: #{{color}};"></td>
+  			<td>{{name}}</td>
+  		</tr>
+  	</table>
+-->

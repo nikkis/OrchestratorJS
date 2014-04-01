@@ -5,23 +5,87 @@
 
 
 
-<div class="instructions_container">
+<div class="">
 
 
-	<div class="large-features">
+  <div class="large-features">
         <div class="feature">
             <div class="row">
                 <div class="large-3 columns image">
-                	<!--<img src="http://placehold.it/350/aefac5/000000/&amp;text=[{{UserService.username}}]">-->
-                	<img src="http://placehold.it/200/{{UserService.color}}/000000/&amp;text=[{{UserService.username}}]">
+                  <!--<img src="http://placehold.it/350/aefac5/000000/&amp;text=[{{UserService.username}}]">-->
+                  <img src="http://placehold.it/200/{{UserService.color}}/000000/&amp;text=[{{UserService.username}}]">
                 </div>
                 <div class="large-9 columns description">
-                    <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>{{UserService.username}}</h3>
-                    <p></p>
+                    <h3 class="with-icon"><i class="fi-torso ojs-device-icon"><i></i></i>{{UserService.username}}</h3>
                 </div>
+                
+                <br />
+
+
+                <div class="large-9 columns description">
+                    <h3 class="with-icon"><i class="fi-mobile-signal ojs-device-icon"><i></i></i>devices</h3>
+                    
+                    <div ng-repeat="device in user.devices" class="row">
+                      
+                      <div class="large-3 medium-3 small-5 columns" >
+                        <a ng-href="#/user/{{UserService.username}}/device/{{device.deviceName}}"><i class="fi-social-{{device.deviceType == 'gadgeteer' ? 'windows' : device.deviceType }} ojs-device-icon"></i>
+                        {{device.identity}}</a>
+                      </div>
+
+                      <div class="large-9 medium-9 small-3 columns" >
+                        <a ng-click="removeDevice( device.deviceName )"><i class="fi-trash myRemoveIcon"></i></a>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="large-9 columns description ojs-userprofile-add-device">
+                  <a ng-href="#/user/{{UserService.username}}/device/newDevice" ><i class="fi-plus"></i></a>
+                </div>
+
             </div>
         </div>
     </div>
 
 </div>
 
+
+
+<!--
+<div class="row contents">
+    <div class="large-12 large-centered columns">
+      <center>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+
+                <th width="120">Identity</th>
+                <th width="130"><i class="fi-bluetooth ojs-device-icon"></i>MAC</th>
+                <th width="120">Type</th>
+                <th>Capabilities</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="device in user.devices">
+
+                <td style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><p ng-bind="device.identity"></p></td>
+
+                <td><p ng-bind="( device.bluetoothMAC ) ? device.bluetoothMAC : 'N/A'"></p></td>
+                <td><i class="fi-social-{{device.deviceType == 'gadgeteer' ? 'windows' : device.deviceType }} ojs-device-icon"></i>{{device.deviceType}}</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td ng-repeat="capability in device.capabilities" class="has-tooltip" style="background-color: #{{capability.color}};" title="{{capability.name}}" ></td>
+                        </tr>
+                    </table>
+                
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </center>
+
+    </div>
+</div>
+-->

@@ -234,7 +234,7 @@ this.getDevices = function( req, res ) {
 
       tempDev[ 'online' ] = ( CONNECTION_POOL[ devModel.identity ] ) ? true : false;
 
-      log( tempDev.metadata );
+      log( tempDev.capabilities );
 
       responseDevices.push( tempDev );
     }

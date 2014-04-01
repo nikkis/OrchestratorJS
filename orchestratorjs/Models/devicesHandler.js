@@ -25,7 +25,7 @@ function emitContextData( contextDataDict ) {
 
 
 
-
+// identity = username + '@' + name
 var deviceSchema = mongoose.Schema( {
   identity: {
     type: String,
@@ -75,7 +75,11 @@ module.exports = function DeviceHandler() {
 
 
 
-
+  this.removeDevice = function( identity, callback ) {
+    DeviceModel.remove( {
+      identity: identity
+    }, callback );
+  };
 
 
   this.findDevice = function( identity, callback ) {
@@ -83,6 +87,63 @@ module.exports = function DeviceHandler() {
       identity: identity
     }, callback );
   };
+
+
+  // new ( for user controller )
+
+  this.findUserDevices = function( username, next ) {
+    DeviceModel.find( {
+      username: username
+    }, next ); 
+  };
+
+
+  this.upsertDevice = function( identity, username, bluetoothMAC, type, deviceName, capabilities, next ) {
+
+    var lastSeen = new Date();
+
+    var query = {
+      identity: identity,
+      username: username
+    };
+
+    DeviceModel.findOneAndUpdate( query, {
+      $set: {
+        identity: identity,
+        username: username,
+        bluetoothMAC: bluetoothMAC,
+        type: type,
+        name: deviceName,
+        capabilities: capabilities,
+        lastSeen: lastSeen
+      }
+    }, {
+      upsert: true
+    }, 
+    next );
+  };
+
+
+
+
+  this.removeCapability = function( capabilityName ) {
+
+    var lastSeen = new Date();
+    DeviceModel.find( function( err, devicemodels ) {
+      for( i in devicemodels ) {
+
+        if( devicemodels[ i ].capabilities && devicemodels[ i ].capabilities.indexOf( capabilityName ) != -1 ) {
+          log( 'removing ' + capabilityName + ' from ' + devicemodels[ i ].identity );
+          devicemodels[ i ].capabilities.splice( devicemodels[ i ].capabilities.indexOf( capabilityName ) );
+          devicemodels[ i ].save();
+        }
+      }
+
+    } );
+
+  };
+
+
 
   this.updateOrCreateDevice = function( identity, bluetoothMAC, username, type, capabilities ) {
 

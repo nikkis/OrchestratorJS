@@ -98,6 +98,11 @@ this.postCapability = function(req, res) {
 this.deleteCapability = function(req, res) {
 	var capabilityName = req.params.capabilityName;
 	log('deleting capability: '+capabilityName);
+
+	// remove capability from devices
+	DEVICE_HANDLER.removeCapability( capabilityName );
+
+
 	HELPERS.deleteFile(ROOT+config.resources.capabilities+capabilityName+'.js');
 	res.send('OK\n');
 };

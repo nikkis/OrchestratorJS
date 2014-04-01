@@ -27,7 +27,7 @@
 		      <tr>
 		      	<!--<th width="50"></th>-->
 		        <th width="120">Identity</th>
-		        <th width="130">Bluetooth MAC</th>
+		        <th width="130"><i class="fi-bluetooth ojs-device-icon"></i>MAC</th>
 		        <th width="120">Owner</th>
 		        <th width="100">Type</th>
 		        <th>Capabilities</th>
@@ -37,36 +37,31 @@
 		    <tbody>
 		      <tr ng-repeat="device in devices">
 		      	<!--<td><a>edit</a></td>-->
-		        <td style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><p>{{device.identity}}</p></td>
-<!--<td style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><input type="text" ng-model="device.identity"></input></td>-->
+		        <td style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><p ng-bind="device.identity"></p></td>
+						<!--<td style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><input type="text" ng-model="device.identity"></input></td>-->
 
-		        <td><p>{{ ( device.bluetoothMAC ) ? device.bluetoothMAC : 'N/A' }}</p></td>
-		        <td><p>{{device.username}}</p></td>
-		        <td><p>{{device.type}}</p></td>
+		        <td><p ng-bind="( device.bluetoothMAC ) ? device.bluetoothMAC : 'N/A'"></p></td>
+		        <td><p ng-bind="device.username" ></p></td>
+		        
+						<td><i class="fi-social-{{device.type == 'gadgeteer' ? 'windows' : device.type }} ojs-device-icon"></i>{{device.type}}</td>
+
 		        <td>
+		        	
 		        	<table>
 		        		<tr>
 		        			<td ng-repeat="capability in device.capabilities" class="has-tooltip" style="background-color: #{{capability.color}};" title="{{capability.name}}" ></td>
 		        		</tr>
 		        	</table>
+		        
 		        </td>
-		       	<td ng-repeat="metadataTitle in metadataFields">{{ ( !device.metadata[ metadataTitle ] ) ? 'N/A': device.metadata[metadataTitle] }}</td>
+		       	<td ng-repeat="metadataTitle in metadataFields"><p ng-bind="( !device.metadata[ metadataTitle ] ) ? 'N/A': device.metadata[metadataTitle]"></p></td>
 
 		      </tr>
 		    </tbody>
 		  </table>
 		</div>
-<p>{{foo1}}</p>
 
 		</center>
-<!--
-		<hr>
-  	<table>
-  		<tr ng-repeat="(name, color) in capabilities">
-  			<td style="background-color: #{{color}};"></td>
-  			<td>{{name}}</td>
-  		</tr>
-  	</table>
--->
+
 	</div>
 </div>

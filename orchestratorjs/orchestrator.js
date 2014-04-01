@@ -52,9 +52,14 @@ app.set( 'views', __dirname + '/Views' );
 ////////// INITIALIZE SERVICES - START //////////
 var services = require(ROOT+'/Services/services.js')
 services.initializeServices();
-
 ////////// INITIALIZE SERVICES - END   //////////
 
+
+
+////////// INITIALIZE ORCHESTRATOR CORE - START //////////
+var orchestrator = require( ROOT+'/Controllers/orchestratorCore.js' );
+orchestrator.initialize( app );
+////////// INITIALIZE ORCHESTRATOR CORE -   END //////////
 
 
 
@@ -85,7 +90,7 @@ app.get('/test', function(req, res) { webconsole.test(req, res) });
 
 
 var userController = require(ROOT+'/Controllers/users.js');
-
+userController.initialize( orchestrator );
 
 app.get('/api/'+config.api+'/user/:username', function(req, res) { userController.getUser(req, res) });
 
@@ -98,6 +103,11 @@ app.post('/api/'+config.api+'/user', function(req, res) { userController.postUse
 // put is for editing, post is for registering
 app.put('/api/'+config.api+'/user/:username', function(req, res) { userController.putUser(req, res) });
 app.delete('/api/'+config.api+'/user/:username', function(req, res) { userController.deleteUser(req, res) });
+
+
+app.get(   '/api/'+config.api+'/user/:username/device/:deviceName', function(req, res) { userController.getDevice(req, res) });
+app.post(  '/api/'+config.api+'/user/:username/device/:deviceName', function(req, res) { userController.postDevice(req, res) });
+app.delete('/api/'+config.api+'/user/:username/device/:deviceName', function(req, res) { userController.deleteDevice(req, res) });
 
 
 ////////// Users Controller - END   //////////
@@ -127,8 +137,6 @@ app.get(   '/api/'+config.api+'/capabilities/info', function(req, res) { resourc
 
 
 ////////// Orchestrator - START //////////
-var orchestrator = require( ROOT+'/Controllers/orchestratorCore.js' );
-orchestrator.initialize( app );
 
 app.delete('/api/'+config.api+'/actioninstance/:actioninstanceID', function(req, res) { orchestrator.deleteActionInstance(req, res) });
 app.post('/api/'+config.api+'/actioninstance', function(req, res) { orchestrator.postActionInstance(req, res) });

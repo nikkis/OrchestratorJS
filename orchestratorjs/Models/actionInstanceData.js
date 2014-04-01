@@ -25,11 +25,11 @@ var ActionInstanceDataModel = mongoose.model('actionInstanceDataModel', actionIn
 
 module.exports = function actionInstanceDataHandler()
 {
-    this.findactionInstanceData = function(actionName, next) {
-		    ActionInstanceDataModel.findOne({actionName: actionName}, next);
+    this.findactionInstanceData = function( actionName, next ) {
+		    ActionInstanceDataModel.findOne( { actionName: actionName }, next );
     };
 
-    this.createActionInstanceData = function(actionName, args, next) {
+    this.createActionInstanceData = function(actionName, args, next ) {
     	var lastSeen = new Date();
     	var query = { actionName: actionName };
       ActionInstanceDataModel.findOneAndUpdate(query, { $set: { actionName: actionName, args: args, lastSeen: lastSeen}}, {upsert: true}, function (err, data) {

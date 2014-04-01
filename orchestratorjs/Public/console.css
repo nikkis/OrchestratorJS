@@ -149,6 +149,20 @@ footer ul {
     border-top: 1px solid #c3c9cc;
 }
 
+
+
+.table-container th, .table-container td, .table-container td p {
+    font-size: 0.8em !important;
+}
+
+.table-container td {
+  vertical-align: top;
+}
+
+.ojs-device-icon {
+  padding-right: 5px;
+}
+
 /* devices and instances list table - end */
 
 
@@ -545,6 +559,32 @@ box-sizing: border-box;
 
 
 
+/* User profile - begin */
+
+.ojs-capability-enable-cb {
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.ojs-capability-enable-desc {
+  font-size: 1em;
+  margin-left: 1em;
+  margin-top: 2.5em;
+}
+
+.ojs-userprofile-add-device {
+  margin-top: 2em;
+  font-size: 1em;
+  padding-bottom: 2em;
+}
+
+
+/* User profile - end   */
+
+
+
+
+
 .user-logo-small {
   display: inline-block;
   position: relative;
@@ -559,4 +599,7 @@ textarea {
   text-shadow: none !important;
 }
 
+.ct {
+  text-align: center;;
+}
 
