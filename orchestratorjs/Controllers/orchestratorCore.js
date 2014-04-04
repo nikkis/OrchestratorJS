@@ -177,7 +177,7 @@ this.initialize = function( app ) {
     } );
 
 
-    // rely the message ahead to browsers
+    // rely the log messages ahead to browsers
     socket.on( 'ojs_log', function( actionId, deviceId, message ) {
       if ( config.services.ojsConsole.enabled )
         ojsConsoleSocket.emit( 'ojs_log', actionId, deviceId, message );

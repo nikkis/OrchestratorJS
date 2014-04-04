@@ -163,6 +163,20 @@ footer ul {
   padding-right: 5px;
 }
 
+
+/* for blinking the table cell */
+@-webkit-keyframes mymove { 
+  50% { background: rgb(0, 140, 186); }
+}
+@keyframes mymove { 
+  50% { border-color: rgb(0, 140, 186); }
+}
+.blinkClass {
+  animation:mymove 2s;
+  -webkit-animation:mymove 2s; /* Safari and Chrome */
+}
+
+
 /* devices and instances list table - end */
 
 

@@ -11,6 +11,18 @@ this.log = function( m ) {
   logger.info( m );
 }
 
+// very clos, in the same space, in vicinity
+this.ssidToM = function( ssid ) {
+  if( typeof( ssid ) == 'string' )
+    ssid = parseInt( ssid );
+
+  if( ssid > -70 )
+    return 0.1;
+  else if( ssid > -89 )
+    return 1.0;
+  else
+    return 10;
+};
 
 
 function printHost() {

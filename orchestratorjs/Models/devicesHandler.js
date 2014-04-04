@@ -14,8 +14,9 @@ mongoose.connect( 'mongodb://localhost/' + config.database );
 
 var ojsConsoleSocket = ( config.services.ojsConsole.enabled ) ? require( 'socket.io-client' ).connect( 'http://0.0.0.0:' + config.services.ojsConsole.port ) : undefined;
 var ojsDeviceRegistrySocket = ( config.services.ojsDeviceRegistry.enabled ) ? require( 'socket.io-client' ).connect( 'http://0.0.0.0:' + config.services.ojsDeviceRegistry.port ) : undefined;
+
 function emitContextData( contextDataDict ) {
-  
+
   if ( config.services.ojsDeviceRegistry.enabled )
     ojsDeviceRegistrySocket.emit( 'ojs_context_data', contextDataDict );
 
@@ -46,6 +47,7 @@ var deviceSchema = mongoose.Schema( {
 
 
 var DeviceModel = mongoose.model( 'DeviceModel', deviceSchema );
+
 module.exports = function DeviceHandler() {
 
 
@@ -94,7 +96,7 @@ module.exports = function DeviceHandler() {
   this.findUserDevices = function( username, next ) {
     DeviceModel.find( {
       username: username
-    }, next ); 
+    }, next );
   };
 
 
@@ -108,21 +110,20 @@ module.exports = function DeviceHandler() {
     };
 
     DeviceModel.findOneAndUpdate( query, {
-      $set: {
-        identity: identity,
-        username: username,
-        bluetoothMAC: bluetoothMAC,
-        type: type,
-        name: deviceName,
-        capabilities: capabilities,
-        lastSeen: lastSeen
-      }
-    }, {
-      upsert: true
-    }, 
-    next );
+        $set: {
+          identity: identity,
+          username: username,
+          bluetoothMAC: bluetoothMAC,
+          type: type,
+          name: deviceName,
+          capabilities: capabilities,
+          lastSeen: lastSeen
+        }
+      }, {
+        upsert: true
+      },
+      next );
   };
-
 
 
 
@@ -130,9 +131,9 @@ module.exports = function DeviceHandler() {
 
     var lastSeen = new Date();
     DeviceModel.find( function( err, devicemodels ) {
-      for( i in devicemodels ) {
+      for ( i in devicemodels ) {
 
-        if( devicemodels[ i ].capabilities && devicemodels[ i ].capabilities.indexOf( capabilityName ) != -1 ) {
+        if ( devicemodels[ i ].capabilities && devicemodels[ i ].capabilities.indexOf( capabilityName ) != -1 ) {
           log( 'removing ' + capabilityName + ' from ' + devicemodels[ i ].identity );
           devicemodels[ i ].capabilities.splice( devicemodels[ i ].capabilities.indexOf( capabilityName ) );
           devicemodels[ i ].save();
@@ -174,60 +175,196 @@ module.exports = function DeviceHandler() {
   };
 
 
-  this.upsertMetadata = function( identity, newMetadata, next ) {
+  this.upsertMetadata = function( identity, newMetadata, next1 ) {
+
+    log( 'upsert begin' );
 
     var publishThese = {};
 
-    DeviceModel.findOne( {
-      identity: identity
-    }, function( err, dev ) {
-      if ( err )
-        console.log( 'error while userting metadata for ' + identity + ':' + err );
 
-      var deviceMetadata = dev.metadata;
-      if ( !deviceMetadata )
-        deviceMetadata = {};
 
-      for ( newKey in newMetadata ) {
+    var theUpserMethod = function( identity, newMetadata, cb ) {
 
-        // publish only when metadata changes
-        if ( !deviceMetadata[ newKey ] || deviceMetadata[ newKey ] != newMetadata[ newKey ] ) {
-          var key = newKey; //newKey + '+' + identity;
-          publishThese[ key ] = {
-            deviceIdentity: identity,
-            key: newKey,
-            value: newMetadata[ newKey ]
-          };
-        }
-// check the null issue!!
-        deviceMetadata[ newKey ] = newMetadata[ newKey ];
-      }
-
-      DeviceModel.findOneAndUpdate( {
+      DeviceModel.findOne( {
         identity: identity
-      }, {
-        $set: {
-          metadata: deviceMetadata,
-        }
-      }, {
-        upsert: true
       }, function( err, dev ) {
         if ( err )
           console.log( 'error while userting metadata for ' + identity + ':' + err );
 
-        // sending pubsub notifications
-        for ( key in publishThese ) {
-          emitContextData( publishThese[ key ] );
+        var deviceMetadata = dev.metadata;
+        if ( !deviceMetadata )
+          deviceMetadata = {};
+
+        for ( newKey in newMetadata ) {
+
+          // publish only when metadata changes
+          if ( !deviceMetadata[ newKey ] || deviceMetadata[ newKey ] != newMetadata[ newKey ] ) {
+            var key = newKey; //newKey + '+' + identity;
+            publishThese[ key ] = {
+              deviceIdentity: identity,
+              key: newKey,
+              value: newMetadata[ newKey ],
+              oldValue: deviceMetadata[ newKey ]
+            };
+          }
+          // check the null issue!!
+          deviceMetadata[ newKey ] = newMetadata[ newKey ];
         }
-        
+
+        DeviceModel.findOneAndUpdate( {
+          identity: identity
+        }, {
+          $set: {
+            metadata: deviceMetadata,
+          }
+        }, {
+          upsert: true
+        }, function( err, dev ) {
+          if ( err )
+            console.log( 'error while userting metadata for ' + identity + ':' + err );
+
+          // sending pubsub notifications
+          for ( key in publishThese ) {
+
+            /*
+            // check for special keys, like bt_devices
+            if( key == 'bt_devices' ) {
+              bt_devices_handler( identity, publishThese[ key ].value );
+
+            // the default case
+            } else {
+              emitContextData( publishThese[ key ] );
+            }
+*/
 
 
-        next();
+
+            // original:
+            emitContextData( publishThese[ key ] );
+
+          }
+
+
+          cb();
+        } );
+
       } );
+    }
 
-    } );
+
+
+    // check for special keys, like bt_devices. ( Could also filter these from device updates )
+    for ( key in newMetadata ) {
+      if ( key == 'bt_devices' ) {
+        bt_devices_handler( identity, newMetadata[ key ] );
+      }
+    }
+
+
+    theUpserMethod( identity, newMetadata, next1 );
+
+
+
+    // context data special handlers
+    function bt_devices_handler( identity, btDevicesTuple ) {
+
+      log( btDevicesTuple );
+
+      function getSSID( btMac ) {
+        for ( index in btDevicesTuple ) {
+          if ( btDevicesTuple[ index ][ 0 ] == btMac )
+            return btDevicesTuple[ index ][ 1 ];
+        }
+      }
+
+      var deviceBluetoothMacs = [];
+      for ( index in btDevicesTuple ) {
+        log( btDevicesTuple[ index ] );
+        deviceBluetoothMacs.push( btDevicesTuple[ index ][ 0 ] );
+      }
+      log( 'foo ----- 0' );
+      log( deviceBluetoothMacs );
+      log( 'foo ----- 1' );
+
+      DeviceModel.find( {
+        bluetoothMAC: {
+          $in: deviceBluetoothMacs
+        }
+      }, function( err, deviceModels ) {
+        if ( err ) {
+          log( 'error while handling context data for bt_devices: ' + err );
+          return;
+        }
+
+        var nearbyRegisteredDevices = [];
+        for ( i in deviceModels ) {
+          var ssid = getSSID( deviceModels[ i ].bluetoothMAC );
+          var distance = HELPERS.ssidToM( ssid );
+
+          log( 'nearby registered device: ' + deviceModels[ i ].identity + ': ' + ssid + ', m: ' + distance );
+          nearbyRegisteredDevices.push( [ deviceModels[ i ].identity, distance ] );
+        }
+
+
+
+        DeviceModel.findOne( {
+          identity: identity
+        }, function( err, dev ) {
+          if ( err || !dev )
+            return;
+
+          var deviceMetadata = dev.metadata;
+          if ( !deviceMetadata )
+            deviceMetadata = {};
+
+          deviceMetadata[ 'proximityDevices' ] = nearbyRegisteredDevices;
+
+          // update device that reported to proximity set
+          DeviceModel.findOneAndUpdate( {
+            identity: identity
+          }, {
+            $set: {
+              metadata: deviceMetadata,
+            }
+          }, {
+            upsert: true
+          }, function( err, dev ) {
+            if ( err )
+              console.log( 'error while userting metadata for ' + identity + ':' + err );
+
+            // sending pubsub notifications
+            for ( key in publishThese ) {
+              // original:
+              emitContextData( { 
+                deviceIdentity: identity,
+                key: "proximityDevices",
+                value: nearbyRegisteredDevices,
+                oldValue: []
+              } );
+            }
+
+          } ); // find and update the metadata
+
+        } ); // find to get metadata
+
+
+      } ); // bt
+
+    } // bt_device_handler()
+
 
   };
+
+
+
+  this.findDevicesBasedOnBluetooth = function( btMacs, callback ) {
+    DeviceModel.find( {
+      bluetoothMAC: {
+        $in: btMacs
+      }
+    }, callback );
+  };
+
 
 
   //db.devicemodels.remove({identity: "device:nikkis@s3mini"})
