@@ -49,6 +49,14 @@ function removeDevice( deviceName, $scope, $http ) {
 }
 
 
+
+
+
+
+
+
+
+
 // For creating / editing user device and its settings
 app.controller( 'UserDeviceController',
 	function( $scope, $location, $routeParams, $http, UserService ) {

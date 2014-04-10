@@ -202,6 +202,7 @@ this.getDevices = function( req, res ) {
       var tempDev = {};
       var devModel = devices[ i ];
       tempDev[ 'identity' ] = devModel.identity;
+      tempDev[ 'deviceName' ] = devModel.name;
       tempDev[ 'bluetoothMAC' ] = devModel.bluetoothMAC;
       tempDev[ 'lastSeen' ] = devModel.lastSeen;
       tempDev[ 'username' ] = devModel.username;

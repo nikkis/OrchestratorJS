@@ -105,6 +105,9 @@ app.put('/api/'+config.api+'/user/:username', function(req, res) { userControlle
 app.delete('/api/'+config.api+'/user/:username', function(req, res) { userController.deleteUser(req, res) });
 
 
+app.get(   '/api/'+config.api+'/user/:username/device/:deviceName/proximity', function(req, res) { userController.getProximityGraph(req, res) });
+
+
 app.get(   '/api/'+config.api+'/user/:username/device/:deviceName', function(req, res) { userController.getDevice(req, res) });
 app.post(  '/api/'+config.api+'/user/:username/device/:deviceName', function(req, res) { userController.postDevice(req, res) });
 app.delete('/api/'+config.api+'/user/:username/device/:deviceName', function(req, res) { userController.deleteDevice(req, res) });

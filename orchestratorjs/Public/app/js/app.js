@@ -34,6 +34,9 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/user/:username',  {templateUrl: 'app/partials/account/user.html',  controller: 'UserController', access: { isFree: false }});
   $routeProvider.when('/user/:username/device/:deviceName',  {templateUrl: 'app/partials/account/userDevice.html',  controller: 'UserDeviceController', access: { isFree: false }});
 
+  $routeProvider.when('/user/:username/device/:deviceName/proximity',  {templateUrl: 'app/partials/proximityGraph.html',  controller: 'UserDeviceProximityController', access: { isFree: true }});
+
+
   // apps
   $routeProvider.when('/apps',         {templateUrl: 'app/partials/apps/apps.html', controller: 'AppsController', access: { isFree: true } });
   $routeProvider.when('/app/:appName', {templateUrl: 'app/partials/apps/appEdit.html', controller: 'AppEditController', access: { isFree: false }});

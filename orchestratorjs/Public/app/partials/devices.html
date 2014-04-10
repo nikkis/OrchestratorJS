@@ -38,6 +38,7 @@
 		        <th width="120">Owner</th>
 		        <th width="100">Type</th>
 		        <th>Capabilities</th>
+		        <th>proximityDevices</th>
 		        <th ng-repeat="metadataTitle in metadataFields">{{metadataTitle}}</th>
 		      </tr>
 		    </thead>
@@ -45,7 +46,6 @@
 		      <tr ng-repeat="device in devices">
 		      	<!--<td><a>edit</a></td>-->
 		        <td class="{{device.identity.replace('@','AT')}}_online" style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><p ng-bind="device.identity"></p></td>
-						<!--<td style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><input type="text" ng-model="device.identity"></input></td>-->
 
 		        <td><p ng-bind="( device.bluetoothMAC ) ? device.bluetoothMAC : 'N/A'"></p></td>
 		        <td><p ng-bind="device.username" ></p></td>
@@ -61,9 +61,13 @@
 		        	</table>
 		        
 		        </td>
-		       	<td ng-repeat="metadataTitle in metadataFields" class="{{device.identity.replace('@','AT')}}_{{metadataTitle}}"><p ng-bind="( !device.metadata[ metadataTitle ] ) ? 'N/A': ( device.metadata[metadataTitle].join().length > 30 ) ? device.metadata[metadataTitle].join().substring(0,27) + '..' : device.metadata[metadataTitle]"></p></td>
 
+		       	<td class="{{device.identity.replace('@','AT')}}_proximityDevices"><a ng-href="#/user/{{device.username}}/device/{{device.deviceName}}/proximity" ng-bind="( !device.metadata.proximityDevices ) ? 'N/A': ( device.metadata.proximityDevices.join().length > 30 ) ? device.metadata.proximityDevices.join().substring(0,27) + '..' : device.metadata.proximityDevices"></a></td>
+
+
+		       	<td ng-repeat="metadataTitle in metadataFields" class="{{device.identity.replace('@','AT')}}_{{metadataTitle}}"><p ng-bind="( !device.metadata[ metadataTitle ] ) ? 'N/A': ( device.metadata[metadataTitle].join().length > 30 ) ? device.metadata[metadataTitle].join().substring(0,27) + '..' : device.metadata[metadataTitle]"></p></td>
 		      </tr>
+
 		    </tbody>
 		  </table>
 		</div>
