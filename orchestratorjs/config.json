@@ -45,7 +45,7 @@
 		}
 	},
 
-	"device_types": ["android", "gadgeteer", "arduino", "ios"],
+	"device_types": ["android", "gadgeteer", "arduino", "ios" ],
 
 	"api" : "1"
 }
