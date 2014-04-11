@@ -1,0 +1,33 @@
+
+<div class="row contents">
+  <div class="large-12 columns">
+
+    <center>
+    <div class="table-container">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Action name</th>
+            <th width="120">Identity</th>
+            <th>Participants</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="instance in actioninstances">
+            <td><p>{{instance.name}}</p></td>
+            <td><p>{{instance.identity}}</p></td>
+            <td><ul class="inline-list"><li ng-repeat="deviceId in instance.participants">{{deviceId}}</li</ul></td>
+            
+            <td><a ng-click="deleteActionInstance(instance.identity)" ><i class="fi-x ojs-device-icon"></i>kill</a></td>
+
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    </center>
+
+  </div>
+</div>

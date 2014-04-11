@@ -55,7 +55,7 @@ app.controller( 'DocsController',
 );
 
 
-
+/*
 app.controller( 'ActionsController',
 	function( $scope ) {
 
@@ -68,16 +68,6 @@ app.controller( 'ActionsController',
 );
 
 
-app.controller( 'ActionInstancesController',
-	function( $scope ) {
-
-		$( '.non-angular-container' ).html( '' );
-		$( '.angular-container' ).hide();
-
-		showInstances();
-	}
-);
-
 
 app.controller( 'CapabilitiesController',
 	function( $scope ) {
@@ -99,3 +89,4 @@ app.controller( 'CapabilitiesController',
 		showCapabilities();
 	}
 );
+*/

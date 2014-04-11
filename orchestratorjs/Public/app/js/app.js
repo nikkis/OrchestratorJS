@@ -45,10 +45,12 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/devices', {templateUrl: 'app/partials/devices.html', controller: 'DevicesController', access: { isFree: true }});
 
   // actions
-  $routeProvider.when('/instances', {templateUrl: 'app/partials/empty.html', controller: 'ActionInstancesController', access: { isFree: true }});
+  $routeProvider.when('/instances', {templateUrl: 'app/partials/actionInstances.html', controller: 'ActionInstancesController', access: { isFree: true }});
   
   //$routeProvider.when('/actions', {templateUrl: 'app/partials/empty.html', controller: 'ActionsController', access: { isFree: true }});
   $routeProvider.when('/actions', {templateUrl: 'app/partials/actionEdit.html', controller: 'ActionEditController', access: { isFree: true }});
+  $routeProvider.when('/actions/instances', {templateUrl: 'app/partials/actionInstances.html', controller: 'ActionInstancesController', access: { isFree: true }});
+
   
   // capabilities
   

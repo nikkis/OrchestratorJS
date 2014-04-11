@@ -93,6 +93,41 @@ function pushCodeToCloud( $scope ) {
 /*
 *			Action
 */
+
+
+app.controller( 'ActionInstancesController',
+	function( $scope, $http, AuthService, UserService ) {
+
+
+		$scope.UserService = UserService;
+
+		
+
+		$http.get( '/api/' + apiVersion + '/actioninstances' ).success( function( data, status, headers, config ) {
+			$scope.actioninstances = data.actioninstances;
+		} );	
+
+
+		$scope.deleteActionInstance = function( actioninstanceID ) {
+			$http.delete( '/api/' + apiVersion + '/actioninstance/' + actioninstanceID ).success( function( data, status, headers, config ) {
+				alert( data );
+
+			} ).error( function( data, status, headers, config ) {
+				alert( data );
+			} );
+
+			$http.get( '/api/' + apiVersion + '/actioninstances' ).success( function( data, status, headers, config ) {
+				$scope.actioninstances = data.actioninstances;
+			} );
+
+		};
+
+	}
+);
+
+
+
+
 app.controller( 'ActionEditController',
 	function( $scope, $http, AuthService, UserService ) {
 

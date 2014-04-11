@@ -134,7 +134,7 @@ this.initialize = function( app ) {
         log( 'methodCallResponseValue:' );
         log( methodCallResponseValue )
         */
-        
+
         if ( methodCallResponseType == 'INT' ) {
           methodCallResponseValue = parseInt( methodCallResponseValue );
         }
@@ -289,6 +289,7 @@ this.deleteActionInstance = function( req, res ) {
   var actioninstanceID = req.params.actioninstanceID;
   log( 'killing: ' + actioninstanceID );
   actionFinishHandler( actioninstanceID );
+  res.send('Killing action with id: '+actioninstanceID);
 }
 
 

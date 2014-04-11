@@ -50,7 +50,10 @@ function changeActivePage(newPage) {
 
 function showView( name ) {
    
+
     console.log('name: '+name);
+   
+/*
     $('.non-angular-container').show();
     $('.angular-container').hide();
     
@@ -87,7 +90,7 @@ function showView( name ) {
             showHome();
             break;
     }
-
+*/
 }
 
 
@@ -377,6 +380,9 @@ function deleteCapability( capabilityName ) {
 
 
 function showInstances() {
+
+    console.log('old showInstances');
+
     $.getJSON( '/api/' + apiVersion + '/actioninstances', function( data ) {
         require( [ 'text!templates/actioninstances.html' ], function( actioninstancesTemplate ) {
             var html = Mustache.to_html( actioninstancesTemplate, data );
