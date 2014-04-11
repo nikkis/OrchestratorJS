@@ -126,11 +126,15 @@ this.initialize = function( app ) {
     socket.on( 'methodcallresponse', function( actionId, methodCallId, methodCallResponseValue, methodCallResponseType ) {
       log( 'methodcallresponse' );
       try {
-        /*log( 'response for action: ' + actionId );
+
+        /*
+        log( 'response for action: ' + actionId );
         log( 'methodcall id: ' + methodCallId );
         log( 'methodCallResponseType: ' + methodCallResponseType );
         log( 'methodCallResponseValue:' );
-        log( methodCallResponseValue );*/
+        log( methodCallResponseValue )
+        */
+        
         if ( methodCallResponseType == 'INT' ) {
           methodCallResponseValue = parseInt( methodCallResponseValue );
         }

@@ -203,6 +203,9 @@
 .fi-social-amazon:before,
 .fi-social-android:before,
 .fi-social-apple:before,
+
+.fi-social-ios:before,
+
 .fi-social-behance:before,
 .fi-social-bing:before,
 .fi-social-blogger:before,
@@ -249,6 +252,9 @@
 .fi-social-twitter:before,
 .fi-social-vimeo:before,
 .fi-social-windows:before,
+
+.fi-social-gadgeteer:before,
+
 .fi-social-xbox:before,
 .fi-social-yahoo:before,
 .fi-social-yelp:before,
@@ -295,6 +301,9 @@
 .fi-web:before,
 .fi-wheelchair:before,
 .fi-widget:before,
+
+.fi-social-arduino:before,
+
 .fi-wrench:before,
 .fi-x-circle:before,
 .fi-x:before,
@@ -500,6 +509,9 @@
 .fi-social-amazon:before { content: "\f1b6"; }
 .fi-social-android:before { content: "\f1b7"; }
 .fi-social-apple:before { content: "\f1b8"; }
+
+.fi-social-ios:before { content: "\f1b8"; }
+
 .fi-social-behance:before { content: "\f1b9"; }
 .fi-social-bing:before { content: "\f1ba"; }
 .fi-social-blogger:before { content: "\f1bb"; }
@@ -546,6 +558,9 @@
 .fi-social-twitter:before { content: "\f1e4"; }
 .fi-social-vimeo:before { content: "\f1e5"; }
 .fi-social-windows:before { content: "\f1e6"; }
+
+.fi-social-gadgeteer:before { content: "\f1e6"; }
+
 .fi-social-xbox:before { content: "\f1e7"; }
 .fi-social-yahoo:before { content: "\f1e8"; }
 .fi-social-yelp:before { content: "\f1e9"; }
@@ -594,6 +609,9 @@
 .fi-web:before { content: "\f212"; }
 .fi-wheelchair:before { content: "\f213"; }
 .fi-widget:before { content: "\f214"; }
+
+.fi-social-arduino:before { content: "\f214"; }
+
 .fi-wrench:before { content: "\f215"; }
 .fi-x-circle:before { content: "\f216"; }
 .fi-x:before { content: "\f217"; }
