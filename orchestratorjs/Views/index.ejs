@@ -3,15 +3,15 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app="ojsConsole", ng-controller="AppController" > <!--<![endif]-->
 
 <head>
-  
+
 
   <title><%= title %></title>
   <link rel="icon" type="image/png" href="img/ojs_logos/png/ojs-32.png">
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  
-  <!-- WEB CONSOLE CONFIG FILE -->  
+
+  <!-- WEB CONSOLE CONFIG FILE -->
   <script src="config.js"></script>
   <script type="text/javascript">
     hostName   = '<%= hostName %>';
@@ -51,8 +51,8 @@
   <link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/foundation.css">
-  <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css">    
-  
+  <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css">
+
   <!-- Google Webfonts -->
   <!--<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">-->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
@@ -84,7 +84,7 @@
       <ul class="title-area">
         <li class="name">
           <h1><a href="#/" ><%= title %></a></h1>
-      </li>    
+      </li>
       <li class="toggle-topbar menu-icon"><a><span>Menu</span>
             </a>
         </li>
@@ -94,7 +94,7 @@
 
         <!-- Left Nav Section -->
         <ul class="left">
-          
+
           <li class="divider"></li>
           <li><a href="#/apps" class="aTopMenuBtn" check-user="1" >Apps</a></li>
           <li class="divider"></li>
@@ -112,7 +112,7 @@
           <li class="divider"></li>
 
           <li class="has-dropdown">
-            <a href="#/develop" class="">Develop</a>
+            <a href="#/develop" class="">Docs</a>
             <ul class="dropdown">
               <li><a href="#/develop">General instructions</a></li>
               <li><a href="#/develop/android">Develop for Android</a></li>
@@ -129,7 +129,7 @@
 
 
         <!-- Right Nav Section -->
-        
+
         <ul class="right">
           <li class="divider hide-for-small"></li>
 
@@ -151,7 +151,7 @@
                 <li><a href="#/user/{{UserService.username}}" ng-bind='UserService.username'></a></li>
                 <li><a href="#/user/{{UserService.username}}/device/newDevice" >Add Device</a></li>
                 <li><a href="#/signOut">Sign out</a></li>
-              </ul>        
+              </ul>
             </li>
           </span>
 
@@ -223,7 +223,7 @@
   <script src="app/lib/socket.io.js"></script>
   <script src="app/lib/angular/angular.js"></script>
   <script src="app/lib/angular/angular-route.js"></script>
-  
+
   <script src="app/js/app.js"></script>
 
   <script src="app/js/services/services.js"></script>
