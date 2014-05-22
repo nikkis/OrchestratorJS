@@ -1,0 +1,11 @@
+{
+	"name": "tests",
+  	"description": "tests for Orchestrator.js",
+  	"version": "0.0.1",
+
+	"dependencies": {
+		"fibers": "1.0.1",
+		"socket.io-client": ">= 0.0.1",
+		"request": ">= 0.0.1"
+	}
+}

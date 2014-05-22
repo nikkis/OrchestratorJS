@@ -34,6 +34,7 @@ var deviceSchema = mongoose.Schema( {
   },
   username: String,
   bluetoothMAC: String,
+  btUUID: String,
   name: String,
   type: String,
   capabilities: [],
@@ -164,7 +165,19 @@ module.exports = function DeviceHandler() {
     }, {
       upsert: true
     }, function( err, dev ) {
+
+      log('jepulis');
+
       if ( !err ) {
+
+        if( !dev.btUUID ) {
+          log('not yet UUID -> generate + save');
+          dev.btUUID = HELPERS.getUUID();
+          dev.save();
+          log('saved UUID');
+
+        }
+
         console.log( dev.identity );
       } else {
         console.log( 'error while userting DeviceModel: ' + err );
@@ -335,7 +348,7 @@ module.exports = function DeviceHandler() {
             // sending pubsub notifications
             for ( key in publishThese ) {
               // original:
-              emitContextData( { 
+              emitContextData( {
                 deviceIdentity: identity,
                 key: "proximityDevices",
                 value: nearbyRegisteredDevices,

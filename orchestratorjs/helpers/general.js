@@ -2,7 +2,7 @@ ROOT = process.cwd();
 var logger = require( ROOT + '/logs/log' );
 
 var crypto = require( 'crypto' );
-
+var uuid = require('node-uuid');
 
 var fs = require( 'fs' );
 
@@ -40,6 +40,10 @@ function printHost() {
       }
     } );
   }
+}
+
+this.getUUID = function() {
+  return uuid.v4();
 }
 
 this.md5 = function( s ) {
