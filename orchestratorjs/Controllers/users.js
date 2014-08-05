@@ -249,7 +249,6 @@ module.exports = {
 				device.btUUID = HELPERS.getUUID();
 				device.save();
 				log('saved UUID');
-
 			}
 
 
