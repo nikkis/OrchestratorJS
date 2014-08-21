@@ -12,13 +12,13 @@ this.log = function( m ) {
 }
 
 // very clos, in the same space, in vicinity
-this.ssidToM = function( ssid ) {
-  if( typeof( ssid ) == 'string' )
-    ssid = parseInt( ssid );
+this.rssiToM = function( rssi ) {
+  if( typeof( rssi ) == 'string' )
+    rssi = parseInt( rssi );
 
-  if( ssid > -70 )
+  if( rssi > -70 )
     return 0.1;
-  else if( ssid > -89 )
+  else if( rssi > -89 )
     return 1.0;
   else
     return 10;
@@ -177,4 +177,60 @@ this.reRequire = function( fullPath ) {
     delete require.cache[ require.resolve( fullPath ) ];
   }
   return require( fullPath );
+};
+
+
+/*
+this.getResourceMD5 = function( type, name ) {
+
+  var resourcepathpart;
+  if( type == 'action' || type == 'ACTION' ) {
+    resourcepathpart = 'actions';
+  } else if ( type = 'capability' || type == 'CAPABILITY' ) {
+    resourcepathpart = 'capabilities';
+  } else {
+    throw( 'unkown resource type for md5' );
+  }
+
+  fs.readFile( ROOT + '/resources/' + resourcepathpart + '/' + name + '.js', 'binary', function( error, file ) {
+
+    if( error ) {
+      throw( 'Cannot calucalte resource hash' );
+    }
+
+    var s = file;
+
+    // does not work, needs invoking a function instead of return.. return crypto.createHash('md5').update( s ).digest('hex');
+
+  } );
+}
+*/
+
+
+
+this.getIdentities = function( params ) {
+
+
+
+  function recursiveGetIdentities( params ) {
+
+    for ( i in params ) {
+      var param = params[ i ];
+      log( 'param: ' + param );
+      if ( param instanceof Array ) {
+        recursiveGetIdentities( param );
+      } else {
+        log('else');
+        if ( param.slice( 0, 7 ) == 'device:' ) {
+          log( param.slice( 7 ) );
+          deviceIdentities.push( param.slice( 7 ) );
+        }
+      }
+    }
+  }
+
+  var deviceIdentities = [];
+  recursiveGetIdentities( params );
+
+  return deviceIdentities;
 };

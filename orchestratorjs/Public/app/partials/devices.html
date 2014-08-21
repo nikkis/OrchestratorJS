@@ -35,6 +35,7 @@
 		      	<!--<th width="50"></th>-->
 		        <th width="120">Identity</th>
 		        <th width="130"><i class="fi-bluetooth ojs-device-icon"></i>MAC</th>
+						<th width="130"><i class="fi-bluetooth ojs-device-icon"></i>BLE UUID</th>
 		        <th width="120">Owner</th>
 		        <th width="100">Type</th>
 		        <th>Capabilities</th>
@@ -48,18 +49,19 @@
 		        <td class="{{device.identity.replace('@','AT')}}_online" style="background-color:#{{ (device.online) ? '2BA6CB' : ''}};"><p ng-bind="device.identity"></p></td>
 
 		        <td><p ng-bind="( device.bluetoothMAC ) ? device.bluetoothMAC : 'N/A'"></p></td>
+						<td><p ng-bind="( device.btUUID ) ? device.btUUID : 'N/A'"></p></td>
 		        <td><p ng-bind="device.username" ></p></td>
-		        
+
 						<td><i class="fi-social-{{device.type == 'gadgeteer' ? 'windows' : device.type }} ojs-device-icon"></i>{{device.type}}</td>
 
 		        <td>
-		        	
+
 		        	<table>
 		        		<tr>
 		        			<td ng-repeat="capability in device.capabilities" class="has-tooltip" style="background-color: #{{capability.color}};" title="{{capability.name}}" ></td>
 		        		</tr>
 		        	</table>
-		        
+
 		        </td>
 
 		       	<td class="{{device.identity.replace('@','AT')}}_proximityDevices"><a ng-href="#/user/{{device.username}}/device/{{device.deviceName}}/proximity" ng-bind="( !device.metadata.proximityDevices ) ? 'N/A': ( device.metadata.proximityDevices.join().length > 30 ) ? device.metadata.proximityDevices.join().substring(0,27) + '..' : device.metadata.proximityDevices"></a></td>

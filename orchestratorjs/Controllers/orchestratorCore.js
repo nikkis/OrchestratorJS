@@ -84,7 +84,7 @@ this.initialize = function( app ) {
 
 
     /*
-     
+
     //////////////////////////////////////////
     // For testing
     socket.on( 'test', function( deviceid ) {
@@ -127,13 +127,13 @@ this.initialize = function( app ) {
       log( 'methodcallresponse' );
       try {
 
-        /*
+
         log( 'response for action: ' + actionId );
         log( 'methodcall id: ' + methodCallId );
         log( 'methodCallResponseType: ' + methodCallResponseType );
         log( 'methodCallResponseValue:' );
         log( methodCallResponseValue )
-        */
+
 
         if ( methodCallResponseType == 'INT' ) {
           methodCallResponseValue = parseInt( methodCallResponseValue );
@@ -177,6 +177,9 @@ this.initialize = function( app ) {
 
     // save changed metadata and emit to observers and browsers
     socket.on( 'ojs_context_data', function( actionId, deviceId, metadataDict ) {
+
+      log('wo oooo oo o');
+
       DEVICE_HANDLER.upsertMetadata( deviceId, metadataDict, function( err, devices ) {} );
     } );
 
@@ -208,6 +211,7 @@ this.getDevices = function( req, res ) {
       tempDev[ 'identity' ] = devModel.identity;
       tempDev[ 'deviceName' ] = devModel.name;
       tempDev[ 'bluetoothMAC' ] = devModel.bluetoothMAC;
+      tempDev[ 'btUUID' ] = devModel.btUUID;
       tempDev[ 'lastSeen' ] = devModel.lastSeen;
       tempDev[ 'username' ] = devModel.username;
       tempDev[ 'type' ] = devModel.type;
@@ -299,9 +303,13 @@ this.postActionInstance = function( req, res ) {
   var actionName = req.body[ 'actionName' ];
   var parameters = req.body[ 'parameters' ];
 
+
+
   // save the parameters
   ACTION_INSTANCE_DATA_HANDLER.createActionInstanceData( actionName, parameters, function( err, metadata ) {} );
 
+/*
+// general helpers
   function getIdentities( params ) {
     for ( i in params ) {
       var param = params[ i ];
@@ -316,11 +324,12 @@ this.postActionInstance = function( req, res ) {
       }
     }
   }
-
-
   var deviceIdentities = [];
   getIdentities( parameters );
 
+*/
+
+  var deviceIdentities = HELPERS.getIdentities( parameters );
 
   DEVICE_HANDLER.findMultipleDevices( deviceIdentities, function( err, devices ) {
 
@@ -330,14 +339,34 @@ this.postActionInstance = function( req, res ) {
         throw ( 'Not all devices found' );
       } else {
 
-        var actionId = executeAction( res, actionName, devices, parameters );
-        var body = actionId + '\n';
-        log( 'Action instance (' + actionId + ') created' );
-        res.setHeader( 'Content-Type', 'text/plain' );
-        res.setHeader( 'Content-Length', body.length );
-        res.end( body );
-      }
 
+
+        // check if BLE instance
+        var bleCoordinatorDeviceIdentity = req.body[ 'bleCoordinatorDeviceIdentity' ];
+        if( bleCoordinatorDeviceIdentity ) {
+          log( 'This is BLE action instance, coodinator: ' + bleCoordinatorDeviceIdentity );
+
+          var actionId = executeBLEAction( res, actionName, devices, parameters, bleCoordinatorDeviceIdentity );
+          var body = actionId + '\n';
+          log( 'BLE action instance (' + actionId + ') created' );
+          res.setHeader( 'Content-Type', 'text/plain' );
+          res.setHeader( 'Content-Length', body.length );
+          res.end( body );
+          return;
+        }
+
+        // Normal (non-BLE) action instance
+        else
+        {
+          var actionId = executeAction( res, actionName, devices, parameters, bleCoordinatorDeviceIdentity );
+          var body = actionId + '\n';
+          log( 'Action instance (' + actionId + ') created' );
+          res.setHeader( 'Content-Type', 'text/plain' );
+          res.setHeader( 'Content-Length', body.length );
+          res.end( body );
+          return;
+      }
+      }
     } catch ( err ) {
       log( 'Error while creating action instance: ' + err );
       var body = 'Error: ' + err + '\n';
@@ -621,7 +650,7 @@ function ActionRunnable( actionName ) {
         this.action.exceptionHandlingOn = false;
         log( 'exception (' + exception_value + ') of method call ' + methodCallId + ' executed' );
 
-        // release here bodyInstanceFiber because error happened on client side and still waiting for response                
+        // release here bodyInstanceFiber because error happened on client side and still waiting for response
         log( 'client-side exception' );
         var runResponse = {
           runRetType: runYieldHelpers.OJS_EXCEPTION,
@@ -691,6 +720,138 @@ function g( object, func, args ) {
 }
 
 
+
+function executeBLEAction( res, actionName, deviceModels, actionParameters, coordinatorDeviceIdentity ) {
+
+log(actionName);
+    try {
+      var bodyDefinition = HELPERS.reRequire( ROOT + config.resources.actions + actionName + '.js' );
+
+      var action = new ActionRunnable( actionName );
+      var actionID = 'BLE_'+action.id;
+      // calculate MD5 from contents and give the hash as a parameter for the coordinator
+      var actionVersionHash = HELPERS.md5( bodyDefinition.toString() );
+
+      var coordinatorDeviceIdentity = HELPERS.getIdentities( [coordinatorDeviceIdentity] );
+
+
+log('SALIL EKA SALIL VIKA 0');
+
+      // check that the coordinator device is connected to OJS
+      var participantInfo = [];
+      var deviceStubs = createDevices( deviceModels, action.id, action );
+
+      // generate stub info that is sent to the device coordinator
+      for( i in deviceModels ) {
+        participantInfo.push( { identity: deviceModels[i].identity, capabilities: deviceModels[i].capabilities, btUUID: deviceModels[i].btUUID, username: deviceModels[i].username } );
+        log('participant id: '+deviceStubs[i].identity);
+      }
+
+      var params = { actionName: actionName, actionID: actionID, actionParams: actionParameters, participantInfo: participantInfo, actionVersionHash: actionVersionHash};
+
+      // command device ( coordinatorDeviceIdentity ) with socket.io to initialize the action instance
+      var soc = CONNECTION_POOL[ coordinatorDeviceIdentity ];
+      soc.emit( 'ojs_action_instance', params );
+
+      log('SALIL EKA SALIL VIKA 1');
+
+      // command also other participants to start peripheral?
+
+
+      return actionID;
+
+
+
+
+/*
+      if ( bodyDefinition[ 'exceptionHandler' ] ) {
+        action.exceptionHandler = bodyDefinition[ 'exceptionHandler' ];
+      }
+      if ( bodyDefinition[ 'serverSideExceptionHandler' ] ) {
+        action.serverSideExceptionHandler = bodyDefinition[ 'serverSideExceptionHandler' ];
+      }
+      if ( bodyDefinition[ 'eventHandler' ] ) {
+        action.eventHandler = bodyDefinition[ 'eventHandler' ];
+      }
+*/
+
+
+
+/*
+
+
+      function getStubByDeviceIdParam( device_id_param ) {
+        log( device_id_param );
+        var r = undefined;
+        for ( j in deviceStubs ) {
+          var stub = deviceStubs[ j ];
+          if ( device_id_param == 'device:' + stub.identity ) {
+            log( 'match' );
+            return stub;
+          }
+        }
+        return r;
+      }
+
+      function replaceIdsWithDevices( paramsArray ) {
+        for ( i in paramsArray ) {
+          var param = paramsArray[ i ];
+          if ( param instanceof Array ) {
+            replaceIdsWithDevices( param );
+          } else if ( param.slice( 0, 7 ) == 'device:' ) {
+            log( 'device param: ' + param );
+            paramsArray[ i ] = getStubByDeviceIdParam( param );
+          } else {
+            log( 'regular param: ' + param );
+          }
+        }
+      }
+
+      replaceIdsWithDevices( parameters );
+      for ( i in deviceStubs ) {
+
+
+        action.participants[ deviceStubs[ i ].identity ] = deviceStubs[ i ];
+      }
+
+      var bodyInstanceFiber = Fiber( function() {
+        try {
+          var fiber = Fiber.current;
+          var o = {
+            mySuper: this
+          };
+          var p = action.body;
+          g( o, p, parameters );
+          actionFinishHandler( action.id );
+        } catch ( serverSideError ) {
+          log( serverSideError );
+          try {
+            //action.handleException('no-method-id','server',serverSideError);
+            action.handleServerSideException( serverSideError );
+          } catch ( doubleError ) {
+            log( 'Error while handling server side error: ' + doubleError );
+            actionFinishHandler( action.id );
+          };
+        }
+      } );
+
+      action.setBodyInstance( bodyInstanceFiber );
+      action.run();
+
+      actionPool[ action.id ] = action;
+
+      return action.id;
+      */
+
+
+    } catch ( error ) {
+      log( error );
+      throw ( error );
+    }
+}
+
+
+
 function executeAction( res, actionName, deviceModels, parameters ) {
 
   try {
@@ -713,6 +874,7 @@ function executeAction( res, actionName, deviceModels, parameters ) {
 
     // create the device stubs
     var deviceStubs = createDevices( deviceModels, action.id, action );
+
 
     /*
         function replaceIdsWithStubs(devStub, params) {
@@ -766,7 +928,7 @@ function executeAction( res, actionName, deviceModels, parameters ) {
 
     replaceIdsWithDevices( parameters );
     for ( i in deviceStubs ) {
-      
+
       /*log( 'dev: ' + deviceStubs[ i ].deviceName );
       if ( deviceStubs[ i ] instanceof DeviceStub ) {
         log( 'juuu u' );

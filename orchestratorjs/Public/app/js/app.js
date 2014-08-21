@@ -5,14 +5,14 @@
 angular.module('ojsConsole', [
   'ngRoute',
   'ojsConsole.filters',
-  
+
   'ojsConsole.services',
   'ojsConsole.services.UserService',
   'ojsConsole.services.AuthService',
   'ojsConsole.services.SocketIOService',
 
   'ojsConsole.directives',
-  
+
   'ojsConsole.controllers',
   'ojsConsole.controllers.ActionAndCapabilityControllers',
   'ojsConsole.controllers.AppsController',
@@ -46,14 +46,14 @@ config(['$routeProvider', function($routeProvider) {
 
   // actions
   $routeProvider.when('/instances', {templateUrl: 'app/partials/actionInstances.html', controller: 'ActionInstancesController', access: { isFree: true }});
-  
+
   //$routeProvider.when('/actions', {templateUrl: 'app/partials/empty.html', controller: 'ActionsController', access: { isFree: true }});
   $routeProvider.when('/actions', {templateUrl: 'app/partials/actionEdit.html', controller: 'ActionEditController', access: { isFree: true }});
   $routeProvider.when('/actions/instances', {templateUrl: 'app/partials/actionInstances.html', controller: 'ActionInstancesController', access: { isFree: true }});
 
-  
+
   // capabilities
-  
+
   $routeProvider.when('/capabilities', {templateUrl: 'app/partials/capabilityEdit.html', controller: 'CapabilityEditController', access: { isFree: true }});
   $routeProvider.when('/capabilitiesOld', {templateUrl: 'app/partials/empty.html', controller: 'CapabilitiesController', access: { isFree: true }});
 
@@ -61,6 +61,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/develop', {templateUrl: 'app/partials/docs/developGeneral.html', controller: 'DocsController', access: { isFree: true }});
   $routeProvider.when('/develop/android', {templateUrl: 'app/partials/docs/developAndroid.html', controller: 'DocsController', access: { isFree: true }});
   $routeProvider.when('/develop/gadgeteer', {templateUrl: 'app/partials/docs/developGadgeteer.html', controller: 'DocsController', access: { isFree: true }});
+  $routeProvider.when('/develop/iOS', {templateUrl: 'app/partials/docs/developiOS.html', controller: 'DocsController', access: { isFree: true }});
   $routeProvider.when('/api', {templateUrl: 'app/partials/docs/developAPI.html', controller: 'DocsController', access: { isFree: true }});
 
 

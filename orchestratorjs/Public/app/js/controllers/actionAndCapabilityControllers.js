@@ -14,12 +14,12 @@ function loadCodeToEditor( fileName, $scope ) {
       type: 'GET',
       url: '/api/' + apiVersion + '/' + $scope.type + '/' + fileName,
   } ).done( function( data ) {
-		
+
 		$scope.fileName = fileName;
 		$scope.$apply();
 
 		editor.setValue(data);
-		
+
   } );
 }
 
@@ -29,7 +29,7 @@ function newFile( $scope ) {
 }
 
 function deleteFile( $scope, $http ) {
-	
+
 	var fileName = $( '#fileNameInput' ).val();
 	if( !fileName ) {
 		alert( 'Nothing to delete!' );
@@ -47,7 +47,7 @@ function deleteFile( $scope, $http ) {
 			alert( data );
 			newFile( $scope );
 			loadFilesList( $scope );
-		} );	
+		} );
 	}
 }
 
@@ -86,7 +86,7 @@ function pushCodeToCloud( $scope ) {
   	alert( fileName+ ' saved!' );
   	loadFilesList( $scope );
   } );
-	
+
 }
 
 
@@ -101,11 +101,11 @@ app.controller( 'ActionInstancesController',
 
 		$scope.UserService = UserService;
 
-		
+
 
 		$http.get( '/api/' + apiVersion + '/actioninstances' ).success( function( data, status, headers, config ) {
 			$scope.actioninstances = data.actioninstances;
-		} );	
+		} );
 
 
 		$scope.deleteActionInstance = function( actioninstanceID ) {
@@ -158,7 +158,7 @@ app.controller( 'ActionEditController',
 		$scope.UserService = UserService;
 		$scope.type = 'Action';
 		$scope.prevParamCheckbox = false;
-		
+
 		loadFilesList( $scope );
 
 		$scope.showActionCode = function( fileName ) {
@@ -186,7 +186,7 @@ app.controller( 'ActionEditController',
     // action specific handlers
 		$scope.showPreviousParams = function() {
 			var fileName = $( '#fileNameInput' ).val();
-    	if ( $scope.prevParamCheckbox) { 		
+    	if ( $scope.prevParamCheckbox) {
         $.getJSON( '/api/' + apiVersion + '/action/' + fileName + '/metadata', function( data ) {
           var preLoadData = [];
           for ( i in data.args ) {
@@ -202,11 +202,13 @@ app.controller( 'ActionEditController',
     };
 
     $scope.triggerAction = function() {
+
 			var actionName = $( '#fileNameInput' ).val();
 			if( !actionName ) {
 				alert('No action selected!');
 				return;
 			}
+
 	    var actionParameters = [];
 	    var divs = $( "#paramLine" ).select2( "container" ).children().find( '.select2-search-choice' ).find( 'div' );
 	    for ( var i = 0; i < divs.length; i++ ) {
@@ -220,6 +222,18 @@ app.controller( 'ActionEditController',
 	    pp[ 'actionName' ] = actionName;
 	    pp[ 'parameters' ] = actionParameters;
 
+
+			var bleCoodinatorID = $( '#useBLECoordinationTextfield' ).val();
+			if( bleCoodinatorID ) {
+				// ugly hack..
+				if( bleCoodinatorID.slice( 0 ) == '"' && bleCoodinatorID.slice( -1 ) == '"' ) {
+					bleCoodinatorID = bleCoodinatorID.slice( 1, bleCoodinatorID - 2 );
+				}
+				console.log('using ' + bleCoodinatorID + ' as a coordinator');
+				pp[ 'bleCoordinatorDeviceIdentity' ] = JSON.parse( bleCoodinatorID );
+			}
+
+
 	    $.ajax( {
 	       type: 'POST',
 	       url: '/api/' + apiVersion + '/actioninstance',
@@ -230,7 +244,7 @@ app.controller( 'ActionEditController',
 	       console.log( msg );
 	    } );
     };
-		
+
 
 	}
 );
@@ -257,6 +271,23 @@ function loadDeviceParameters() {
     $( '#paramLine' ).on( 'change', function() {
         $( '#paramLine_val' ).html( $( '#paramLine' ).val() );
     } );
+
+
+		// BLE coordinator ids
+
+		$( "#useBLECoordinationTextfield" ).select2( {
+				tags: devices,
+				separator: "<myseparotor>",
+				tokenSeparators: [ "<myseparotor>" ]
+		} );
+
+		$( '#useBLECoordinationTextfield' ).on( 'change', function() {
+				$( '#useBLECoordinationTextfield' ).html( $( '#useBLECoordinationTextfield' ).val() );
+		} );
+
+
+
+
 
 /*    $( '#paramLine' ).select2( 'container' ).find( 'ul.select2-choices' ).sortable( {
         containment: 'parent',
@@ -298,7 +329,7 @@ app.controller( 'CapabilityEditController',
 
 		$scope.UserService = UserService;
 		$scope.type = 'Capability';
-		
+
 		loadFilesList( $scope );
 
 		$scope.showCapabilityCode = function( fileName ) {
@@ -319,5 +350,3 @@ app.controller( 'CapabilityEditController',
 
 	}
 );
-
-

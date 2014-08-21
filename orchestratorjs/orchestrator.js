@@ -142,10 +142,10 @@ app.get(   '/api/'+config.api+'/capabilities/info', function(req, res) { resourc
 ////////// Orchestrator - START //////////
 
 app.delete('/api/'+config.api+'/actioninstance/:actioninstanceID', function(req, res) { orchestrator.deleteActionInstance(req, res) });
-app.post('/api/'+config.api+'/actioninstance', function(req, res) { orchestrator.postActionInstance(req, res) });
+app.post(  '/api/'+config.api+'/actioninstance', function(req, res) { orchestrator.postActionInstance(req, res) });
 
-app.get('/api/'+config.api+'/actioninstances', function(req, res) { orchestrator.getActionInstances(req, res) });
-app.get('/api/'+config.api+'/devices', function(req, res) { orchestrator.getDevices(req, res) });
+app.get(  '/api/'+config.api+'/actioninstances', function(req, res) { orchestrator.getActionInstances(req, res) });
+app.get(  '/api/'+config.api+'/devices', function(req, res) { orchestrator.getDevices(req, res) });
 
 ////////// Orchestrator - END   //////////
 
@@ -187,8 +187,3 @@ app.use( function( err, req, res, next ) {
 	console.error( err.stack );
 	res.send( 500, err + '\n' );
 } );
-
-	
-
-
-
