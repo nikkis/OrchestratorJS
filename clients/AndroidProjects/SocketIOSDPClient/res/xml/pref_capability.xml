@@ -1,8 +1,0 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <PreferenceCategory
-        android:key="enabledCapabilitiesCategory"
-        android:title="Capabilities" >
-    </PreferenceCategory>
-
-</PreferenceScreen>

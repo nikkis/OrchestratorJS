@@ -161,6 +161,20 @@ this.initialize = function( app ) {
     } );
 
 
+    socket.on( 'ojs_device', function( actionId, device_id, variable_name ) {
+      log( 'ojs_device for action: ' + actionId );
+      log( 'ojs_device:' );
+      log( device_id );
+      log( variable_name );
+
+      if ( actionPool[ actionId ] ) {
+        a = actionPool[ actionId ];
+        a[ variable_name ] = "tahan tulis laite";
+      }
+      
+      log( 'ojs_device end' );
+    } );
+
 
     socket.on( 'ojs_event', function( actionId, device_id, event_value ) {
       log( 'ojs_event for action: ' + actionId );
@@ -725,13 +739,25 @@ function executeBLEAction( res, actionName, deviceModels, actionParameters, coor
 
 log(actionName);
     try {
+
+/*
       var bodyDefinition = HELPERS.reRequire( ROOT + config.resources.actions + actionName + '.js' );
 
       var action = new ActionRunnable( actionName );
+      */
+
+      var bodyDefinition = HELPERS.reRequire( ROOT + config.resources.actions + actionName + '.js' );
+      var action = new ActionRunnable( actionName );
+      action.body = bodyDefinition.body;
+
+
       var actionID = 'BLE_'+action.id;
       // calculate MD5 from contents and give the hash as a parameter for the coordinator
-      var actionVersionHash = HELPERS.md5( bodyDefinition.toString() );
-
+      var actionVersionHash = HELPERS.md5( action.body.toString() );
+log("actionVersionHash: "+actionVersionHash);
+log('----');
+log(action.body.toString());
+log('---- ee');
       var coordinatorDeviceIdentity = HELPERS.getIdentities( [coordinatorDeviceIdentity] );
 
 
@@ -857,10 +883,13 @@ function executeAction( res, actionName, deviceModels, parameters ) {
   try {
     var bodyDefinition = HELPERS.reRequire( ROOT + config.resources.actions + actionName + '.js' );
 
+
     var action = new ActionRunnable( actionName );
     action.body = bodyDefinition.body;
     //action.participants = deviceModels;
-
+log('----');
+log(action.body.toString());
+log('---- ee');
 
     if ( bodyDefinition[ 'exceptionHandler' ] ) {
       action.exceptionHandler = bodyDefinition[ 'exceptionHandler' ];
