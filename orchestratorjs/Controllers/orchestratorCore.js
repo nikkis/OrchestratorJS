@@ -171,7 +171,7 @@ this.initialize = function( app ) {
         a = actionPool[ actionId ];
         a[ variable_name ] = "tahan tulis laite";
       }
-      
+
       log( 'ojs_device end' );
     } );
 
@@ -399,6 +399,30 @@ function DeviceStub( identity, name, action ) {
   this.action = action;
   this.ownerName = name;
 
+
+  this.getContextData = function( key ) {
+    var waitAction = this.action;
+    this.Fiber = require("fibers");
+    DEVICE_HANDLER.findDevice( this.identity, function( err, device ) {
+
+      if( err || !device ) {
+        waitAction.run( undefined );
+        return;
+      } else {
+
+        var r = device[ key ];
+        if( !r ) {
+          r = device.metadata[ key ];
+        }
+        waitAction.run( r );
+        return;
+      }
+    } );
+    var rVal = this.Fiber.yield();
+    return rVal;
+  };
+
+
   this.invoke = function( methodArguments ) {
     return this.action.sendMethodCall( this.identity, methodArguments );
   }
@@ -421,7 +445,10 @@ function generateCapabilityStub( deviceId, actionid, capabilityName, action, dev
     //this.action = action;
     this.device = deviceStub;
     this.deviceId = deviceId;
+
   };
+
+
   var socket = CONNECTION_POOL[ deviceId ];
   var CapabilityStub = require( ROOT + config.resources.capability_stubs + capabilityName + '.js' );
 
@@ -430,6 +457,9 @@ function generateCapabilityStub( deviceId, actionid, capabilityName, action, dev
   for ( methodName in CapabilityStub ) {
     tempStub[ methodName ] = CapabilityStub[ methodName ]
   }
+
+
+
 
   return tempStub;
 }

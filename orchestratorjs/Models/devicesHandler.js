@@ -22,6 +22,7 @@ function emitContextData( contextDataDict ) {
 
     if ( config.services.ojsConsole.enabled )
       ojsConsoleSocket.emit( 'ojs_context_data', contextDataDict );
+
     }
 
 
