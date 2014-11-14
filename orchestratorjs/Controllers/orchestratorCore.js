@@ -83,45 +83,7 @@ this.initialize = function( app ) {
     } );
 
 
-    /*
-
-    //////////////////////////////////////////
-    // For testing
-    socket.on( 'test', function( deviceid ) {
-      p( 'test event received' );
-    } );
-    //////////////////////////////////////////
-
-
-
-    socket.on( 'message', function( jsonString ) {
-      log( 'message' );
-      // tries to parse methodcall response
-      try {
-        log( jsonString );
-        socket.send( 'check!' );
-        log( 'reply message end' );
-      } catch ( err ) {
-        log( err );
-      }
-    } );
-
-
-    // receive test
-    socket.on( 'test', function( val1, val2 ) {
-      log( 'test' );
-      log( val1 );
-
-      waitForResponse1 = false;
-      if ( myInterVal != null ) {
-        clearInterval( myInterVal );
-      }
-
-      log( 'test end' );
-    } );
-
-    */
-
+    
     // receive methodCallResponse from device
     socket.on( 'methodcallresponse', function( actionId, methodCallId, methodCallResponseValue, methodCallResponseType ) {
       log( 'methodcallresponse' );
@@ -191,9 +153,6 @@ this.initialize = function( app ) {
 
     // save changed metadata and emit to observers and browsers
     socket.on( 'ojs_context_data', function( actionId, deviceId, metadataDict ) {
-
-      log('wo oooo oo o');
-
       DEVICE_HANDLER.upsertMetadata( deviceId, metadataDict, function( err, devices ) {} );
     } );
 

@@ -8,4 +8,11 @@ show collections
 # get entries from mongo
 db.devicemodels.find().pretty()
 
-db.devicemodels.find({id: "id1389170062615"}).pretty()
+db.devicemodels.find({identity: "nikkis@iphone"}).pretty()
+
+
+db.devicemodels.remove({identity: "nikkis@iphone"})
+
+
+
+db.devicemodels.update({identity: "nikkis@beacon"}, {$set: {metadata: {}} }, { upsert: true, multi: false })

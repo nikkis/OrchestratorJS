@@ -30,8 +30,6 @@ this.waitFor = function() {
             runRet = this.Fiber.yield();
             if ( runRet[ 'runRetType' ] ) {
                 runRetType = runRet[ 'runRetType' ];
-                log( 'look mom!' );
-                log( runRetType );
             }
         } catch ( e ) {}
     }

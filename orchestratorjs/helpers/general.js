@@ -11,17 +11,62 @@ this.log = function( m ) {
   logger.info( m );
 }
 
-// very clos, in the same space, in vicinity
+
+/*
+this.rssiToM = function (rssi) {
+
+  // The txPower value should be more negative than the -37 you measured right next to the beacon.  
+  // A value around -50 is closer to what you should have.
+  var txPower = -40.0;
+  if (rssi == 0) {
+    return -1.0; // if we cannot determine accuracy, return -1.
+  }
+
+  var ratio = rssi * 1.0 / txPower;
+  if (ratio < 1.0) {
+    return Math.pow(ratio, 10);
+  } else {
+    var accuracy = (0.89976) * Math.pow(ratio, 7.7095) + 0.111;
+    return accuracy;
+  }
+}
+*/
+
+// -1, IMMEDIATE, NEAR, FAR
 this.rssiToM = function( rssi ) {
+  
+  if( !rssi )
+    return -1;
+  
   if( typeof( rssi ) == 'string' )
     rssi = parseInt( rssi );
+    
+  // if bigger than    
+  if( rssi > -40 )
+    // IMMEDIATE
+    return 0.1;
+  
+  else if( rssi > -50 )
+    // NEAR
+    return 1.0;
+  
+  else if( rssi > -80 )
+    // FAR
+    return 10.0;
 
+  else
+    
+    // NOT IN RANGE
+    return -1;
+    
+    /*
   if( rssi > -70 )
     return 0.1;
   else if( rssi > -89 )
     return 1.0;
   else
     return 10;
+    */
 };
 
 

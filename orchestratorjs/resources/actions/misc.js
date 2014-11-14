@@ -69,7 +69,21 @@ try {
 
 };
 
-this.sleep = function( ms ) {
+
+this.setAction = function( actionObject ) {
+  this.action = actionObject;
+};
+
+
+this.sleep = function( ms, action ) {
+
+log(action.id);
+
+
+  if( action && action.actionKilled ) {
+    log('jeppaaaa');
+    return;
+  }
 
   var Fiber = require( 'fibers' );
   var sleepResponseArgs = {

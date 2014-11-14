@@ -1,5 +1,5 @@
-var hostname = 'localhost';
-//var hostname = 'orchestratorjs.org';
+//var hostname = 'localhost';
+var hostname = 'orchestratorjs.org';
 
 var pubsub = require( 'socket.io-client' ).connect( 'http://'+hostname+':9000' );
 var Fiber = require( 'fibers' );

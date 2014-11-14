@@ -231,12 +231,14 @@ module.exports = {
 		var username     = req.params.username;
 		var identity     = username + '@' + deviceName;
 
+        var btUUID = req.body['btUUID'] ? req.body['btUUID'] : '';
+
 		var bluetoothMAC = req.body['bluetoothMAC'] ? req.body['bluetoothMAC'] : '';
 		var deviceType   = req.body['deviceType'];
 
 		var capabilities = req.body['capabilities'];
 
-		DEVICE_HANDLER.upsertDevice(identity, username, bluetoothMAC, deviceType, deviceName, capabilities, function( err, device ) {
+		DEVICE_HANDLER.upsertDevice(identity, username, bluetoothMAC, btUUID, deviceType, deviceName, capabilities, function( err, device ) {
 
 			if ( err ) {
 				log( 'Cannot create device: ' + err );

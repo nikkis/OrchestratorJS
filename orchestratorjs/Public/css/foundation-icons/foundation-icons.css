@@ -271,6 +271,9 @@
 .fi-tablet-portrait:before,
 .fi-target-two:before,
 .fi-target:before,
+
+.fi-social-beacon:before,
+
 .fi-telephone-accessible:before,
 .fi-telephone:before,
 .fi-text-color:before,
@@ -577,6 +580,9 @@
 .fi-tablet-portrait:before { content: "\f1f4"; }
 .fi-target-two:before { content: "\f1f5"; }
 .fi-target:before { content: "\f1f6"; }
+
+.fi-social-beacon:before { content: "\f1f6"; }
+
 .fi-telephone-accessible:before { content: "\f1f7"; }
 .fi-telephone:before { content: "\f1f8"; }
 .fi-text-color:before { content: "\f1f9"; }
