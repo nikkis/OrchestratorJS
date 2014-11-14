@@ -137,14 +137,11 @@ module.exports = function DeviceHandler() {
     var lastSeen = new Date();
     DeviceModel.find(function (err, devicemodels) {
       for (i in devicemodels) {
-
         if (devicemodels[i].capabilities && devicemodels[i].capabilities.indexOf(capabilityName) != -1) {
-          log('removing ' + capabilityName + ' from ' + devicemodels[i].identity);
           devicemodels[i].capabilities.splice(devicemodels[i].capabilities.indexOf(capabilityName));
           devicemodels[i].save();
         }
       }
-
     });
 
   };
@@ -171,17 +168,20 @@ module.exports = function DeviceHandler() {
       upsert: true
     }, function (err, dev) {
 
-      if (!err) {
-        console.log(dev.identity);
-      } else {
-        console.log('error while userting DeviceModel: ' + err);
+      if (err) {
+        log('error while userting DeviceModel: ' + err);
       }
 
     });
 
   };
 
-
+  
+  
+  // Yes, this seems very complicated method!
+  //  1) theUpserMethod updates metadata, and emits and update to apps and webui
+  //  2) special metadata handlers:
+  //    2.1) bt_devices_handler updates REPORTER device's metadata, and emits an update of this
   this.upsertMetadata = function (identity, newMetadata, next1) {
 
     
@@ -195,7 +195,7 @@ module.exports = function DeviceHandler() {
         identity: identity
       }, function (err, dev) {
         if (err)
-          console.log('error while userting metadata for ' + identity + ':' + err);
+          log('error while userting metadata for ' + identity + ':' + err);
 
         var deviceMetadata = dev.metadata;
         if (!deviceMetadata)
@@ -228,16 +228,10 @@ module.exports = function DeviceHandler() {
           upsert: true
         }, function (err, dev) {
           if (err)
-            console.log('error while userting metadata for ' + identity + ':' + err);
+            log('error while userting metadata for ' + identity + ':' + err);
 
           // sending pubsub notifications
           for (key in publishThese) {
-            
-            /*
-            log('PUBLISH: '+key);
-            log('  ' + publishThese[key].deviceIdentity);
-            log('  ' + publishThese[key].value);
-            */
             // original:
             emitContextData(publishThese[key]);
           }
@@ -255,10 +249,6 @@ module.exports = function DeviceHandler() {
     // check for special keys, like bt_devices. ( Could also filter these out from device updates )
     for (key in newMetadata) {
       if (key == 'bt_devices') {
-        
-        log('11---');
-        log(newMetadata[key]);
-        log('22---');
         bt_devices_handler(identity, newMetadata[key]);
       }
     }
@@ -268,9 +258,9 @@ module.exports = function DeviceHandler() {
 
 
     // context data special handlers
+    
+    // 2) bt_devices_handler updates currently only reporter device's metadata!
     function bt_devices_handler(identity, btDevicesTuple) {
-
-      log('IIII: '+identity);
 
       function getRSSI(btMac) {
         for (index in btDevicesTuple) {
@@ -279,31 +269,19 @@ module.exports = function DeviceHandler() {
         }
       }
 
-      var deviceBluetoothMacs = [];
-      // Lets not update all the bt devices' proximitydata, just the reporter's
-      
-      
+      var deviceBluetoothMacs = [];      
       for (index in btDevicesTuple) {
         deviceBluetoothMacs.push((btDevicesTuple[index][0]).toLowerCase());
       }
       
      
-      // find based on BT UUID first, then based on BT MAC
-      // So this finds all the devices that were in bt_devices metadata. i.e. changes their proximityDevices too
+      // 2.0 registered and reported devices based on BT UUID first, then based on BT MAC
+      //  So finds only the devices that were scanned and reported in bt_devices metadata. Then changes only the reporter's metadata.
       DeviceModel.find({
-        
         btUUID: {
           $exists: true,
           $in: deviceBluetoothMacs
-        }
-        
-        /*
-        identity: {
-          $exists: true,
-          $in: [identity]
-        }
-        */
-        
+        }        
       }, function (err, deviceModels0) {
 
         // find based on BT MAC
@@ -323,24 +301,19 @@ module.exports = function DeviceHandler() {
 
           // Only BLE uuid results
           //var deviceModels = deviceModels1;
-log('1------');          
-for(babe in deviceModels) {
-    log(deviceModels[babe].identity);
-}
-log('2------');
           var nearbyRegisteredDevices = [];
           for (i in deviceModels) {
             var rssi = getRSSI(deviceModels[i].bluetoothMAC) ? getRSSI(deviceModels[i].bluetoothMAC) : getRSSI(deviceModels[i].btUUID);
             var distance = HELPERS.rssiToM(rssi);
 
             if (distance > -1) {
-              log('nearby registered device: ' + deviceModels[i].identity + ': ' + rssi + ', m: ' + distance);
+              //log('nearby registered device: ' + deviceModels[i].identity + ': ' + rssi + ', m: ' + distance);
               nearbyRegisteredDevices.push([deviceModels[i].identity, distance]);
             }
           }
 
 
-          // 1) Find the reporter device
+          // 2.1) Find the reporter device
           DeviceModel.findOne({
             identity: identity
           }, function (err, dev) {
@@ -353,7 +326,7 @@ log('2------');
 
             deviceMetadata['proximityDevices'] = nearbyRegisteredDevices;
 
-            // 2) update reporter device's proximityDevices metadata
+            // 2.2) update reporter device's proximityDevices metadata
             DeviceModel.findOneAndUpdate({
               identity: identity
             }, {
@@ -364,7 +337,7 @@ log('2------');
               upsert: true
             }, function (err, dev) {
               if (err)
-                console.log('error while userting metadata for ' + identity + ':' + err);
+                log('error while userting metadata for ' + identity + ':' + err);
 
               // sending pubsub notifications
               for (key in publishThese) {
