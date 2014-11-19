@@ -7,3 +7,5 @@ Easy to install:
 - Download the source code from GitHub (git clone or download .zip file)
 - inside the folder containing the the codes, simply run command: npm install
 - Finally, start the server with command: forever orchestrator.js ( or as a daemon forever start orchestrator.js )
+
+ Read more from [orchestratorjs.org](http://orchestratorjs.org)
