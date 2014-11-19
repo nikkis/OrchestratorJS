@@ -114,16 +114,20 @@
           <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>Bluetooth Low Energy Support is Coming</h3>
           <p>Lately we have been working with BLE support for OJS.</p>
 
-          <p>Basically this means that the devices can now be coordinated with two paradigms (A.1) and (A.2).</p>
-          <p>Whereas in paradigm A.1 the server coordinates all the devices, in A.2 one of the devices participating into an action receives a trigger from OJS (B.1), and downloads the action definition JavaScript from server (B.2) before it begins the coordination process A.2.</p>
-          <p>C) We have also added a support for detecting orher devices and <a href="http://en.wikipedia.org/wiki/IBeacon">BLE beacons (iBeacon)</a>.</p>
-          <p>Read more from: <a href="http://aisel.aisnet.org/isd2014/proceedings/MobileTechnologies/3/">At the Edge of the Cloud: Improving the Coordination of Proactive Social Devices</a></p>
+          <p>Basically this means that the devices can now be coordinated with two paradigms (A) and (B).</p>
+          <!--<p>Whereas in paradigm A.1 the server coordinates all the devices, in A.2 one of the devices participating into an action receives a trigger from OJS (B.1), and downloads the action definition JavaScript from server (B.2) before it begins the coordination process A.2.</p>-->
+          <p>A) In the new paradigm one of the devices participating into an action receives a trigger from OJS through its Communication Layer (A.1), then downloads the action definition JavaScript from server, and finally begins the coordination process (A.2), coordinating itself as well as other participants.</p>
           
         </div>
         <div class="large-8 columns image">
           <center>
             <img src="img/ble.png" alt="OJS" />
           </center>
+        </div>
+        <div class="large-12 columns image">
+          <p>B) In the old paradigm Orchestrator Core (a centralized server) was coordinating all the participating devices (B.1 and B.2).</p>          
+          <p>C) We have also added a support for detecting orher devices and <a href="http://en.wikipedia.org/wiki/IBeacon">BLE beacons (iBeacon)</a>.</p>
+          <p>Read more from: <a href="http://aisel.aisnet.org/isd2014/proceedings/MobileTechnologies/3/">At the Edge of the Cloud: Improving the Coordination of Proactive Social Devices</a></p>
         </div>
 
       </div>
