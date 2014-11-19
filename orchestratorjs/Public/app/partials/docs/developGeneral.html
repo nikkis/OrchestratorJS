@@ -9,10 +9,19 @@
 
 
   <div class="large-features">
+    <!--
+    <div class="feature">
+      <div class="row">
+        <div class="large-12 columns">
+          gfsdfgsfdgsdfg
+        </div>
+      </div>
+    </div>
+-->
     <div class="feature">
       <div class="row">
         <div class="large-6 columns image">
-          <img src="img/ojs_logos/png/ojs_colors-512.png" alt="Social Devices Platform" />
+          <img src="img/ojs_logos/png/ojs_colors-512.png" />
         </div>
         <div class="large-6 columns description">
           <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>Cloud-based system</h3>
@@ -21,8 +30,14 @@
           </p>
 
           <p>
-            The platform currently runs in Amazon cloud, but is freely available from GitHub, and can be easily hosted on any computer with a network connectivity. The devices are constantly connected to the Orchestrator.js. On client-side we currently support Android, and devices capable of running Python. We are also working on with iOS implementation currently.
+            OJS currently runs in Amazon cloud, but is freely available from <a href="http://github.com/nikkis/OrchestratorJS">GitHub</a>, and can be easily hosted on any computer with a network connectivity. The devices are constantly connected to the Orchestrator.js. On client-side we currently support Android, iOS, and devices capable of running Python/Qt.
           </p>
+
+          <p>
+            OJS has been described in details: <a href="http://dl.acm.org/citation.cfm?doid=2642668.2642678">Building and Programming Ubiquitous Social Devices</a>.
+          </p>
+
+
         </div>
       </div>
     </div>
@@ -30,28 +45,102 @@
       <div class="row">
         <div class="large-6 columns description">
           <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>Context is the key</h3>
-          <p> With Orchestrator.js it is easy to implement context-aware applications for a heterogenous set of device. The platform offers publish-subsrcibe API that easy to utilize in app implementations. The devices constantly report their state to the Orchestrator.js Device Registry, which publishes updates whenever devices' contextual data changes. </p>
+          <p>With Orchestrator.js it is easy to implement context-aware applications for a heterogenous set of device. The middleware offers publish-subsrcibe API that easy to utilize in app implementations. The devices constantly report their state to the Orchestrator.js Device Registry, which publishes updates whenever devices' contextual data changes.</p>
         </div>
+
         <div class="large-6 columns image">
-          <img src="img/generalOJS.png" alt="Social Devices Platform" />
+          <center>
+            <img src="img/proxGraph.png" alt="OJS" />
+          </center>
         </div>
+
       </div>
     </div>
+
+
     <div class="feature">
       <div class="row">
-        <div class="large-6 columns image">
-          <img src="img/executionModel.png" alt="Social Devices Platform" />
+        <div class="large-4 columns description">
+          <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>How it works?</h3>
+          <p>1) Devices connected to OJS measure their context with their sensors, and report this to Device Registry</p>
+          <p>2) When the data changes (newValue != oldValue), Device Registry publishes the change through pub/sub API.</p>
+          <p>3) Applications (Apps) run in cloud and receive events through pub/sub API, and also can monitor other sources, e.g. by polling with HTTP.</p>
+          <p>4) An app then decides when the context of a device is right and tries triggering an action with REST API.</p>
+          <p>5-7) When OJS receives the trigger, it fetches receurces from repositories.</p>
+          <p>8-11) Finally, OJS begins the coordination process, commanding participants with their capabilities.</p>
         </div>
-        <div class="large-6 columns description">
-          <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>AcOP Execution Model</h3>
-          <p> The applications in Orchestrator.js are based on <a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6805439&tag=1">Action-oriented Programming Model (AcOP)</a>. </p>
+
+
+        <div class="large-8 columns image">
+          <center>
+            <img src="img/systemConcept_buildingPaper.png" alt="OJS" />
+          </center>
         </div>
       </div>
     </div>
+
+
+    <div class="feature">
+      <div class="row">
+        <div class="large-5 columns image">
+          <img src="img/acop_model.png" alt="Social Devices" />
+          <img src="img/capabilities.png" alt="Social Devices" />
+        </div>
+        <div class="large-7 columns description">
+          <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>AcOP Execution Model</h3>
+          <p>The applications in Orchestrator.js are based on Action-oriented Programming Model (AcOP). This programming model has the following three main concepts:</p>
+          <p>
+            <b>Apps</b> monitor device contexts, and out-side sources like social media services, such as Facebook, Twitter and so on. Based on the observations and logic defined by the developer, the app triggers actions. So app defines <i>when and what interactions (actions) should take place.</i>
+          </p>
+          <p>
+            <b>Actions</b> define <i>how the devices interact with each other and as well as with users</i>. An action can be very short, like just greeting each other, or long-lasting, like a game.
+          </p>
+          <p>
+            <b>Capabilities</b> are used to describe <i>how a device appears to the system,</i>
+            <i>what a device can or is allowed to do</i>, and <i>in what interactions the device can take part to</i>. The capability can either be very generic, like Talking-capability that allows device to speak, or more specific, like Apocalympics-capability which allows the device to participate to Apocalympics game.
+
+          </p>
+          <p>Read more from <a href="/#/publications">publications</a>.</p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="feature">
+      <div class="row">
+        <div class="large-4 columns description">
+          <h3 class="with-icon"><i class="glyphicons cogwheel"><i></i></i>Bluetooth Low Energy Support is Coming</h3>
+          <p>Lately we have been working with BLE support for OJS.</p>
+
+
+          <p>Basically this means that the devices can now be coordinated with two paradigms (A.1) and (A.2).</p>
+          <p>Whereas in paradigm A.1 the server coordinates all the devices, in A.2 one of the devices participating into an action receives a trigger from OJS (B.1), and downloads the action definition JavaScript from server (B.2) before it begins the coordination process A.2.</p>
+
+
+          <p>C) We have also added a support for detecting orher devices and <a href="http://en.wikipedia.org/wiki/IBeacon">BLE beacons (iBeacon)</a>.</p>
+        </div>
+        <div class="large-8 columns image">
+          <center>
+            <img src="img/ble.png" alt="OJS" />
+          </center>
+        </div>
+
+      </div>
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
   </div>
 
 
-<!--
+  <!--
   <p>Context Awareness</p>
   <p>Managing Contingencies</p>
   <p>Leveraging Device Heterogeneity</p>
