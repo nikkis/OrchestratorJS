@@ -405,6 +405,86 @@ table {
 }
 
 
+/* publication objects begin */
+#sequence button a {
+  color: white;
+}
+
+#sequence button {
+  background-color: rgba(101, 155, 241, 0.86);
+}
+
+#sequence .pObject_info {
+  background-color: rgba(0,0,0,0.3);
+  padding: 20px;
+}
+
+#sequence .pObject {
+  left: -140%;
+  top: -45px;  
+  
+  max-width: 40%;
+  
+  -webkit-transition-property: left top;
+  -moz-transition-property: left top;
+  -ms-transition-property: left top;
+  -o-transition-property: left top;
+  transition-property: left top;
+}
+#sequence .animate-in .pObject {
+  -webkit-transition-duration: 1250ms;
+  -moz-transition-duration: 1250ms;
+  -ms-transition-duration: 1250ms;
+  -o-transition-duration: 1250ms;
+  transition-duration: 1250ms;
+  
+}
+#sequence .animate-out .pObject {
+  -webkit-transition-duration: 1250ms;
+  -moz-transition-duration: 1250ms;
+  -ms-transition-duration: 1250ms;
+  -o-transition-duration: 1250ms;
+  transition-duration: 1250ms;
+}
+
+
+#sequence .animate-in .pObject1 {
+  top:55px; 
+  left:540px;
+  
+  z-index: 6;
+}
+
+
+#sequence .animate-in .pObject2 {
+  top:100px; 
+  left:-250px;
+  
+  z-index: 7;
+}
+
+#sequence .animate-in .pObject3 {
+  top:30px; 
+  left:250px;
+  
+  z-index: 8;
+}
+
+#sequence .animate-in .pObject4 {
+  top:90px; 
+  left:50px;
+  
+  z-index: 9;
+}
+
+#sequence .animate-out .pObject {
+  left: 140%;
+}
+
+/* publication objects end */
+
+
+
 #sequence .sObject1 {
   left: -140%;
   top: 35px;
