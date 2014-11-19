@@ -64,6 +64,8 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/develop/iOS', {templateUrl: 'app/partials/docs/developiOS.html', controller: 'DocsController', access: { isFree: true }});
   $routeProvider.when('/api', {templateUrl: 'app/partials/docs/developAPI.html', controller: 'DocsController', access: { isFree: true }});
 
+  $routeProvider.when('/publications', {templateUrl: 'app/partials/docs/publications.html', controller: 'DocsController', access: { isFree: true }});
+
 
   $routeProvider.otherwise({redirectTo: ''});
 }]);

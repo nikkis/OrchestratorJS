@@ -198,6 +198,42 @@ footer ul {
 }
 
 
+.ojs-publications-title {
+  font-weight: 500;
+  color: rgb(111, 111, 111);
+
+  padding-top: 0px;
+  margin-top: 20px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+
+}
+.ojs-publications-author {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-size: 80%;
+  font-style: oblique;
+}
+.ojs-publications-affiliation {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-size: 80%;
+}
+
+.ojs-publications-updated {
+  padding-top: 0px;
+  margin-top: 20px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+
+
+
 
 .instructions_container {
   padding-right: 15px;
