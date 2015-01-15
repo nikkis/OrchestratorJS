@@ -77,11 +77,8 @@ this.setAction = function( actionObject ) {
 
 this.sleep = function( ms, action ) {
 
-log(action.id);
-
-
   if( action && action.actionKilled ) {
-    log('jeppaaaa');
+    log('Sleep: Action was killed!');
     return;
   }
 

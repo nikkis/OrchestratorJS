@@ -67,11 +67,14 @@ module.exports = {
         for(i in players) {
             var player = players[i];
             var country = Constant.uninitialized;
-            
+            console.log("foo 0");
             // Poll one player so long that he chooses a country and move to next player
             while(country == Constant.uninitialized) {
                 country = player.device.apocalymbics.getCountrySelection();
+              console.log("foo 1");
                 misc.sleep(1);
+              console.log("foo 2");
+              
             }
             player.country = country;
             
