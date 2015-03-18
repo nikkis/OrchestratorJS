@@ -69,6 +69,7 @@ this.initialize = function( app ) {
       DEVICE_HANDLER.deviceOnline( deviceid );
       log( 'initialized Connection for device: ' + deviceid );
 
+			
       // send information about the orchestrator configuration
       /*
       var temp = {
