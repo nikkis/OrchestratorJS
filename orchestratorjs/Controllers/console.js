@@ -12,6 +12,9 @@ var ACTION_INSTANCE_DATA_HANDLER = new( require( ROOT + '/Models/actionInstanceD
 
 
 this.showIndexView = function( req, res ) {
+    
+    log('HOST: ' + req.headers.host);
+    
 	res.render( 'index', {
 		'locals': {
 			'title': config.app_name,
@@ -21,10 +24,6 @@ this.showIndexView = function( req, res ) {
 		}
 	} );
 
-
-
-
-	
 };
 
 
