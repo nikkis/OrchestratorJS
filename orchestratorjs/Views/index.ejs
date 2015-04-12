@@ -5,7 +5,7 @@
 <head>
 
 
-  <title><%= title %></title>
+  <title><%= locals.title %></title>
   <link rel="icon" type="image/png" href="img/ojs_logos/png/ojs-32.png">
 
   <meta charset="utf-8">
@@ -14,8 +14,8 @@
   <!-- WEB CONSOLE CONFIG FILE -->
   <script src="config.js"></script>
   <script type="text/javascript">
-    hostName   = '<%= hostName %>';
-    pubsubPort = '<%= pubsubPort %>';
+    hostName   = '<%= locals.hostName %>';
+    pubsubPort = '<%= locals.pubsubPort %>';
   </script>
 
   <script src="js/jquery.min.js"></script>
@@ -82,7 +82,7 @@
     <nav class="top-bar" data-topbar>
       <ul class="title-area">
         <li class="name">
-          <h1><a href="#/" ><%= title %></a></h1>
+          <h1><a href="#/" ><%= locals.title %></a></h1>
       </li>
       <li class="toggle-topbar menu-icon"><a><span>Menu</span>
             </a>
@@ -202,7 +202,7 @@
 
 <!-- if set to marketing mode show tags marked with marketingTag class -->
 <script type="text/javascript">
-  var marketingMode = <%= marketingMode %>;
+  var marketingMode = <%= locals.marketingMode %>;
   if(marketingMode) {
     console.log('marketing!!');
     $('.marketingTag').show();
