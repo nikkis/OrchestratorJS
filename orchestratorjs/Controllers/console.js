@@ -14,13 +14,14 @@ var ACTION_INSTANCE_DATA_HANDLER = new( require( ROOT + '/Models/actionInstanceD
 
 this.showIndexView = function( req, res ) {
     
-    log('HOST: ' + req.headers.host.replace(':'+config.server.port) );
+    var host = req.headers.host).replace(':'+config.server.port,'');
+    log('HOST: ' + (host);
     
 	res.render( 'index', {
 		'locals': {
 			'title': config.app_name,
 			'marketingMode': config.web_console.marketing_mode,
-			'hostName': req.headers.host.replace(':'+config.server.port), //config.server.host,
+			'hostName': host, //config.server.host,
 			'pubsubPort': config.services.ojsConsole.port,
 		}
 	} );
