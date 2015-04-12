@@ -14,8 +14,8 @@ var ACTION_INSTANCE_DATA_HANDLER = new( require( ROOT + '/Models/actionInstanceD
 
 this.showIndexView = function( req, res ) {
     
-    var host = req.headers.host).replace(':'+config.server.port,'');
-    log('HOST: ' + (host);
+    var host = (req.headers.host).replace(':'+config.server.port,'');
+    log('HOST: ' + host);
     
 	res.render( 'index', {
 		'locals': {
