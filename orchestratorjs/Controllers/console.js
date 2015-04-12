@@ -16,7 +16,7 @@ this.showIndexView = function( req, res ) {
 		'locals': {
 			'title': config.app_name,
 			'marketingMode': config.web_console.marketing_mode,
-			'hostName': config.server.host,
+			'hostName': req.headers.host, //config.server.host,
 			'pubsubPort': config.services.ojsConsole.port,
 		}
 	} );
