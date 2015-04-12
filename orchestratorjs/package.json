@@ -22,6 +22,8 @@
 		"request": ">= 0.0.1",
 		"passport": ">=0.0.1",
 		"passport-local": ">=0.0.1",
-		"node-uuid": ">=0.0.1"
+		"node-uuid": ">=0.0.1",
+        
+        "node-hue-api": ">=0.0.1"
 	}
 }
