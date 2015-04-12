@@ -744,14 +744,8 @@ log(actionName);
       var actionID = 'BLE_'+action.id;
       // calculate MD5 from contents and give the hash as a parameter for the coordinator
       var actionVersionHash = HELPERS.md5( action.body.toString() );
-log("actionVersionHash: "+actionVersionHash);
-log('----');
-log(action.body.toString());
-log('---- ee');
       var coordinatorDeviceIdentity = HELPERS.getIdentities( [coordinatorDeviceIdentity] );
 
-
-log('SALIL EKA SALIL VIKA 0');
 
       // check that the coordinator device is connected to OJS
       var participantInfo = [];
@@ -876,10 +870,6 @@ function executeAction( res, actionName, deviceModels, parameters ) {
 
     var action = new ActionRunnable( actionName );
     action.body = bodyDefinition.body;
-    //action.participants = deviceModels;
-log('----');
-log(action.body.toString());
-log('---- ee');
 
     if ( bodyDefinition[ 'exceptionHandler' ] ) {
       action.exceptionHandler = bodyDefinition[ 'exceptionHandler' ];

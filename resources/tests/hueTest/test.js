@@ -7,5 +7,6 @@ var hueDevice = require('./hueAPI.js');
 //hueDevice.turnAllOff();
 //hueDevice.turnAllOn();
 
-hueDevice.setSceneOn('Energize');
+//hueDevice.setSceneOn('Energize');
 
+hueDevice.displayBridges();

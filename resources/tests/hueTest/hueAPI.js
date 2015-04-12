@@ -14,11 +14,21 @@ var scenePostFix = ' on 0';
 
 
 module.exports = {
+
+    displayBridges: function () {
+        var displayBridges = function (bridge) {
+            console.log("Hue Bridges Found: " + JSON.stringify(bridge));
+        };
+
+        
+        hue.nupnpSearch().then(displayBridges).done();
+
+    },
+
     registerNewUser: function () {
 
-
-        var newUserName = null; // You can provide your own username value, but it is normally easier to leave it to the Bridge to create it 
-        userDescription = "device description goes here";
+        var newUserName = null;
+        userDescription = "Orchestrator.js Middleware";
 
         var displayUserResult = function (result) {
             console.log("Created user: " + JSON.stringify(result));
@@ -36,13 +46,6 @@ module.exports = {
             .then(displayUserResult)
             .fail(displayError)
             .done();
-
-        // -------------------------- 
-        // Using a callback (with default description and auto generated username) 
-        hue.createUser(hostname, null, null, function (err, user) {
-            if (err) throw err;
-            displayUserResult(user);
-        });
 
     },
 

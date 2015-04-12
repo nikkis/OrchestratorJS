@@ -4,7 +4,6 @@ log = HELPERS.log
 var config = require( ROOT + '/config.json' );
 
 var fs = require( 'fs' );
-var os = require("os"); 
 
 var DeviceHandler = require( ROOT + '/Models/devicesHandler' );
 var DEVICE_HANDLER = new DeviceHandler();
