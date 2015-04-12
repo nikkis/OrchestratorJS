@@ -4,6 +4,7 @@ log = HELPERS.log
 var config = require( ROOT + '/config.json' );
 
 var fs = require( 'fs' );
+var os = require("os"); 
 
 var DeviceHandler = require( ROOT + '/Models/devicesHandler' );
 var DEVICE_HANDLER = new DeviceHandler();
@@ -13,7 +14,7 @@ var ACTION_INSTANCE_DATA_HANDLER = new( require( ROOT + '/Models/actionInstanceD
 
 this.showIndexView = function( req, res ) {
     
-    log('HOST: ' + req.headers.host);
+    log('HOST: ' + os.hostname());
     
 	res.render( 'index', {
 		'locals': {
