@@ -186,3 +186,36 @@ function generateGadgeteerStub( capabilityName, methodName, args ) {}
 
 
 
+
+
+
+
+
+this.postVirtualCapability = function(req, res) {
+	var capabilityName = req.params.capabilityName;
+	
+	var body = '';
+	req.on('data', function (data) {
+	    body += data;
+	});
+
+	req.on('end', function () {
+    var POST = body;
+    this.generateCapabilityStub;
+    HELPERS.saveFile(ROOT+config.resources.virtualCapabilities+capabilityName+'.js', POST, function(virtualCapabilityName) {}, capabilityName);
+	});
+	res.send('OK');
+};
+
+this.deleteVirtualCapability = function(req, res) {
+	var capabilityName = req.params.capabilityName;
+	log('deleting capability: '+capabilityName);
+
+	// remove capability from devices
+	DEVICE_HANDLER.removeCapability( capabilityName );
+
+
+	HELPERS.deleteFile(ROOT+config.resources.virtualCapabilities+capabilityName+'.js');
+	res.send('OK\n');
+};
+

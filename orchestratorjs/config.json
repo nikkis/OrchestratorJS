@@ -25,6 +25,7 @@
 		"actions" :          "/resources/actions/",
 		"capabilities" :     "/resources/capabilities/",
 		"capability_stubs" : "/resources/capability_stubs/",
+		"virtualCapabilities" :     "/resources/virtualCapabilities/",        
 		"apps" : "/resources/observers/"
 	},
 

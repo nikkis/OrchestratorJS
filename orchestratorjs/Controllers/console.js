@@ -184,6 +184,71 @@ this.getCapability = function( req, res ) {
 
 
 
+///////// virtual capability
+
+
+this.getVirtualCapabilities = function( req, res ) {
+	fs.readdir( ROOT + config.resources.virtualCapabilities, function( err, files ) {
+		if ( err ) {
+			log( err );
+			res.writeHead( 500, {
+				'Content-Type': 'text/plain'
+			} );
+			res.write( err + '\n' );
+			res.end();
+		} else {
+
+			var fileNames = [];
+			for ( var i = 0; i < files.length; i++ ) {
+				var file = files[ i ];
+				if ( file[ 0 ] == '.' || file.slice( -3 ) != '.js' || file == 'misc.js' ) {
+					continue;
+				}
+				fileNames.push( file.replace( '.js', '' ) );
+			}
+			res.writeHead( 200, {
+				"Content-Type": "application/json"
+			} );
+			res.write(
+				JSON.stringify( {
+					//'capabilities': fileNames.sort()
+					files: fileNames.sort(),
+					virtualCapabilities: fileNames.sort(),
+					deviceTypes: config.device_types
+				} )
+			);
+			res.end();
+		}
+	} );
+};
+
+
+this.getVirtualCapability = function( req, res ) {
+	var capabilityName = req.params.capabilityName;
+	log( capabilityName );
+
+	fs.readFile( ROOT + config.resources.virtualCapabilities + capabilityName + '.js', 'binary', function( error, file ) {
+		if ( error ) {
+			res.writeHead( 500, {
+				'Content-Type': 'text/plain'
+			} );
+			res.write( error + '\n' );
+			res.end();
+		} else {
+			res.writeHead( 200, {
+				'Content-Type': 'text/plain'
+			} );
+			res.write( file, 'binary' );
+			res.end();
+		}
+	} );
+
+};
+
+
+
+///////// Downloads
+
 this.getDownloads = function( req, res ) {
 	fs.readdir( ROOT + config.clients_path, function( err, files ) {
 		if ( err ) {

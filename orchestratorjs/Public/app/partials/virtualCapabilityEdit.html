@@ -1,0 +1,83 @@
+<div class="row">
+
+
+<div class="large-9 columns virtualCapabilityCode">
+	<div class="row">
+		<div class="large-2 columns">
+			<p>
+				<a class="editStopEditLink" ng-click="pushToCloud()" >
+					<i class="fi-upload-cloud myEditIcon"></i>
+				</a>
+			</p>
+		</div>
+
+		<div class="large-2 columns">
+			<p>
+				<a ng-click="ensureDeleteVirtualCapability()" >
+					<i class="fi-trash myRemoveIcon"></i>
+				</a>
+			</p>
+		</div>
+
+		<div  class="large-4 columns right fileNameEdit">
+			<input type="text" id="fileNameInput" value="{{fileName}}" />
+		</div>
+
+	</div>
+	<div class="row" height="1000">
+		<div class="large-12 columns virtualCapabilityCode">
+			<form id="formi">
+
+				<textarea id="code" style="height: 450px; width: 100%;" name="cm_action_class_file" >
+				</textarea>
+
+				<input type="hidden" name="web_console" value="True" />
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="large-3 columns fileNames">
+
+  <div class="fileNamesListing">
+    <h3>{{readableType}} files</h3>
+    <ul class="side-nav">
+
+			<p style=""><a style="text-align: center;" ng-click="newFile()" >NEW {{readableType}}</a></p>
+
+      
+      <li class="fileNameLink fileName_{{.}}" ng-repeat="filename in filenames">
+        <a ng-click="showVirtualCapabilityCode(filename)">{{filename}}</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+</div><!-- row -->
+
+
+
+
+<script>
+  editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true,
+    indentWithTabs: false,
+		tabSize: 2,
+    extraKeys: {"Ctrl-Space": "autocomplete"},
+    mode: {name: "javascript", globalVars: true},
+    theme: 'monokai'
+  } );
+	
+	editor.setSize('100%', '450px');
+
+</script>
+
+
+
+
+
+

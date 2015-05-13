@@ -75,6 +75,10 @@ app.get('/api/'+config.api+'/action/:actionName/metadata', function(req, res) { 
 app.get('/api/'+config.api+'/capability', function(req, res) { webconsole.getCapabilities(req, res) });
 app.get('/api/'+config.api+'/capability/:capabilityName', function(req, res) { webconsole.getCapability(req, res) });
 
+app.get('/api/'+config.api+'/virtualCapability', function(req, res) { webconsole.getVirtualCapabilities(req, res) });
+app.get('/api/'+config.api+'/virtualCapability/:capabilityName', function(req, res) { webconsole.getVirtualCapability(req, res) });
+
+
 app.get('/api/'+config.api+'/downloads', function(req, res) { webconsole.getDownloads(req, res) });
 app.get('/api/'+config.api+'/downloads/:clientName', function(req, res) { webconsole.getDownload(req, res) });
 
@@ -130,6 +134,10 @@ app.post(  '/api/'+config.api+'/user/:username/capability/:capabilityName', func
 app.delete('/api/'+config.api+'/user/:username/capability/:capabilityName', function(req, res) { resourceHandler.deleteCapability(req, res) });
 
 app.get(   '/api/'+config.api+'/capabilities/info', function(req, res) { resourceHandler.getCapabilityInfo(req, res) });
+
+app.post(  '/api/'+config.api+'/user/:username/virtualCapability/:capabilityName', function(req, res) { resourceHandler.postVirtualCapability(req, res) });
+app.delete('/api/'+config.api+'/user/:username/virtualCapability/:capabilityName', function(req, res) { resourceHandler.deleteVirtualCapability(req, res) });
+
 
 ////////// Resource Handler - END   //////////
 

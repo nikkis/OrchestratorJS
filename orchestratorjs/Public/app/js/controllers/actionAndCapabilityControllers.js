@@ -157,6 +157,7 @@ app.controller( 'ActionEditController',
 
 		$scope.UserService = UserService;
 		$scope.type = 'Action';
+        $scope.readableType = 'Action';
 		$scope.prevParamCheckbox = false;
 
 		loadFilesList( $scope );
@@ -329,6 +330,7 @@ app.controller( 'CapabilityEditController',
 
 		$scope.UserService = UserService;
 		$scope.type = 'Capability';
+        $scope.readableType = 'Capability';
 
 		loadFilesList( $scope );
 
@@ -345,6 +347,52 @@ app.controller( 'CapabilityEditController',
     };
 
     $scope.ensureDeleteCapability = function() {
+    	deleteFile( $scope, $http );
+    };
+
+	}
+);
+
+
+
+
+/*
+*			Virtual Capability
+*/
+app.controller( 'VirtualCapabilityEditController',
+	function( $scope, $http, AuthService, UserService ) {
+
+
+
+		var orig = CodeMirror.hint.javascript;
+		CodeMirror.hint.javascript = function(cm) {
+		  var inner = orig(cm) || {from: cm.getCursor(), to: cm.getCursor(), list: []};
+		  inner.list = [];
+		  inner.list.push("module.exports = {\n\n};");
+		  inner.list.push("methodName: function ( param1, param2 ) {},");
+		  return inner;
+		};
+
+
+		$scope.UserService = UserService;
+		$scope.type = 'VirtualCapability';
+        $scope.readableType = 'Virtual Capability';
+
+		loadFilesList( $scope );
+
+		$scope.showVirtualCapabilityCode = function( fileName ) {
+			loadCodeToEditor( fileName, $scope );
+		};
+
+		$scope.pushToCloud = function() {
+			pushCodeToCloud( $scope );
+		};
+
+    $scope.newFile = function() {
+      newFile( $scope );
+    };
+
+    $scope.ensureDeleteVirtualCapability = function() {
     	deleteFile( $scope, $http );
     };
 

@@ -57,6 +57,12 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/capabilities', {templateUrl: 'app/partials/capabilityEdit.html', controller: 'CapabilityEditController', access: { isFree: true }});
   $routeProvider.when('/capabilitiesOld', {templateUrl: 'app/partials/empty.html', controller: 'CapabilitiesController', access: { isFree: true }});
 
+  // virtual capabilities
+
+  $routeProvider.when('/virtualCapabilities', {templateUrl: 'app/partials/virtualCapabilityEdit.html', controller: 'VirtualCapabilityEditController', access: { isFree: true }});
+  $routeProvider.when('/virtualCapabilitiesOld', {templateUrl: 'app/partials/empty.html', controller: 'VirtualCapabilitiesController', access: { isFree: true }});
+    
+    
   // instructions
   $routeProvider.when('/develop', {templateUrl: 'app/partials/docs/developGeneral.html', controller: 'DocsController', access: { isFree: true }});
   $routeProvider.when('/develop/android', {templateUrl: 'app/partials/docs/developAndroid.html', controller: 'DocsController', access: { isFree: true }});
