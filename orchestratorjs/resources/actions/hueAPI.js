@@ -2,6 +2,7 @@ var hue = require("node-hue-api"),
     HueApi = hue.HueApi,
     lightState = hue.lightState;
 var hostname = "192.168.1.68";
+//var hostname = "localhost";
 var username = "25fa138c1c7bbacf123c76429e69a67";
 
 

@@ -132,9 +132,14 @@ app.controller('UserDeviceProximityController',
       .attr("height", height);
 
 
+	
+		/////////////////////////
+		////    All Begins Here
+	  /////////////////////////
     var graph = {};
     d3.json(uri, function (error, data) {
 
+			
       graph = data;
 
       // initialize with fetched data
@@ -157,8 +162,61 @@ app.controller('UserDeviceProximityController',
         
       });
 
-
-
+			
+			var regions = [
+				{"radius": 50,  "color": "blue"},
+				{"radius": 100, "color": "green"},
+				{"radius": 200, "color": "grey"}
+			];
+			
+				function drawCircle(x, y, className, options) {
+					var circleData = [{ "cx": x, "cy": y, "radius": options.radius, "color" : options.color }];
+					var circle = svg.selectAll(".region")
+						.data(circleData)
+						.enter().append("circle")
+						.attr("cx", function (d) { return d.cx; })
+						.attr("cy", function (d) { return d.cy; })
+						.attr("class", function (d) {
+							return "circle "+className;
+						})
+						.attr("r", function (d) {
+							return d.radius;
+						})
+						.style("fill-opacity", function (d) {
+							return 0.1;
+						})
+						.style("fill", function (d) {
+							return d.color;
+						})		
+						.style("stroke", function (d) {
+							return d.color;
+						});
+				}
+			
+			
+			
+				function updateCircle(x,y,className) {
+					var circle = svg.selectAll("."+className);
+					circle.attr("cx", function (d) {
+						return x;
+					})
+					.attr("cy", function (d) {
+						return y;
+					});
+				}
+			
+			
+			function drawRegions(entity) {
+				drawCircle(entity.cx, entity.cy, "region0_"+entity.name.replace('@', 'AT'), regions[0]);
+				drawCircle(entity.cx, entity.cy, "region1_"+entity.name.replace('@', 'AT'), regions[1]);
+			}
+			
+			function updateRegions(entity) {
+				updateCircle(entity.x, entity.y, "region0_"+entity.name.replace('@', 'AT'));
+				updateCircle(entity.x, entity.y, "region1_"+entity.name.replace('@', 'AT'));
+			}
+			
+			
       function updateGraph() {
 
         var link = svg.selectAll(".link")
@@ -171,7 +229,17 @@ app.controller('UserDeviceProximityController',
             return Math.sqrt(d.value);
           });
 
-        var node = svg.selectAll(".node")
+				
+				// Add regions
+				for(var ii in graph.nodes) {
+					console.log(graph.nodes[ii].name);
+					//drawCircle(graph.nodes[ii].cx, graph.nodes[ii].cy, graph.nodes[ii].name);
+					drawRegions(graph.nodes[ii]);
+				}
+
+				
+				/// orig
+				var node = svg.selectAll(".node")
           .data(graph.nodes)
           .enter().append("circle")
           .attr("class", function (d) {
@@ -184,7 +252,11 @@ app.controller('UserDeviceProximityController',
             return hexColor(d.name);
           })
           .call(force.drag);
-
+				
+				
+          
+				
+				
         node.append("title")
           .text(function (d) {
             return d.name;
@@ -222,32 +294,44 @@ app.controller('UserDeviceProximityController',
         link.attr("x1", function (d) {
           return d.source.x;
         })
-          .attr("y1", function (d) {
-            return d.source.y;
-          })
-          .attr("x2", function (d) {
-            return d.target.x;
-          })
-          .attr("y2", function (d) {
-            return d.target.y;
-          });
+				.attr("y1", function (d) {
+					return d.source.y;
+				})
+				.attr("x2", function (d) {
+					return d.target.x;
+				})
+				.attr("y2", function (d) {
+					return d.target.y;
+				});
 
         var node = svg.selectAll(".node");
         node.attr("cx", function (d) {
           return d.x;
         })
-          .attr("cy", function (d) {
-            return d.y;
-          });
+				.attr("cy", function (d) {
+					//updateCircle(d.x,d.y,d.name);
+					updateRegions(d);
+					return d.y;
+				});
 
+		/*		
+				var circle = svg.selectAll(".circle");
+        circle.attr("cx", function (d) {
+          return 50;
+        })
+				.attr("cy", function (d) {
+					return 50;
+				});
+*/
+				
 
         var label = svg.selectAll("text");
         label.attr("x", function (d) {
           return d.x - 33;
         })
-          .attr("y", function (d) {
-            return d.y + 20;
-          });
+				.attr("y", function (d) {
+					return d.y + 20;
+				});
 
       });
 
