@@ -417,6 +417,9 @@ app.controller('UserDeviceProximityController',
 
               // remove from the image
               svg.selectAll("." + prevDevId.replace('@', 'AT')).data(graph.links[i]).exit().remove();
+							
+							svg.selectAll(".region0_" + prevDevId.replace('@', 'AT')).data(graph.links[i]).exit().remove();
+							svg.selectAll(".region1_" + prevDevId.replace('@', 'AT')).data(graph.links[i]).exit().remove();
 
               // remove from the data models
               for (k in graph.nodes) {
