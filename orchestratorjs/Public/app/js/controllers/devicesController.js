@@ -382,6 +382,9 @@ app.controller('UserDeviceProximityController',
                 "group": 1,
                 "size": 7
               }) - 1;
+							
+							drawRegions(graph.nodes[devIndex]);
+							
             }
 
             // check if we already have the link between 0 and the device
