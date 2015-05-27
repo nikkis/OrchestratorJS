@@ -194,6 +194,15 @@ app.controller('UserDeviceProximityController',
 				}
 			
 			
+							
+				// Add regions
+				for(var ii in graph.nodes) {
+					console.log(graph.nodes[ii].name);
+					//drawCircle(graph.nodes[ii].cx, graph.nodes[ii].cy, graph.nodes[ii].name);
+					drawRegions(graph.nodes[ii]);
+				}
+
+			
 			
 				function updateCircle(x,y,className) {
 					var circle = svg.selectAll("."+className);
@@ -229,14 +238,14 @@ app.controller('UserDeviceProximityController',
             return Math.sqrt(d.value);
           });
 
-				
+/*				
 				// Add regions
 				for(var ii in graph.nodes) {
 					console.log(graph.nodes[ii].name);
 					//drawCircle(graph.nodes[ii].cx, graph.nodes[ii].cy, graph.nodes[ii].name);
 					drawRegions(graph.nodes[ii]);
 				}
-
+*/
 				
 				/// orig
 				var node = svg.selectAll(".node")
