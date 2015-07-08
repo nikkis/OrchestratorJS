@@ -225,6 +225,10 @@ app.controller('UserDeviceProximityController',
 				updateCircle(entity.x, entity.y, "region1_"+entity.name.replace('@', 'AT'));
 			}
 			
+			function removeRegions(entity) {
+				updateCircle(entity.x, entity.y, "region0_"+entity.name.replace('@', 'AT'));
+				updateCircle(entity.x, entity.y, "region1_"+entity.name.replace('@', 'AT'));
+			}			
 			
       function updateGraph() {
 
@@ -289,6 +293,9 @@ app.controller('UserDeviceProximityController',
           .text(function (d) {
             return d.name;
           })
+				
+				// Does not work yet
+			//.attr('transform', 'translate(-' + height + ',' + height / 2 + ') rotate(-90)')	
           .call(force.drag);
 
 
