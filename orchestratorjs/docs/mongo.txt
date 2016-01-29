@@ -1,3 +1,7 @@
+# Mac OS X with Homebrew installed MongoDB:
+sudo mongod --dbpath /usr/local/var/mongodb/ &
+
+
 # mongo console
 show databases
 
