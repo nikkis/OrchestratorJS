@@ -468,11 +468,6 @@ app.controller('UserDeviceProximityController',
         }
 
       });
-
-
     });
 
-
-
-  }
-);
+  });
