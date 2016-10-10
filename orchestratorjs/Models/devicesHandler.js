@@ -1,6 +1,9 @@
-ROOT = process.cwd()
-HELPERS = require(ROOT + '/helpers/general.js');
-log = HELPERS.log
+/*jslint node: true */
+
+
+var ROOT = process.cwd();
+var HELPERS = require(ROOT + '/helpers/general.js');
+var log = HELPERS.log;
 
 
 
@@ -19,12 +22,14 @@ var ojsDeviceRegistrySocket = (config.services.ojsDeviceRegistry.enabled) ? requ
 function emitContextData(contextDataDict) {
 
   // Publish for OJS apps
-  if (config.services.ojsDeviceRegistry.enabled)
+  if (config.services.ojsDeviceRegistry.enabled) {
     ojsDeviceRegistrySocket.emit('ojs_context_data', contextDataDict);
+  }
 
   // Publish for web-ui
-  if (config.services.ojsConsole.enabled)
+  if (config.services.ojsConsole.enabled) {
     ojsConsoleSocket.emit('ojs_context_data', contextDataDict);
+  }
 
 }
 
@@ -46,7 +51,7 @@ var deviceSchema = mongoose.Schema({
   lastSeen: {
     type: Date,
     default: Date.now
-  },
+  }
 
 });
 
@@ -235,6 +240,7 @@ module.exports = function DeviceHandler() {
             if (!deviceMetadata)
               deviceMetadata = {};
 
+            var newKey;
             for (newKey in newMetadata) {
 
               // publish only when metadata changes
@@ -248,15 +254,19 @@ module.exports = function DeviceHandler() {
                   oldValue: deviceMetadata[newKey]
                 };
               }
+
               // check the null issue!!
               deviceMetadata[newKey] = newMetadata[newKey];
             }
+
+
+            //log(deviceMetadata);
 
             DeviceModel.findOneAndUpdate({
               identity: identity
             }, {
               $set: {
-                metadata: deviceMetadata,
+                metadata: deviceMetadata
               }
             }, {
               upsert: true
@@ -265,6 +275,7 @@ module.exports = function DeviceHandler() {
                 log('error while userting metadata for ' + identity + ':' + err);
 
               // sending pubsub notifications
+              var key;
               for (key in publishThese) {
                 // original:
                 emitContextData(publishThese[key]);
@@ -281,6 +292,7 @@ module.exports = function DeviceHandler() {
 
 
       // check for special keys, like bt_devices. ( Could also filter these out from device updates )
+      var key;
       for (key in newMetadata) {
         if (key == 'bt_devices') {
           bt_devices_handler(identity, newMetadata[key]);

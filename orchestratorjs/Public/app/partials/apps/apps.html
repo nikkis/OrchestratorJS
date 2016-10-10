@@ -1,68 +1,66 @@
-
-
-  <div class="row">
+<div class="row">
 
 
 
-      <div class="small-12 medium-6 large-4 columns ojs-new-app-btn">
-        <a ng-href="#/app/newApp">NEW<br/>APP</a>
-      </div>
+  <div class="small-12 medium-6 large-4 columns ojs-new-app-btn">
+    <a ng-href="#/app/newApp">NEW<br/>APP</a>
+  </div>
 
-      <div class="small-12 medium-6 large-4 columns" ng-repeat="instance in appInstances">
+  <div class="small-12 medium-6 large-4 columns" ng-repeat="instance in appInstances">
 
-        <div class="panel">
+    <div class="panel">
 
-          <div class="row ojs-app-top" >
-            
-            <div class="small-12 medium-4 large-4 columns">
-              <img class="ojs-app-img" src="http://placehold.it/200/{{ ( !instance.color ) ? '218bc0': instance.color }}/000000/&amp;text=[{{instance.name}}]">
-            </div>
-            <div class="small-12 medium-8 large-8 columns" ><h4 class="ojs-app-name">{{instance.name}}</h4></div>
+      <div class="row ojs-app-top">
 
-          </div>
-
-          <hr>
-
-          <!-- running -->
-          <div class="row" ng-show='UserService.isLogged'>
-            <div class="small-12 medium-12 large-12 columns">
-              <span class="ojs-app-info-h" >Running: </span>{{instance.running}}
-            </div>
-          </div>
-
-          <!-- desc -->
-          <div class="row">
-            <div class="small-12 medium-12 large-12 columns"><span class="ojs-app-info-h">Description:</span></div>
-          </div>
-
-          <div class="row">
-            <div class="small-12 medium-12 large-12 columns ojs-app-desc-text" >
-              {{ ( !instance.desc ) ? '...': ( instance.desc.length > 150 ) ? instance.desc.substring(0,147) + '...' : instance.desc }}
-            </div>
-          </div>
-
-          <!-- author -->
-          <div class="row">
-            <div class="small-12 medium-12 large-12 columns">
-              <span class="ojs-app-info-h">Author: </span>
-              {{ ( !instance.author ) ? 'N/A': instance.author }}
-            </div>
-          </div>
-
-          <hr>
-
-          <!-- start/edit/stop -->      
-          <center class="app-instance-btns" >
-            <a ng-click="startApp(instance.name)" class="start-instance-btn">start</a>
-            <a ng-show='UserService.isLogged' ng-href="#/app/{{instance.name}}" class="edit-instance-btn">edit</a>
-            <a ng-click="stopApp(instance.name)" class="stop-instance-btn">stop</a>
-          </center>
-        </div>          
-
-
+        <div class="small-12 medium-4 large-4 columns">
+          <img class="ojs-app-img" src="http://placehold.it/200/{{ ( !instance.color ) ? '218bc0': instance.color }}/000000/&amp;text=[{{instance.name}}]">
         </div>
+        <div class="small-12 medium-8 large-8 columns">
+          <h4 class="ojs-app-name">{{instance.name}}</h4></div>
 
       </div>
+
+      <hr>
+
+      <!-- running -->
+      <div class="row" ng-show='UserService.isLogged'>
+        <div class="small-12 medium-12 large-12 columns">
+          <span class="ojs-app-info-h">Running: </span>{{instance.running}}
+        </div>
+      </div>
+
+      <!-- desc -->
+      <div class="row">
+        <div class="small-12 medium-12 large-12 columns"><span class="ojs-app-info-h">Description:</span></div>
+      </div>
+
+      <div class="row">
+        <div class="small-12 medium-12 large-12 columns ojs-app-desc-text">
+          {{ ( !instance.desc ) ? '...': ( instance.desc.length > 150 ) ? instance.desc.substring(0,147) + '...' : instance.desc }}
+        </div>
+      </div>
+
+      <!-- author -->
+      <div class="row">
+        <div class="small-12 medium-12 large-12 columns">
+          <span class="ojs-app-info-h">Author: </span> Alice
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- start/edit/stop -->
+      <center class="app-instance-btns">
+        <a ng-click="startApp(instance.name)" class="start-instance-btn">start</a>
+        <a ng-show='UserService.isLogged' ng-href="#/app/{{instance.name}}" class="edit-instance-btn">edit</a>
+        <a ng-click="stopApp(instance.name)" class="stop-instance-btn">stop</a>
+      </center>
+    </div>
+
+
+  </div>
+
+</div>
 
 <!--
       <div class="small-12 medium-6 large-4 columns ojs-new-app-btn">
@@ -79,11 +77,11 @@
 -->
 
 
-    <!--<div class="small-12 medium-12 large-12 columns">-->
+<!--<div class="small-12 medium-12 large-12 columns">-->
 
 
-    <!--  <div ng-repeat="instance in appInstances" class="large-4">-->
-      <!--<div ng-repeat="instance in appInstances" class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">-->
+<!--  <div ng-repeat="instance in appInstances" class="large-4">-->
+<!--<div ng-repeat="instance in appInstances" class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">-->
 <!--
         <div class="panel">
 
@@ -131,6 +129,4 @@
       </div>
     -->
 
-  </div>
-
-
+</div>

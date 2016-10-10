@@ -1,37 +1,37 @@
 ROOT = process.cwd()
-HELPERS = require( ROOT + '/helpers/general.js' );
+HELPERS = require(ROOT + '/helpers/general.js');
 log = HELPERS.log
-var config = require( ROOT + '/config.json' );
-var httprequest = require( "request" );
+var config = require(ROOT + '/config.json');
+var httprequest = require("request");
 
-runYieldHelpers = require( ROOT + '/helpers/helperForRunYield.js' );
-
-
-this.StartAction = function( actionName, actionParameters ) {
+runYieldHelpers = require(ROOT + '/helpers/helperForRunYield.js');
 
 
-try {
-  log( 'misc - triggering action from action: ' + actionName );
-
-  var params = {};
-  params[ 'actionName' ] = actionName;
-  params[ 'parameters' ] = actionParameters;
+this.StartAction = function (actionName, actionParameters) {
 
 
-  httprequest( {
-    uri: 'http://localhost:' + config.server.port + '/api/' + config.api + '/actioninstance',
-    method: "POST",
-    form: params
+  try {
+    log('misc - triggering action from action: ' + actionName);
 
-  }, function( error, response, body ) {
-    log( 'body: '+body );
-  } );
+    var params = {};
+    params['actionName'] = actionName;
+    params['parameters'] = actionParameters;
 
-  log( 'paapaaa' );
 
-}catch(err){
-  log('misc start action error: '+err);
-}
+    httprequest({
+      uri: 'http://localhost:' + config.server.port + '/api/' + config.api + '/actioninstance',
+      method: "POST",
+      form: params
+
+    }, function (error, response, body) {
+      log('body: ' + body);
+    });
+
+    log('paapaaa');
+
+  } catch (err) {
+    log('misc start action error: ' + err);
+  }
 
   /*
         type: 'POST',
@@ -70,56 +70,56 @@ try {
 };
 
 
-this.setAction = function( actionObject ) {
+this.setAction = function (actionObject) {
   this.action = actionObject;
 };
 
 
-this.sleep = function( ms, action ) {
+this.sleep = function (ms, action) {
 
-  if( action && action.actionKilled ) {
+  if (action && action.actionKilled) {
     log('Sleep: Action was killed!');
     return;
   }
 
-  var Fiber = require( 'fibers' );
+  var Fiber = require('fibers');
   var sleepResponseArgs = {
     runRetType: runYieldHelpers.SLEEP_TIMEOUT
   };
 
   var runRet = null;
   var runRetType = null;
-  while ( runRetType != sleepResponseArgs[ 'runRetType' ] ) {
+  while (runRetType != sleepResponseArgs['runRetType']) {
     try {
       var fiber = Fiber.current;
-      setTimeout( function() {
-        if ( fiber !== undefined ) {
-          fiber.run( sleepResponseArgs );
+      setTimeout(function () {
+        if (fiber !== undefined) {
+          fiber.run(sleepResponseArgs);
         }
-      }, ms * 1000 );
+      }, ms * 1000);
       runRet = Fiber.yield();
-      console.log( 'yield off' );
-      console.log( runRet );
-      if ( runRet[ 'runRetType' ] ) {
-        runRetType = runRet[ 'runRetType' ];
+      console.log('yield off');
+      console.log(runRet);
+      if (runRet['runRetType']) {
+        runRetType = runRet['runRetType'];
       }
-    } catch ( err ) {
-      log( err );
+    } catch (err) {
+      log(err);
     }
   }
 };
 
 
 
-this.waitFor = function( responseStrTowait ) {
+this.waitFor = function (responseStrTowait) {
   this.waitForStr = responseStrTowait;
   var resVal = 'asdf-asdf--asf-_sdfasdf';
-  while ( resVal != this.waitForStr ) {
+  while (resVal != this.waitForStr) {
     try {
       resVal = Fiber.yield();
-    } catch ( err ) {
-      console.log( err );
+    } catch (err) {
+      console.log(err);
     }
   }
-  console.log( 'no more waiting, got: ' + resVal );
+  console.log('no more waiting, got: ' + resVal);
 }

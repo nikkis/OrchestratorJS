@@ -2,14 +2,17 @@ var app = angular.module('ojsConsole.controllers.DevicesController', ['ojsConsol
 
 
 function blinkCell(deviceIdentity, metadataKey) {
-  var className = '.' + deviceIdentity.replace('@', 'AT') + '_' + metadataKey;
 
-  //console.log(className);
+  if (deviceIdentity && deviceIdentity.replace) {
+    var className = '.' + deviceIdentity.replace('@', 'AT') + '_' + metadataKey;
 
-  $(className).addClass('blinkClass');
-  $(className).bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function (e) {
-    $(className).removeClass('blinkClass');
-  });
+    console.log(className);
+
+    $(className).addClass('blinkClass');
+    $(className).bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function (e) {
+      $(className).removeClass('blinkClass');
+    });
+  }
 }
 
 

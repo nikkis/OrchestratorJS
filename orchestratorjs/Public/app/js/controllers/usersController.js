@@ -15,9 +15,8 @@ app.controller('UserController',
 
     console.log('profile page for user: ' + UserService.username);
 
-    $http.get('/api/' + apiVersion + '/user/' + username).success(function (data, status, headers, config) {
-      $scope.user = data.user;
-      $scope.user.devices = data.devices;
+    $http.get('/api/' + apiVersion + '/user/' + UserService.username).success(function (data, status, headers, config) {
+      $scope.user = data;
     });
 
     $scope.removeDevice = function (deviceName) {
@@ -91,7 +90,6 @@ app.controller('UserDeviceController',
         $http.get('/api/' + apiVersion + '/user/' + username + '/device/' + deviceName, {
           username: UserService.username,
         }).success(function (data, status, headers, config) {
-          console.log(data);
 
           $scope.device.btUUID = data.btUUID ? data.btUUID : getUUID();
           $scope.device.deviceIdentity = data.identity;

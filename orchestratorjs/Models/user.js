@@ -1,6 +1,9 @@
-ROOT = process.cwd()
-HELPERS = require(ROOT + '/helpers/general.js');
-log = HELPERS.log
+/*jslint node: true */
+
+
+var ROOT = process.cwd();
+var HELPERS = require(ROOT + '/helpers/general.js');
+var log = HELPERS.log;
 
 
 var config = require(ROOT + '/config.json');
@@ -37,18 +40,23 @@ var userSchema = mongoose.Schema({
 
   devices: [{
     type: ObjectId,
-    ref: 'DeviceModel'
+    ref: 'DeviceModel',
+    unique: true
   }]
 
 });
 
 var LINK_PATH_PREFIX = '/users/';
 
+
+
 // Own version of toJSON method for formatting links for the child elements
 userSchema.methods.toJson = function () {
-  var userObject = this.toObject();
-  var tempDevices = [];
-  for (var i = 0; i < userObject.devices.length; i++) {
+
+  var userObject = this.toObject(),
+    tempDevices = [],
+    i;
+  for (i = 0; i < userObject.devices.length; i++) {
     userObject.devices[i].toJson = DEVICE_HANDLER.toJsonMethod;
     tempDevices.push(userObject.devices[i].toJson());
   }
@@ -58,7 +66,7 @@ userSchema.methods.toJson = function () {
     color: userObject.color ? userObject.color : null,
     edited: userObject.edited ? userObject.edited : null,
     soMeData: userObject.soMeData ? userObject.soMeData : {},
-    devices: tempDevices //userObject.devices ? userObject.devices : []
+    devices: tempDevices
   };
 
   return response;

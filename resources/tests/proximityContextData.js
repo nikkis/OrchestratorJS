@@ -13,7 +13,7 @@ function sleep( seconds ) {
 }
 
 var interval = 3;
-var deviceIdentity = 'nikkis@iphone';
+var deviceIdentity = 'nikkis@raspberry';
 
 var values = [];
 values.push( {

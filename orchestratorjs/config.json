@@ -1,52 +1,52 @@
 {
 
-	"app_name": "orchestrator.js",
-	"app_version": "0.0.1",
+  "app_name": "Liquid Store",
+  "app_version": "0.0.1",
 
-	"web_console": {
-		"marketing_mode": false
-	},
+  "web_console": {
+    "marketing_mode": false
+  },
 
-	"server" : {
-		"host" : "localhost",
-		"port" : 9000,
-		"socketio_debug": true
-	},
+  "server": {
+    "host": "localhost",
+    "port": 9000,
+    "socketio_debug": true
+  },
 
-	"database" : "socialDevicesOrchestratorDB",
+  "database": "socialDevicesOrchestratorDB",
 
-	"require_authentication" : true,
-	"admin_users" : ["admin", "nikkis"],
+  "require_authentication": true,
+  "admin_users": ["admin", "nikkis"],
 
-	"log_path" : "/logs/",
+  "log_path": "/logs/",
 
 
-	"resources" : {
-		"actions" :          "/resources/actions/",
-		"capabilities" :     "/resources/capabilities/",
-		"capability_stubs" : "/resources/capability_stubs/",
-		"virtualCapabilities" :     "/resources/virtualCapabilities/",        
-		"apps" : "/resources/observers/"
-	},
+  "resources": {
+    "actions": "/resources/actions/",
+    "capabilities": "/resources/capabilities/",
+    "capability_stubs": "/resources/capability_stubs/",
+    "virtualCapabilities": "/resources/virtualCapabilities/",
+    "apps": "/resources/observers/"
+  },
 
-	"clients_path" : "/../clients/app_clients/",
+  "clients_path": "/../clients/app_clients/",
 
-	"services": {
+  "services": {
 
-		"ojsDeviceRegistry" : {
-			"enabled": true,
-			"port" : 9002,
-			"debug": false
-		},
+    "ojsDeviceRegistry": {
+      "enabled": true,
+      "port": 9002,
+      "debug": false
+    },
 
-		"ojsConsole": {
-			"enabled": true,			
-			"port" : 9001,
-			"debug": false
-		}
-	},
+    "ojsConsole": {
+      "enabled": true,
+      "port": 9001,
+      "debug": false
+    }
+  },
 
-	"device_types": ["android", "gadgeteer", "arduino", "ios", "beacon" ],
+  "device_types": ["android", "gadgeteer", "arduino", "ios", "beacon", "raspberry"],
 
-	"api" : "1"
+  "api": "1"
 }

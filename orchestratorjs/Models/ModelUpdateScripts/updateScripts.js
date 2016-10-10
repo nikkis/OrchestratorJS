@@ -1,3 +1,6 @@
+/*jslint node: true */
+
+
 ROOT = process.cwd();
 HELPERS = require(ROOT + '/helpers/general.js');
 log = HELPERS.log
@@ -60,6 +63,6 @@ var SCRIPTS = module.exports = {
 
 
 
-//SCRIPTS.addDeviceReferenceToUsers();
+SCRIPTS.addDeviceReferenceToUsers();
 
 //SCRIPTS.test();

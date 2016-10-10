@@ -1,3 +1,6 @@
+/*jslint node: true */
+
+
 function getFormattedJSON(myObject) {
   return JSON.stringify(myObject, null, 4);
 }
@@ -58,8 +61,6 @@ module.exports = function (objectType) {
 
 
 
-    
-    
 
 
 
