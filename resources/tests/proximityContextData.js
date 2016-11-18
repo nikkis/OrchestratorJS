@@ -1,66 +1,66 @@
 var hostname = 'localhost';
 //var hostname = 'orchestratorjs.org';
 
-var pubsub = require( 'socket.io-client' ).connect( 'http://'+hostname+':9000' );
-var Fiber = require( 'fibers' );
+var pubsub = require('socket.io-client').connect('http://' + hostname + ':9000');
+var Fiber = require('fibers');
 
-function sleep( seconds ) {
-  var fiber = Fiber.current;
-  setTimeout( function() {
-    fiber.run();
-  }, seconds * 1000 );
-  Fiber.yield();
+function sleep(seconds) {
+    var fiber = Fiber.current;
+    setTimeout(function () {
+        fiber.run();
+    }, seconds * 1000);
+    Fiber.yield();
 }
 
 var interval = 3;
 var deviceIdentity = 'nikkis@raspberry';
 
 var values = [];
-values.push( {
-  "bt_devices": [
-    [ "60:45:BD:D3:8C:63", -90 ],
-    [ "E8:99:C4:D6:77:06", -59 ],
-    [ "84:B1:53:F0:39:96", -83 ],
-    [ "D0:E7:82:08:66:06", -41 ],
-    [ "08:ED:B9:BA:00:F2", -89 ]
+values.push({
+    "bt_devices": [
+    ["60:45:BD:D3:8C:63", -90],
+    ["E8:99:C4:D6:77:06", -59],
+    ["84:B1:53:F0:39:96", -83],
+    ["D0:E7:82:08:66:06", -41],
+    ["08:ED:B9:BA:00:F2", -89]
   ]
-} );
+});
 
 
-values.push( {
-  "bt_devices": [
-    [ "60:45:BD:D3:8C:63", -90 ],
-    [ "84:B1:53:F0:39:96", -83 ],
-    [ "D0:E7:82:08:66:06", -41 ],
-    [ "08:ED:B9:BA:00:F2", -89 ]
+values.push({
+    "bt_devices": [
+    ["60:45:BD:D3:8C:63", -90],
+    ["84:B1:53:F0:39:96", -83],
+    ["D0:E7:82:08:66:06", -41],
+    ["08:ED:B9:BA:00:F2", -89]
   ]
-} );
+});
 
 
-values.push( {
-  "bt_devices": [
-    [ "60:45:BD:D3:8C:63", -90 ],
-    [ "E8:99:C4:D6:77:06", -59 ],
-    [ "84:B1:53:F0:39:96", -83 ],
-    [ "D0:E7:82:08:66:06", -41 ],
-    [ "08:ED:B9:BA:00:F2", -89 ]
+values.push({
+    "bt_devices": [
+    ["60:45:BD:D3:8C:63", -90],
+    ["E8:99:C4:D6:77:06", -59],
+    ["84:B1:53:F0:39:96", -83],
+    ["D0:E7:82:08:66:06", -41],
+    ["08:ED:B9:BA:00:F2", -89]
   ]
-} );
+});
 
 
 
-Fiber( function() {
+Fiber(function () {
 
-  sleep( 5 );
+    sleep(5);
 
-  for ( i in values ) {
+    for (i in values) {
 
-    console.log( 'tick' );
-    console.log( values[ i ] );
+        console.log('tick');
+        console.log(values[i]);
 
-    pubsub.emit( "ojs_context_data", "", deviceIdentity, values[ i ] );
+        pubsub.emit("ojs_context_data", "", deviceIdentity, values[i]);
 
-    sleep( interval );
-  }
+        sleep(interval);
+    }
 
-} ).run();
+}).run();
