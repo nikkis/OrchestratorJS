@@ -5,16 +5,14 @@ var ojsDeviceRegistryServicePort = 9001;
 
 app.factory('socket', function ($rootScope) {
 
-
     var socket = io.connect('http://' + hostName + ':' + pubsubPort);
 
     return {
         on: function (eventName, callback) {
 
-
-
+            // deviceid, data
             socket.on(eventName, function () {
-                console.log('event received!');
+
                 var args = arguments;
                 $rootScope.$apply(function () {
                     callback.apply(socket, args);
