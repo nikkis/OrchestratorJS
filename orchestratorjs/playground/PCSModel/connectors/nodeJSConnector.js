@@ -1,6 +1,7 @@
 // Receives data with Socket.IO (and later with MQTT and HTTP) and then dispatches PCS
 
-var host = 'http://localhost'
+//var host = 'http://localhost'
+var host = 'http://orchestratorjs.org';
 var port = 9006;
 var pcsIdentity = 'nikkis@pcs';
 
@@ -10,8 +11,7 @@ var log = console.log;
 var PCSmodel;
 
 
-var Socket = require('socket.io-client')
-
+var Socket = require('socket.io-client');
 
 
 
@@ -38,10 +38,6 @@ var initializeConnector = function (pcsModel) {
         // Dispatch the received data to the PCS model
         pcsModel.dispatch(deviceid, data);
     });
-
-
-
-
 
 };
 

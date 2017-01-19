@@ -22,69 +22,77 @@
         pubsubPort = '<%= locals.pubsubPort %>';
     </script>
 
+
+
     <script src="js/jquery.min.js"></script>
+
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/jquery-migrate-1.2.1.js"></script>
-    <!--<script src="js/jquery.ba-bbq.min.js"></script>
-  <script src="js/jquery.ba-hashchange.min.js"></script>-->
+    <script src="js/jquery.ba-bbq.min.js"></script>
+    <script src="js/jquery.ba-hashchange.min.js"></script>
+    -->
 
     <!-- ojs-icons -->
     <link rel="stylesheet" href="css/ojs-icons/style.css">
-</head>
+
+    <base href="/">
 
 
-<script src="/app/lib/socket.io/socket.io.js"></script>
+    <script src="/app/lib/socket.io/socket.io.js"></script>
+    <!--<script src="/app/lib/socket.io/socket.io.min.js"></script>-->
 
-<script src="app/lib/d3.min.js"></script>
-
-
-<!-- codemirror editor -->
-<link rel="stylesheet" href="app/lib/codemirror/codemirror.css">
-<link rel="stylesheet" href="app/lib/codemirror/addon/hint/show-hint.css">
-<script src="app/lib/codemirror/codemirror.js"></script>
-<script src="app/lib/codemirror//mode/javascript/javascript.js"></script>
-
-<!-- addons for codemirror editor -->
-<link rel="stylesheet" href="app/lib/codemirror/theme/monokai.css">
-<script src="app/lib/codemirror/addon/hint/show-hint.js"></script>
-<script src="app/lib/codemirror/addon/hint/javascript-hint.js"></script>
+    <script src="app/lib/d3.min.js"></script>
 
 
-<script src="js/sequence/jquery.sequence-min.js"></script>
+    <!-- codemirror editor -->
+    <link rel="stylesheet" href="app/lib/codemirror/codemirror.css">
+    <link rel="stylesheet" href="app/lib/codemirror/addon/hint/show-hint.css">
+    <script src="app/lib/codemirror/codemirror.js"></script>
+    <script src="app/lib/codemirror//mode/javascript/javascript.js"></script>
 
-<script src="js/foundation.min.js"></script>
-<script src="js/foundation/foundation.dropdown.js"></script>
-<script src="js/foundation/foundation.topbar.js"></script>
-
-<link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
-<link rel="stylesheet" href="css/normalize.css">
-<link rel="stylesheet" href="css/foundation.css">
-<link rel="stylesheet" href="css/foundation-icons/foundation-icons.css">
-
-<!-- Google Webfonts -->
-<!--<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">-->
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+    <!-- addons for codemirror editor -->
+    <link rel="stylesheet" href="app/lib/codemirror/theme/monokai.css">
+    <script src="app/lib/codemirror/addon/hint/show-hint.js"></script>
+    <script src="app/lib/codemirror/addon/hint/javascript-hint.js"></script>
 
 
-<link rel="stylesheet" href="console.css">
+    <script src="js/sequence/jquery.sequence-min.js"></script>
 
 
-<!-- remove this, please! -->
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-46640474-1', 'orchestratorjs.org');
-    ga('send', 'pageview');
-</script>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/sequence/sequencejs-theme.sliding-horizontal-parallax.css" />
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css">
+
+    <!-- Google Webfonts -->
+    <!--<link href="http://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet" type="text/css">-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+
+
+    <link rel="stylesheet" href="console.css">
+
+
+    <!-- remove this, please! -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-46640474-1', 'orchestratorjs.org');
+        ga('send', 'pageview');
+    </script>
 
 </head>
 
@@ -97,7 +105,7 @@
         <nav class="top-bar" data-topbar>
             <ul class="title-area">
                 <li class="name">
-                    <h1><a href="#/" ><%= locals.title %></a></h1>
+                    <h1><a ng-href="#/" ><%= locals.title %></a></h1>
                 </li>
                 <li class="toggle-topbar menu-icon"><a><span>Menu</span>
             </a>
@@ -113,7 +121,7 @@
                     <li><a href="#/apps" class="aTopMenuBtn" check-user="1">Apps</a></li>
                     <li class="divider"></li>
 
-                    <li class=""><a href="#/actions" class="">Actions</a></li>
+                    <li class=""><a href="/#/actions" class="">Actions</a></li>
                     <li class="divider"></li>
 
                     <li class="has-dropdown">
@@ -200,31 +208,20 @@
 
 
     <div class="container angular-container">
-        <!--<div ng-app="ojsConsole">-->
         <div ng-view></div>
     </div>
-    </div>
 
 
-
+    <script src="js/modernizr.min.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script src="js/foundation/foundation.dropdown.js"></script>
+    <script src="js/foundation/foundation.topbar.js"></script>
     <script>
         $(document).foundation();
     </script>
 
     <script src="js/mustache.js"></script>
     <script src="js/require.js"></script>
-
-    <!--
-<script src="console.js"></script>
--->
-    <script type="text/javascript">
-        /*
-                                                                                  $( window ).hashchange( function() {
-                                                                                    showView( location.hash.substring( 1 ) );
-                                                                                  } )
-                                                                                  $( window ).hashchange();
-                                                                                  */
-    </script>
 
 
     <!-- if set to marketing mode show tags marked with marketingTag class -->
@@ -251,8 +248,16 @@
 
 
 
-    <script src="app/lib/angular/angular.js"></script>
-    <script src="app/lib/angular/angular-route.js"></script>
+    <!--
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.js"></script>
+-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
+
+
+
 
     <script src="app/js/app.js"></script>
 
