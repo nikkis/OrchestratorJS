@@ -14,52 +14,121 @@
 
     <link rel="icon" type="image/png" sizes="96x96" href="assets/graphics/exports/PCS_logo_fav.png">
 
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 
+<script src="libs/d3.min.js"></script>
+<script src="libs/jquery-3.1.1.min.js"></script>
+
+<script src="libs/socket.io.min.js"></script>
+
+<script data-main="PCSmodel" src="libs/require.js"></script>
+
+<span class="pcs-logo">
+    <img src="assets/graphics/exports/PCS_logo.png" /><span class="pcs-logo-text">Physical-Cyber-Social Model</span>
+</span>
 
 
-<script src="scripts/socket.io.min.js"></script>
+<!-- Devices Graph -->
+<script src="scripts/graph.js"></script>
+<style>
+    .node {
+        stroke: #fff;
+        stroke-width: 1.5px;
+        z-index: 10;
+    }
+    
+    .link {
+        stroke: #999;
+        stroke-opacity: .6;
+    }
+</style>
 
-<!--<script src="PCSmodel.js"></script>-->
-<script data-main="PCSmodel" src="scripts/require.js"></script>
-
-<img src="assets/graphics/exports/PCS_logo.png" />
-
+<div id="thegraph" class="userDeviceProximityGraph">
+</div>
 
 
 <!-- Google Maps -->
-<div id="googleMap" style="width:100%;height:420px;"></div>
+<div id="googleMap"></div>
 
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script>
-    var myCenter = new google.maps.LatLng(41.878114, -87.629798);
+    // Subscribe the GPS coordinates from the model
+    $('#googleMap').hide();
 
-    function initialize() {
-        var mapProp = {
-            center: myCenter,
-            zoom: 5,
-            scrollwheel: false,
-            draggable: false,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+    function updatedLocation(lat, long) {
+        var myCenter = new google.maps.LatLng(lat, long);
 
-        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        function initialize() {
+            var mapProp = {
+                center: myCenter,
+                zoom: 15,
+                scrollwheel: false,
+                draggable: false,
+                disableDefaultUI: true,
 
-        var marker = new google.maps.Marker({
-            position: myCenter,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+            var marker = new google.maps.Marker({
+                position: myCenter,
+            });
+
+            marker.setMap(map);
+        }
+
+        initialize();
+    };
+
+
+
+    // Wait for a little while for the pcs to get initialized
+    var currentLocationMD5 = '';
+    setTimeout(function () {
+
+        pcsModel.addCallbackForEvent('location', function (event) {
+            if (currentLocationMD5 !== event.md5 &&
+                pcsModel.model.location.latitude && pcsModel.model.location.longitude) {
+
+                log('old: ' + currentLocationMD5 + ' vs. ' + event.md5);
+                currentLocationMD5 = event.md5;
+
+
+                $('#googleMap').fadeIn();
+
+                updatedLocation(
+                    pcsModel.model.location.latitude,
+                    pcsModel.model.location.longitude
+                );
+
+            } else {
+
+                $('#googleMap').fadeOut(5000);
+            }
         });
 
-        marker.setMap(map);
-    }
+        pcsModel.addCallbackForEvent('social_proximity_set', function (event) {
 
-    google.maps.event.addDomListener(window, 'load', initialize);
+        });
+
+    }, 1000);
+</script>
 
 
-    // Subscribe the GPS coordinates from the model
-
-    // Wait for a little while
+<script>
     setTimeout(function () {
-        console.log(pcsModel.asdf);
+        log('ProximityGraph');
+
+        var event = {
+            graph: {
+                nodes: {}
+            }
+        };
+
+        updateProximityGraph('nikkis', 'iphone');
+
     }, 1000);
 </script>
 

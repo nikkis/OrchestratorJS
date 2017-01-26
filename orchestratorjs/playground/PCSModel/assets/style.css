@@ -1,0 +1,43 @@
+body {
+    font-family: arial;
+}
+
+.pcs-logo {
+    position: relative;
+    display: inline;
+    z-index: 100;
+}
+
+.pcs-logo-text {
+    display: inline;
+    font-size: 2em;
+    font-family: arial;
+    position: relative;
+    top: -1.5em;
+    left: 1em;
+    z-index: 100;
+}
+
+#googleMap {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    /* Set z-index to 0 as it will be on a layer below the contact form */
+}
+
+#thegraph {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    /* The z-index should be higher than Google Maps */
+    width: 100%;
+    /*
+    background: black;
+    height: 100%;
+    opacity: .1;*/
+    /* Set the opacity for a slightly transparent Google Form */
+}

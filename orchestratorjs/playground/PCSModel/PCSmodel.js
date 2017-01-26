@@ -1,3 +1,8 @@
+// PHASE 1: data input filtering and handling
+// PHASE 2: higher level event generators
+// PHASE 3: event callbacks    
+
+
 var log = console.log;
 log('Physical-Cyber-Social model');
 
@@ -38,32 +43,53 @@ var PCSModel = function () {
         unknownProxemicDevices: {}
     };
 
+    // PHASE 1
     var inputListeners = {};
+
+    // PHASE 2
+    var eventUpdateTimes = {};
     var eventGenerators = {};
     var dataToEventsMappings = {};
+
+    // PHASE 3
+    var eventCallbacks = {
+        'local': {}
+    };
 
     var connectors = {};
     var that = {};
 
-    function initializePCS() {
-        log('Initializing Physical-Cyber-Social model');
+
+    // PUBLIC
+
+    // INITIALIZING
+
+    // Starts the whole thing
+    that.startPCS = function () {
+        log('Starting PCS..');
+        initializePCS();
     };
 
 
-    that.addInputListener = function (dataType, handlerMethod) {
-        inputListeners[dataType] = handlerMethod;
-        log('handler addded for: ' + dataType);
+    // PHASE 1
+
+    that.addInputListener = function (inputDataType, inputListener) {
+        inputListeners[inputDataType] = inputListener;
+        log('Input listener addded for: ' + inputDataType);
     };
 
 
-    that.addEventGenerator = function (eventType, triggeringInputDataTypes, maxInterval, generatorMethod) {
-        log('adding new event generator: ' + eventType);
+    // PHASE 2
+
+    that.addEventGenerator = function (eventType, triggeringInputDataTypes, maxInterval, validTime, generatorMethod) {
+        log('Event generator for: ' + eventType);
 
         // name: when last called, function to call, maxInterval (how often can be invoked)
         eventGenerators[eventType] = {
             lastCalled: null,
             generator: generatorMethod,
-            maxInterval: maxInterval
+            maxInterval: maxInterval,
+            validTime: validTime
         };
 
         log(triggeringInputDataTypes);
@@ -80,6 +106,26 @@ var PCSModel = function () {
 
         log(dataToEventsMappings);
     };
+
+
+    // PHASE 3
+
+    that.addCallbackForEvent = function (eventName, callback) {
+        log('Call back for event: ' + eventName);
+
+        if (!eventGenerators[eventName]) {
+            throw "Cannot add callback: Unknown event type: " + eventName;
+        }
+
+        // For direct/local subsribers
+        eventCallbacks['local'][eventName] = callback;
+
+    };
+
+
+
+
+    //////////// DISPATCHER - MAIN METHOD
 
 
     that.dispatch = function (senderId, inputData) {
@@ -101,21 +147,53 @@ var PCSModel = function () {
                 // invoke the event generators
 
                 var j,
+                    key,
                     eventGeneratorKeys = dataToEventsMappings[dataType];
                 log(eventGeneratorKeys);
                 for (j = 0; j < eventGeneratorKeys.length; j += 1) {
                     key = eventGeneratorKeys[j];
                     var generatorInfo = eventGenerators[key];
-                    log('BAR');
 
-                    log(generatorInfo);
 
                     // TODO: check the interval
 
-                    // invoke method
-                    var eventToPublish = generatorInfo.generator();
 
-                    // publish for the subscribers
+                    // invoke method
+                    var eventToPublish = generatorInfo.generator(model);
+                    //model[key] = eventToPublish.eventValue;
+                    eventUpdateTimes[key] = Date.now();
+
+                    // publish to local
+                    var localCallbackForEvent = eventCallbacks['local'][key];
+                    if (!localCallbackForEvent) {
+                        return;
+                    }
+
+                    // Add the md5 so that the client can decide if it reacts to the event
+                    var oldMD5 = getHashForEventType(key);
+                    eventToPublish.md5 = oldMD5;
+
+                    localCallbackForEvent(eventToPublish);
+
+
+                    // TODO: publish for global subscribers
+
+
+                    // check for validity
+
+                    setTimeout(function () {
+                        var newMD5 = getHashForEventType(key);
+                        if (eventUpdateTimes[key] && newMD5 === oldMD5) {
+                            log('SAME VALUE TOO LONG (' + generatorInfo.validTime + '): ' + oldMD5 + ' vs. ' + newMD5);
+                            model[key] = {};
+                            var eventToPublish = {
+                                eventType: key,
+                                eventValue: model[key]
+                            };
+
+                            localCallbackForEvent(eventToPublish);
+                        }
+                    }, generatorInfo.validTime * 1000);
 
 
                 }
@@ -129,14 +207,30 @@ var PCSModel = function () {
     };
 
 
-    // Starts the whole thing
-    that.startPCS = function () {
-        log('Starting PCS..');
-        initializePCS();
+    // PRIVATE METHODS
+
+    function initializePCS() {
+        log('Initializing Physical-Cyber-Social model');
+        that.model = model;
     };
+
+
+    function getHashForEventType(eventType) {
+        var datadataJsonString = model[eventType] ? JSON.stringify(model[eventType]) : '';
+        var lastUpdateTime = eventUpdateTimes[eventType];
+        return md5(datadataJsonString + lastUpdateTime);
+    }
+
 
     return that;
 };
+
+
+
+
+
+
+
 
 
 /// Initialize
@@ -145,20 +239,21 @@ var pcsModel = PCSModel();
 pcsModel.startPCS();
 
 
+////////// PHASE 1
 
-pcsModel.addInputListener('facebook_friends', function (pcsModel, facebookFriends) {
+pcsModel.addInputListener('facebook_friends', function (theModel, facebookFriends) {
 
-    pcsModel.facebookFriends = facebookFriends;
+    theModel.facebookFriends = facebookFriends;
 
     // TODO: use here real fb data
 
 });
 
 
-pcsModel.addInputListener('ble_devices', function (pcsModel, proximitySet) {
+pcsModel.addInputListener('ble_devices', function (theModel, proximitySet) {
 
-    pcsModel.proxemicDevices = {};
-    pcsModel.proxemicUsers = {};
+    theModel.proxemicDevices = {};
+    theModel.proxemicUsers = {};
 
     var
         measurementIndex,
@@ -170,36 +265,39 @@ pcsModel.addInputListener('ble_devices', function (pcsModel, proximitySet) {
         var bleIdentity = proximitySet[measurementIndex][0];
         var rssiValue = proximitySet[measurementIndex][1];
 
-        if (Object.keys(pcsModel.knownBLEDevices).indexOf(bleIdentity) !== -1) {
+        if (Object.keys(theModel.knownBLEDevices).indexOf(bleIdentity) !== -1) {
 
-            measuredDeviceId = pcsModel.knownBLEDevices[bleIdentity];
+            measuredDeviceId = theModel.knownBLEDevices[bleIdentity];
 
-            if (Object.keys(pcsModel.knownCompanionDevices).indexOf(bleIdentity) !== -1) {
+            if (Object.keys(theModel.knownCompanionDevices).indexOf(bleIdentity) !== -1) {
                 measuredUsername = measuredDeviceId.split('@', 1);
-                pcsModel.proxemicUsers[measuredUsername] = rssiValue;
+                theModel.proxemicUsers[measuredUsername] = rssiValue;
             }
 
-            pcsModel.proxemicDevices[measuredDeviceId] = rssiValue;
+            theModel.proxemicDevices[measuredDeviceId] = rssiValue;
 
         } else {
             // unknown device
-            pcsModel.unknownProxemicDevices["unknown_" + unknownDevicesIndex] = rssiValue;
+            theModel.unknownProxemicDevices["unknown_" + unknownDevicesIndex] = rssiValue;
             unknownDevicesIndex += 1;
         }
     }
 });
 
-pcsModel.addInputListener('gps_coordinates', function (pcsModel, coordinates) {
-
-    pcsModel.locationGPS = {};
-    pcsModel.locationGPS['latitude'] = coordinates[0];
-    pcsModel.locationGPS['longitude'] = coordinates[1];
-
+pcsModel.addInputListener('gps_coordinates', function (theModel, coordinates) {
+    theModel.location = {};
+    theModel.location['latitude'] = coordinates.latitude;
+    theModel.location['longitude'] = coordinates.longitude;
 });
 
 
+
+////////// PHASE 2
+
+
+
 // pcs event type (name), array of inputs that trigger the generator, interval in seconds (how fast/often the generator can be called)
-pcsModel.addEventGenerator('social_proximity_set', ['ble_devices', 'facebook_friends'], 3, function (pcsModel) {
+pcsModel.addEventGenerator('social_proximity_set', ['ble_devices', 'facebook_friends'], 3, 5, function (theModel) {
 
     // the the fb data
     console.log('SOCIAL PROXIMITY GRAPH CHANGED EVENT');
@@ -209,12 +307,19 @@ pcsModel.addEventGenerator('social_proximity_set', ['ble_devices', 'facebook_fri
 
 
 // pcs event type (name), array of inputs that trigger the generator, interval in seconds (how fast/often the generator can be called)
-pcsModel.addEventGenerator('location', ['gps_coordinates'], 3, function (pcsModel) {
+pcsModel.addEventGenerator('location', ['gps_coordinates'], 3, 10, function (theModel) {
 
     // Generate location output events
 
-    console.log('LOCATION CHANGED EVENT');
-    var event = {};
+    var event = {
+        eventType: 'location',
+        eventValue: {
+            location: {
+                latitude: theModel.location['latitude'],
+                longitude: theModel.location['longitude']
+            }
+        }
+    };
 
     return event;
 });
@@ -235,8 +340,8 @@ if (isNode()) {
 } else {
 
     log('NOT Node.js');
-    pcsModel.asdf = "22";
-    requirejs(["connectors/connectorForJS"], function (connector) {
+
+    requirejs(["connectors/connectorForJS", "libs/md5"], function (connector) {
         initializeConnector(pcsModel);
     });
 
