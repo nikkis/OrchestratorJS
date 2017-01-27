@@ -46,6 +46,8 @@ var PCSModel = function () {
         */
         // Ble data
 
+        bleUUID: "FB694B90-F49E-4597-8306-171BBA78F844",
+
         knownBLEDevices: {
             "717f860e-f0e6-4c93-a4e3-cc724d27e05e": "nikkis@iphone",
             "5bf2e050-4730-46de-b6a7-2c8be4d9fa36": "nikkis@iphone5",
@@ -57,8 +59,6 @@ var PCSModel = function () {
             "717f860e-f0e6-4c93-a4e3-cc724d27e05e": "nikkis@iphone"
         },
 
-
-        // Dynamic data
 
         proxemicUsers: {},
         proxemicDevices: {},
@@ -83,7 +83,11 @@ var PCSModel = function () {
     var that = {};
 
 
-    // PUBLIC
+    var remoteDispatcher;
+
+
+
+    // PUBLIC METHODS
 
     // INITIALIZING
 
@@ -230,6 +234,20 @@ var PCSModel = function () {
     };
 
 
+    that.addDispatcher = function (dispatcherMethod) {
+        remoteDispatcher = dispatcherMethod;
+    }
+
+    that.dispatchSeed = function () {
+        remoteDispatcher(model.identity, 'pcs_seed', {
+            identity: model.identity,
+            facebookID: model.facebookID,
+            bleUUID: model.bleUUID
+        });
+    }
+
+
+
     // PRIVATE METHODS
 
     function initializePCS() {
@@ -368,6 +386,11 @@ if (isNode()) {
 
     requirejs(["connectors/connectorForJS", "libs/md5"], function (connector) {
         initializeConnector(pcsModel);
+
+        setTimeout(function () {
+            pcsModel.dispatchSeed();
+        }, 2000);
+
     });
 
 }

@@ -8,11 +8,18 @@ var pcsIdentity = 'nikkis@pcs';
 
 var initializeConnector = function (pcsModel) {
 
+
+
     // Socket.IO client
     var socket = io(host + ':' + port);
     socket.on('connect', function () {
         log('connection');
-        socket.emit('identify', pcsModel.identity);
+        socket.emit('identify', pcsModel.model.identity);
+
+        pcsModel.addDispatcher(function (eventName, eventData) {
+            socket.emit(eventName, pcsModel.model.identity, eventData);
+        });
+
     });
 
     socket.on('disconnect', function (deviceid) {

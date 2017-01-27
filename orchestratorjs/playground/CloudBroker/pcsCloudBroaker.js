@@ -118,6 +118,11 @@ io.on('connection', function (socket) {
         removeConnection(socket);
     });
 
+    socket.on('pcs_seed', function (deviceIdentity, data) {
+        log('pcs_seed');
+
+    });
+
 
     socket.on('pcs_data', function (deviceIdentity, data) {
 
