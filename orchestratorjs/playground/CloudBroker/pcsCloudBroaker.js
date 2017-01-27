@@ -90,6 +90,21 @@ function addConnection(deviceIdentity, socket) {
 };
 
 
+
+function dispacthSeed(pcsIdentity, seedData) {
+
+    if (!pcsIdentity) {
+        return;
+    }
+
+    var pcs_id;
+    for (pcs_id in PCS_CONNECTION_POOL) {
+        var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
+        pcsConnection.emit('pcs_seed', pcsIdentity, seedData);
+    }
+};
+
+
 function dispacthDataToPCS(deviceIdentity, data) {
 
     if (!deviceIdentity) {
@@ -120,7 +135,8 @@ io.on('connection', function (socket) {
 
     socket.on('pcs_seed', function (identity, data) {
         log('pcs_seed');
-
+        dispacthSeed(identity, data);
+        log('pcs_seed dispatched');
     });
 
 

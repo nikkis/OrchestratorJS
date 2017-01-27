@@ -239,7 +239,7 @@ var PCSModel = function () {
     }
 
     that.dispatchSeed = function () {
-        remoteDispatcher(model.identity, 'pcs_seed', {
+        remoteDispatcher('pcs_seed', model.identity, {
             identity: model.identity,
             facebookID: model.facebookID,
             bleUUID: model.bleUUID

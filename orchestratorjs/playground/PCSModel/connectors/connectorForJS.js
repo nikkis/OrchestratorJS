@@ -27,6 +27,11 @@ var initializeConnector = function (pcsModel) {
         console.log('disconnect');
     });
 
+    socket.on('pcs_seed', function (identity, seedData) {
+        console.log('pcs_seed received! -> add to model');
+    });
+
+
     socket.on('pcs_data', function (deviceid, data) {
         log('Socket.IO data received:');
         log(deviceid);
