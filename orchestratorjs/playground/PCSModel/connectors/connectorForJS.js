@@ -17,6 +17,7 @@ var initializeConnector = function (pcsModel) {
         socket.emit('identify', pcsModel.model.identity);
 
         pcsModel.addDispatcher(function (eventName, eventData) {
+            log('sending seed');
             socket.emit(eventName, pcsModel.model.identity, eventData);
         });
 
