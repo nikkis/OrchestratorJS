@@ -12,7 +12,7 @@ var initializeConnector = function (pcsModel) {
     var socket = io(host + ':' + port);
     socket.on('connect', function () {
         log('connection');
-        socket.emit('identify', pcsIdentity);
+        socket.emit('identify', pcsModel.identity);
     });
 
     socket.on('disconnect', function (deviceid) {

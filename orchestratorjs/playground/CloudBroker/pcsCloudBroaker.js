@@ -71,6 +71,11 @@ function removeConnection(socket) {
 };
 
 function addConnection(deviceIdentity, socket) {
+
+    if (!deviceIdentity) {
+        return;
+    }
+
     var connectionInfo = getConnectionInformation(deviceIdentity);
     if (connectionInfo.type === 'pcs') {
         if (!PCS_CONNECTION_POOL[connectionInfo.user]) {
@@ -86,6 +91,10 @@ function addConnection(deviceIdentity, socket) {
 
 
 function dispacthDataToPCS(deviceIdentity, data) {
+
+    if (!deviceIdentity) {
+        return;
+    }
 
     var connectionInfo = getConnectionInformation(deviceIdentity);
     var pcsConnection = getPCSconnection(connectionInfo.user);
@@ -127,10 +136,6 @@ io.on('connection', function (socket) {
 
 try {
     var connectionInfo = getConnectionInformation("nikkis@pcs");
-    log(connectionInfo);
-
-    getPCSconnection('tepi');
-
 } catch (e) {
     log("Error: " + e);
 }

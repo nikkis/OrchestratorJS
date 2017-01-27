@@ -26,6 +26,26 @@ var PCSModel = function () {
 
     var model = {
 
+        identity: "nikkis@pcs",
+
+        // Facebook data set dynamically when received from client
+
+        facebookID: "",
+        facebookName: "",
+        facebookFriends: [],
+
+        /*
+                facebookID: "140151603157984",
+                facebookName: "Niko Mäkitalo",
+                facebookFriends: [
+                    "102684690214746",
+                    "117525188729419",
+                    "119560198524790",
+                    "120144918465781"
+                ],
+        */
+        // Ble data
+
         knownBLEDevices: {
             "717f860e-f0e6-4c93-a4e3-cc724d27e05e": "nikkis@iphone",
             "5bf2e050-4730-46de-b6a7-2c8be4d9fa36": "nikkis@iphone5",
@@ -34,8 +54,11 @@ var PCSModel = function () {
         },
 
         knownCompanionDevices: {
-            "717f860e-f0e6-4c93-a4e3-cc724d27e05e": "nikkis@iphone",
+            "717f860e-f0e6-4c93-a4e3-cc724d27e05e": "nikkis@iphone"
         },
+
+
+        // Dynamic data
 
         proxemicUsers: {},
         proxemicDevices: {},
@@ -212,7 +235,7 @@ var PCSModel = function () {
     function initializePCS() {
         log('Initializing Physical-Cyber-Social model');
         that.model = model;
-    };
+    }
 
 
     function getHashForEventType(eventType) {
@@ -259,11 +282,13 @@ pcsModel.addInputListener('ble_devices', function (theModel, proximitySet) {
         measurementIndex,
         measuredUsername,
         measuredDeviceId,
-        unknownDevicesIndex = 0;
+        unknownDevicesIndex = 0,
+        bleIdentity,
+        rssiValue;
     for (measurementIndex = 0; measurementIndex < proximitySet.length; measurementIndex += 1) {
 
-        var bleIdentity = proximitySet[measurementIndex][0];
-        var rssiValue = proximitySet[measurementIndex][1];
+        bleIdentity = proximitySet[measurementIndex][0];
+        rssiValue = proximitySet[measurementIndex][1];
 
         if (Object.keys(theModel.knownBLEDevices).indexOf(bleIdentity) !== -1) {
 
@@ -315,8 +340,8 @@ pcsModel.addEventGenerator('location', ['gps_coordinates'], 3, 10, function (the
         eventType: 'location',
         eventValue: {
             location: {
-                latitude: theModel.location['latitude'],
-                longitude: theModel.location['longitude']
+                latitude: theModel.location.latitude,
+                longitude: theModel.location.longitude
             }
         }
     };
@@ -335,7 +360,7 @@ if (isNode()) {
     log('Node.js');
 
     var NodeJSConnector = require('./connectors/nodeJSConnector.js');
-    connector = NodeJSConnector(pcsModel);
+    connector = new NodeJSConnector(pcsModel);
 
 } else {
 

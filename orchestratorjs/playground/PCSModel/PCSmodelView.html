@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Physical-Cyber-Social Model</title>
+    <!--    <title>Physical-Cyber-Social Model</title>-->
+    <title>Human Data model</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="" />
     <meta name="HandheldFriendly" content="true" />
@@ -15,6 +16,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="assets/graphics/exports/PCS_logo_fav.png">
 
     <link rel="stylesheet" href="assets/style.css">
+
 </head>
 
 <script src="libs/d3.min.js"></script>
@@ -131,5 +133,19 @@
 
     }, 1000);
 </script>
+
+
+
+<script>
+    var config = {
+        name: "Human Data model"
+    };
+
+    $(document).ready(function () {
+        document.title = config.name;
+        $('.pcs-logo-text').text(config.name);
+    });
+</script>
+
 
 </html>
