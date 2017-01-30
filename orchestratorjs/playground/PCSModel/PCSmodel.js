@@ -28,6 +28,9 @@ var PCSModel = function () {
 
         identity: "nikkis@pcs",
 
+        // Contains seeds from other pcs models online
+        seeds: {},
+
         // Facebook data set dynamically when received from client
 
         facebookID: "",
@@ -83,7 +86,7 @@ var PCSModel = function () {
     var that = {};
 
 
-    var remoteDispatcher;
+    var seedDispatcher;
 
 
 
@@ -235,18 +238,27 @@ var PCSModel = function () {
 
 
     that.addDispatcher = function (dispatcherMethod) {
-        remoteDispatcher = dispatcherMethod;
+        seedDispatcher = dispatcherMethod;
     }
 
-    that.dispatchSeed = function () {
-        remoteDispatcher('pcs_seed', model.identity, {
+    that.broadcastSeed = function () {
+        seedDispatcher('pcs_seed', model.identity, that.getSeed());
+    }
+
+    // Sends my seed for the newcomer
+    that.getSeed = function (to_identity) {
+        return {
             identity: model.identity,
             facebookID: model.facebookID,
             bleUUID: model.bleUUID
-        });
+        };
     }
 
-
+    that.newSeedReceived = function (pcsIdentity, seedData) {
+        model.seeds[pcsIdentity] = seedData;
+        // dispatch seed to the newcomer
+        seedDispatcher('pcs_seed_to', seedData.identity, that.getSeed());
+    }
 
     // PRIVATE METHODS
 
@@ -388,7 +400,7 @@ if (isNode()) {
         initializeConnector(pcsModel);
 
         setTimeout(function () {
-            pcsModel.dispatchSeed();
+            pcsModel.broadcastSeed();
         }, 2000);
 
     });

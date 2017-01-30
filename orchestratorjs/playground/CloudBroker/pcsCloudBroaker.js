@@ -139,6 +139,12 @@ io.on('connection', function (socket) {
         log('pcs_seed dispatched');
     });
 
+    socket.on('pcs_seed_to', function (identity, data) {
+        log('pcs_seed_to: ' + identity);
+        dispacthSeed(identity, data);
+        log('pcs_seed_to dispatched');
+    });
+
 
     socket.on('pcs_data', function (deviceIdentity, data) {
 
