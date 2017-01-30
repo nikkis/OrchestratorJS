@@ -13,28 +13,23 @@ var initializeConnector = function (pcsModel) {
     // Socket.IO client
     var socket = io(host + ':' + port);
     socket.on('connect', function () {
-        log('connection');
+
+        log('connection to cloud broaker..');
+
         socket.emit('identify', pcsModel.model.identity);
 
         pcsModel.addDispatcher(function (eventName, identity, eventData) {
             log('sending seed');
             socket.emit(eventName, identity, eventData);
         });
-
     });
 
     socket.on('disconnect', function (deviceid) {
-        console.log('disconnect');
+        console.log('disconnect from cloud broaker');
     });
 
     socket.on('pcs_seed', function (identity, seedData) {
-        console.log('pcs_seed received! -> add to model');
-        log(seedData);
-        log('seedData end');
         pcsModel.newSeedReceived(identity, seedData);
-        var seed = pcsModel.getSeed();
-        log('SEED:');
-        log(seed);
     });
 
 

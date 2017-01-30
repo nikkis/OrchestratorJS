@@ -256,8 +256,10 @@ var PCSModel = function () {
 
     that.newSeedReceived = function (pcsIdentity, seedData) {
         model.seeds[pcsIdentity] = seedData;
-        // dispatch seed to the newcomer
-        seedDispatcher('pcs_seed_to', seedData.identity, that.getSeed());
+        // dispatch seed to the newcomer, but not to self
+        if (pcsIdentity !== model.identity) {
+            seedDispatcher('pcs_seed_to', seedData.identity, that.getSeed());
+        }
     }
 
     // PRIVATE METHODS

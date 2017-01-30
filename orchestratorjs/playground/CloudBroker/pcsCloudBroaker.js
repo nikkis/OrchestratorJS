@@ -99,12 +99,10 @@ function dispacthSeed(pcsIdentity, seedData) {
 
     var pcs_id;
     for (pcs_id in PCS_CONNECTION_POOL) {
-        if (pcs_id !== seedData.identity) {
-            var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
-            pcsConnection.emit('pcs_seed', pcsIdentity, seedData);
-        } else {
-            log('Do not send seed back to self');
-        }
+
+        var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
+        pcsConnection.emit('pcs_seed', pcsIdentity, seedData);
+
     }
 };
 
@@ -139,9 +137,6 @@ io.on('connection', function (socket) {
 
     socket.on('pcs_seed', function (identity, data) {
         log('pcs_seed');
-        log(identity);
-        log(data);
-        log('pcs seed end');
         dispacthSeed(identity, data);
         log('pcs_seed dispatched');
     });
