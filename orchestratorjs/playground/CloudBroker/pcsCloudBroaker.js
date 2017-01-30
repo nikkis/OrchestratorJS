@@ -99,8 +99,10 @@ function dispacthSeed(pcsIdentity, seedData) {
 
     var pcs_id;
     for (pcs_id in PCS_CONNECTION_POOL) {
-        var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
-        pcsConnection.emit('pcs_seed', pcsIdentity, seedData);
+        if (pcs_id !== seedData.identity) {
+            var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
+            pcsConnection.emit('pcs_seed', pcsIdentity, seedData);
+        }
     }
 };
 
