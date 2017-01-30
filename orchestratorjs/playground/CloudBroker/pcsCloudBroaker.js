@@ -102,6 +102,8 @@ function dispacthSeed(pcsIdentity, seedData) {
         if (pcs_id !== seedData.identity) {
             var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
             pcsConnection.emit('pcs_seed', pcsIdentity, seedData);
+        } else {
+            log('Do not send seed back to self');
         }
     }
 };
