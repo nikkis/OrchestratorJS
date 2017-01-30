@@ -135,6 +135,9 @@ io.on('connection', function (socket) {
 
     socket.on('pcs_seed', function (identity, data) {
         log('pcs_seed');
+        log(identity);
+        log(data);
+        log('pcs seed end');
         dispacthSeed(identity, data);
         log('pcs_seed dispatched');
     });
