@@ -2,7 +2,6 @@
 
 var host = 'http://orchestratorjs.org';
 var port = 9006;
-var pcsIdentity = 'nikkis@pcs';
 
 
 
@@ -28,12 +27,17 @@ var initializeConnector = function (pcsModel) {
         console.log('disconnect from cloud broaker');
     });
 
-    socket.on('pcs_seed', function (identity, seedData) {
+    socket.on('seed_broadcast', function (identity, seedData) {
+        log('seed received');
         pcsModel.newSeedReceived(identity, seedData);
     });
 
+    socket.on('seed_broadcast_reply', function (identity, seedData) {
+        log('seed to received');
+        pcsModel.newSeedReceived(identity, seedData);
+    });
 
-    socket.on('pcs_data', function (deviceid, data) {
+    socket.on('data', function (deviceid, data) {
         log('Socket.IO data received:');
         log(deviceid);
         log(data);

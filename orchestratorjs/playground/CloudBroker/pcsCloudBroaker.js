@@ -101,7 +101,7 @@ function dispacthSeed(pcsIdentity, seedData) {
     for (pcs_id in PCS_CONNECTION_POOL) {
 
         var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
-        pcsConnection.emit('pcs_seed', pcsIdentity, seedData);
+        pcsConnection.emit('seed_broadcast', pcsIdentity, seedData);
 
     }
 };
@@ -115,7 +115,7 @@ function dispacthDataToPCS(deviceIdentity, data) {
 
     var connectionInfo = getConnectionInformation(deviceIdentity);
     var pcsConnection = getPCSconnection(connectionInfo.user);
-    pcsConnection.emit('pcs_data', connectionInfo.deviceIdentity, data);
+    pcsConnection.emit('data', connectionInfo.deviceIdentity, data);
 
 };
 
@@ -135,22 +135,22 @@ io.on('connection', function (socket) {
         removeConnection(socket);
     });
 
-    socket.on('pcs_seed', function (identity, data) {
-        log('pcs_seed');
+    socket.on('seed_broadcast', function (identity, data) {
+        log('seed_broadcast');
         dispacthSeed(identity, data);
-        log('pcs_seed dispatched');
+        log('seed_broadcast dispatched');
     });
 
-    socket.on('pcs_seed_to', function (identity, data) {
+    socket.on('seed_broadcast_reply', function (identity, data) {
         log('pcs_seed_to: ' + identity);
         dispacthSeed(identity, data);
         log('pcs_seed_to dispatched');
     });
 
 
-    socket.on('pcs_data', function (deviceIdentity, data) {
+    socket.on('data', function (deviceIdentity, data) {
 
-        log('pcs_data');
+        log('data');
         try {
             addConnection(deviceIdentity, socket);
 
@@ -161,10 +161,3 @@ io.on('connection', function (socket) {
     });
 
 });
-
-
-try {
-    var connectionInfo = getConnectionInformation("nikkis@pcs");
-} catch (e) {
-    log("Error: " + e);
-}

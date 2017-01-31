@@ -26,7 +26,7 @@ var PCSModel = function () {
 
     var model = {
 
-        identity: "nikkis@pcs",
+        identity: "x",
 
         // Contains seeds from other pcs models online
         seeds: {},
@@ -236,31 +236,30 @@ var PCSModel = function () {
         }
     };
 
-
-    that.addDispatcher = function (dispatcherMethod) {
-        seedDispatcher = dispatcherMethod;
-    }
-
-    that.broadcastSeed = function () {
-        seedDispatcher('pcs_seed', model.identity, that.getSeed());
-    }
-
-    // Sends my seed for the newcomer
     that.getSeed = function (to_identity) {
         return {
             identity: model.identity,
             facebookID: model.facebookID,
             bleUUID: model.bleUUID
         };
-    }
+    };
+
+    that.addDispatcher = function (dispatcherMethod) {
+        seedDispatcher = dispatcherMethod;
+    };
+
+    that.broadcastSeed = function () {
+        seedDispatcher('seed_broadcast', model.identity, that.getSeed());
+    };
 
     that.newSeedReceived = function (pcsIdentity, seedData) {
         model.seeds[pcsIdentity] = seedData;
         // dispatch seed to the newcomer, but not to self
         if (pcsIdentity !== model.identity) {
-            seedDispatcher('pcs_seed_to', seedData.identity, that.getSeed());
+            log('sending pcs seed');
+            seedDispatcher('seed_broadcast_reply', seedData.identity, that.getSeed());
         }
-    }
+    };
 
     // PRIVATE METHODS
 
@@ -398,13 +397,25 @@ if (isNode()) {
 
     log('NOT Node.js');
 
-    requirejs(["connectors/connectorForJS", "libs/md5"], function (connector) {
-        initializeConnector(pcsModel);
 
-        setTimeout(function () {
-            pcsModel.broadcastSeed();
-        }, 2000);
+    function askIdentity() {
+        var inputIdentity = prompt("Please enter your pcs model identity", "nikkis@pcs");
+        if (inputIdentity != null) {
 
-    });
+            pcsModel.model.identity = inputIdentity;
+
+            requirejs(["connectors/connectorForJS", "libs/md5"], function (connector) {
+                initializeConnector(pcsModel);
+
+                setTimeout(function () {
+                    pcsModel.broadcastSeed();
+                }, 2000);
+
+            });
+        }
+    }
+
+
+    askIdentity();
 
 }
