@@ -91,23 +91,19 @@ function addConnection(deviceIdentity, socket) {
 
 
 
-function dispacthSeed(pcsIdentity, seedData) {
-
+function dispacthToAllPCSs(eventName, pcsIdentity, seedData) {
     if (!pcsIdentity) {
         return;
     }
-
     var pcs_id;
     for (pcs_id in PCS_CONNECTION_POOL) {
-
         var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
-        pcsConnection.emit('seed_broadcast', pcsIdentity, seedData);
-
+        pcsConnection.emit(eventName, pcsIdentity, seedData);
     }
 };
 
 
-function dispacthDataToPCS(deviceIdentity, data) {
+function dispacthDataToPCS(eventName, deviceIdentity, data) {
 
     if (!deviceIdentity) {
         return;
@@ -115,7 +111,7 @@ function dispacthDataToPCS(deviceIdentity, data) {
 
     var connectionInfo = getConnectionInformation(deviceIdentity);
     var pcsConnection = getPCSconnection(connectionInfo.user);
-    pcsConnection.emit('data', connectionInfo.deviceIdentity, data);
+    pcsConnection.emit(eventName, connectionInfo.deviceIdentity, data);
 
 };
 
@@ -137,13 +133,17 @@ io.on('connection', function (socket) {
 
     socket.on('seed_broadcast', function (identity, data) {
         log('seed_broadcast');
-        dispacthSeed(identity, data);
+        dispacthToAllPCSs('seed_broadcast', identity, data);
         log('seed_broadcast dispatched');
     });
 
     socket.on('seed_broadcast_reply', function (identity, data) {
         log('pcs_seed_to: ' + identity);
-        dispacthSeed(identity, data);
+        try {
+            dispacthDataToPCS('seed_broadcast_reply', identity, data);
+        } catch (e) {
+            log('Error while dispatching PCS data: ' + e);
+        }
         log('pcs_seed_to dispatched');
     });
 
@@ -151,10 +151,10 @@ io.on('connection', function (socket) {
     socket.on('data', function (deviceIdentity, data) {
 
         log('data');
+
         try {
             addConnection(deviceIdentity, socket);
-
-            dispacthDataToPCS(deviceIdentity, data);
+            dispacthDataToPCS('data', deviceIdentity, data);
         } catch (e) {
             log('Error while dispatching PCS data: ' + e);
         }

@@ -261,6 +261,11 @@ var PCSModel = function () {
         }
     };
 
+    that.newSeedReplyReceived = function (pcsIdentity, seedData) {
+        model.seeds[pcsIdentity] = seedData;
+        // dispatch seed to the newcomer, but not to self
+    };
+
     // PRIVATE METHODS
 
     function initializePCS() {

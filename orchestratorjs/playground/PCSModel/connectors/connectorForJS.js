@@ -34,7 +34,7 @@ var initializeConnector = function (pcsModel) {
 
     socket.on('seed_broadcast_reply', function (identity, seedData) {
         log('seed to received');
-        pcsModel.newSeedReceived(identity, seedData);
+        pcsModel.newSeedReplyReceived(identity, seedData);
     });
 
     socket.on('data', function (deviceid, data) {
