@@ -3,7 +3,7 @@
 //var host = 'http://localhost'
 var host = 'http://orchestratorjs.org';
 var port = 9006;
-var hdIdentity = 'nikkis@hd';
+var hdIdentity = 'alice@hd';
 
 
 var log = console.log;

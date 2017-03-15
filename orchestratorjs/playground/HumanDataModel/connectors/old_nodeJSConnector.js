@@ -1,7 +1,7 @@
 // Receives data with Socket.IO (and later with MQTT and HTTP) and then dispatches PCS
 
 var port = 9006;
-var pcsIdentity = 'nikkis@pcs';
+var pcsIdentity = 'alice@pcs';
 
 
 var log = console.log;

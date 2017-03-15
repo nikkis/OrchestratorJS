@@ -7,7 +7,7 @@ var socketIO = require('socket.io-client').connect('http://' + hostname + ':' + 
 
 // GPS DATA
 
-var deviceIdentity = 'nikkis@iphone';
+var deviceIdentity = 'alice@iphone';
 var data = {
     "gps_coordinates": [61.45010307017452, 23.85556729123141]
 };

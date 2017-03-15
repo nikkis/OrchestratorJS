@@ -39,8 +39,8 @@ function updateProximityGraph(username, deviceName, proxemicItems) {
 
     var device = {
         proximityDevices: [
-            'nikkis@iphone5',
-            'nikkis@beacon'
+            'alice@iphone5',
+            'alice@beacon'
         ]
     };
 

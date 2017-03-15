@@ -20,7 +20,7 @@ function ins(o) {
 
 
 var allAppDevices = {
-    'nikkis@iphone': {
+    'alice@iphone': {
 
         talkingCapability: {
             say: function (line) {

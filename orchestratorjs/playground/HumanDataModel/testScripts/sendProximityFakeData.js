@@ -15,7 +15,7 @@ function sleep(seconds) {
 }
 
 var interval = 3;
-var deviceIdentity = 'nikkis@raspberry';
+var deviceIdentity = 'alice@raspberry';
 
 var values = [];
 values.push({

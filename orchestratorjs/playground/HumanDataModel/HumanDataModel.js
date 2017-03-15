@@ -465,14 +465,14 @@ var bob = {
 };
 
 
-var nikkis = {
-    username: "nikkis",
-    identity: "nikkis@hd",
+var alice = {
+    username: "alice",
+    identity: "alice@hd",
     companionUUID: "717F860E-F0E6-4C93-A4E3-CC724D27E05E",
     facebookID: "120144918465781",
     devices: {
-        "717F860E-F0E6-4C93-A4E3-CC724D27E05E": "nikkis@iphone",
-        "FB694B90-F49E-4597-8306-171BBA78F844": "nikkis@mac"
+        "717F860E-F0E6-4C93-A4E3-CC724D27E05E": "alice@iphone",
+        "FB694B90-F49E-4597-8306-171BBA78F844": "alice@mac"
     }
 };
 
@@ -507,10 +507,10 @@ if (isNode()) {
 
     function askIdentity() {
         var setUser,
-            inputIdentity = prompt("Please enter your username", "nikkis");
+            inputIdentity = prompt("Please enter your username", "alice");
 
-        if (inputIdentity != null && inputIdentity === 'nikkis') {
-            setUser = nikkis;
+        if (inputIdentity != null && inputIdentity === 'alice') {
+            setUser = alice;
         } else if (inputIdentity != null && inputIdentity === 'bob') {
             setUser = bob;
         } else if (inputIdentity != null && inputIdentity === 'nkm') {

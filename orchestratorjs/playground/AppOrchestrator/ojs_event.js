@@ -13,7 +13,7 @@ function sleep(seconds) {
 }
 
 
-var deviceIdentity = 'nikkis@iphone';
+var deviceIdentity = 'alice@iphone';
 var event = {
     "currentPhotoChanged": 'http://whm19.louhi.net/~taitoata/wp-content/uploads/2015/11/kultainen_1.jpg ' + Date.now()
 };

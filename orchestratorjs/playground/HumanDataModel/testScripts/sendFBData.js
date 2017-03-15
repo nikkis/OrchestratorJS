@@ -19,7 +19,7 @@ data = ({
 
 // FB DATA
 
-var deviceIdentity = 'nikkis@iphone';
+var deviceIdentity = 'alice@iphone';
 var event = {
     "facebook_friends": ['niko', 'hermanni']
 };
@@ -30,7 +30,7 @@ socketIO.emit("pcs_data", deviceIdentity, event);
 
 // FB DATA
 
-var deviceIdentity = 'nikkis@iphone';
+var deviceIdentity = 'alice@iphone';
 var event = {
     "facebook_friends": ['niko', 'teppo']
 };

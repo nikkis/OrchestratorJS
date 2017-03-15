@@ -23,7 +23,7 @@
 
 <script src="libs/socket.io.min.js"></script>
 
-<script data-main="PCSmodel" src="libs/require.js"></script>
+<script data-main="HumanDataModel" src="libs/require.js"></script>
 
 <span class="pcs-logo">
     <img src="assets/graphics/exports/PCS_logo.png" /><span class="pcs-logo-text"></span>
@@ -129,7 +129,7 @@
 
                 $('#thegraph').fadeIn();
 
-                updateProximityGraph('nikkis', 'iphone', Object.keys(
+                updateProximityGraph('alice', 'iphone', Object.keys(
                     hdModel.model.proxemicDevices));
 
             } else {
