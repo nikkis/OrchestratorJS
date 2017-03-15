@@ -1,0 +1,19 @@
+<!doctype html>
+<html ng-app="test">
+<head>
+  <title></title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.js"></script>
+  <script type="text/javascript" src="http://code.angularjs.org/1.2.1/angular-route.js"></script>
+  <script type="text/javascript">
+    angular.module('test', ['ngRoute'])
+               .config(['$routeProvider', function($routeProvider) {
+                    $routeProvider.when('/', {
+                        template: 'Hello world!'
+                    });
+               }]);
+  </script>
+</head>
+<body>
+  <div ng-view>myText<p><a></a></p></div>
+</body>
+</html>
