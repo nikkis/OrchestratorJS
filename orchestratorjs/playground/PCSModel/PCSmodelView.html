@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <!--    <title>Physical-Cyber-Social Model</title>-->
-    <title>Human Data model</title>
+    <title></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="" />
     <meta name="HandheldFriendly" content="true" />
@@ -27,7 +26,7 @@
 <script data-main="PCSmodel" src="libs/require.js"></script>
 
 <span class="pcs-logo">
-    <img src="assets/graphics/exports/PCS_logo.png" /><span class="pcs-logo-text">Physical-Cyber-Social Model</span>
+    <img src="assets/graphics/exports/PCS_logo.png" /><span class="pcs-logo-text"></span>
 </span>
 
 
@@ -86,13 +85,13 @@
 
 
 
-    // Wait for a little while for the pcs to get initialized
+    // Wait for a little while for the hd to get initialized
     var currentLocationMD5 = '';
     setTimeout(function () {
 
-        pcsModel.addCallbackForEvent('location', function (event) {
+        hdModel.addCallbackForEvent('location', function (event) {
             if (currentLocationMD5 !== event.md5 &&
-                pcsModel.model.location.latitude && pcsModel.model.location.longitude) {
+                hdModel.model.location.latitude && hdModel.model.location.longitude) {
 
                 log('old: ' + currentLocationMD5 + ' vs. ' + event.md5);
                 currentLocationMD5 = event.md5;
@@ -101,8 +100,8 @@
                 $('#googleMap').fadeIn();
 
                 updatedLocation(
-                    pcsModel.model.location.latitude,
-                    pcsModel.model.location.longitude
+                    hdModel.model.location.latitude,
+                    hdModel.model.location.longitude
                 );
 
             } else {
@@ -111,9 +110,6 @@
             }
         });
 
-        pcsModel.addCallbackForEvent('social_proximity_set', function (event) {
-
-        });
 
     }, 1000);
 </script>
@@ -123,13 +119,25 @@
     setTimeout(function () {
         log('ProximityGraph');
 
-        var event = {
-            graph: {
-                nodes: {}
-            }
-        };
 
-        updateProximityGraph('nikkis', 'iphone');
+        var currentSocialGraphMD5 = '';
+        hdModel.addCallbackForEvent('social_proximity_set', function (event) {
+            log('UPDATE GRAPH');
+
+            if (currentSocialGraphMD5 !== event.md5 && hdModel.model.proxemicDevices) {
+                currentSocialGraphMD5 = event.md5;
+
+                $('#thegraph').fadeIn();
+
+                updateProximityGraph('nikkis', 'iphone', Object.keys(
+                    hdModel.model.proxemicDevices));
+
+            } else {
+
+                $('#thegraph').fadeOut(5000);
+            }
+        });
+
 
     }, 1000);
 </script>

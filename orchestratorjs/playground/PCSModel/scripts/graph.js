@@ -20,7 +20,7 @@ function hexColor(str) {
 
 
 
-function updateProximityGraph(username, deviceName) {
+function updateProximityGraph(username, deviceName, proxemicItems) {
 
     var identity = username + '@' + deviceName;
 
@@ -44,8 +44,8 @@ function updateProximityGraph(username, deviceName) {
         ]
     };
 
-    for (i in device.proximityDevices) {
-        pDevId = device.proximityDevices[i];
+    for (i in proxemicItems) {
+        pDevId = proxemicItems[i];
         pDevDistance = 1.0;
 
         nodes.push({

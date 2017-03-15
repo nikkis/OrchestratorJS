@@ -1,6 +1,6 @@
 {
-    "name": "PCS",
-    "description": "PCS dependencies",
+    "name": "Humand Data model",
+    "description": "HDmodel dependencies",
     "version": "0.0.1",
 
     "dependencies": {

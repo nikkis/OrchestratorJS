@@ -5,7 +5,7 @@ var port = 9006;
 
 
 
-var initializeConnector = function (pcsModel) {
+var initializeConnector = function (hdModel) {
 
 
 
@@ -15,9 +15,9 @@ var initializeConnector = function (pcsModel) {
 
         log('connection to cloud broaker..');
 
-        socket.emit('identify', pcsModel.model.identity);
+        socket.emit('identify', hdModel.model.identity);
 
-        pcsModel.addDispatcher(function (eventName, identity, eventData) {
+        hdModel.addDispatcher(function (eventName, identity, eventData) {
             log('sending seed');
             socket.emit(eventName, identity, eventData);
         });
@@ -27,23 +27,28 @@ var initializeConnector = function (pcsModel) {
         console.log('disconnect from cloud broaker');
     });
 
+    /////////// AWARENESS
+
     socket.on('seed_broadcast', function (identity, seedData) {
-        log('seed received');
-        pcsModel.newSeedReceived(identity, seedData);
+        log('seed_broadcast received');
+        hdModel.newSeedBroadcastReceived(identity, seedData);
     });
 
     socket.on('seed_broadcast_reply', function (identity, seedData) {
-        log('seed to received');
-        pcsModel.newSeedReplyReceived(identity, seedData);
+        log('seed_broadcast_reply received');
+        hdModel.newSeedBroadcastReplyReceived(identity, seedData);
     });
+
+
+    /////////// DATA
 
     socket.on('data', function (deviceid, data) {
         log('Socket.IO data received:');
         log(deviceid);
         log(data);
 
-        // Dispatch the received data to the PCS model
-        pcsModel.dispatch(deviceid, data);
+        // Dispatch the received data to the HD model
+        hdModel.dispatch(deviceid, data);
     });
 
 };

@@ -11,56 +11,40 @@ function isNode() {
 }
 
 
-// TODO: Enable defining PCS_event_type
+// TODO: Enable defining HD_event_type
 
 // TODO: Enable receiving heteregeneous raw data and events from various sources with various protocols and connectivity types
 
-// TODO: Enable generating PCS events based on the predefined PCS_event_type s from the received raw data and events
+// TODO: Enable generating HD events based on the predefined HD_event_type s from the received raw data and events
 
-// TODO: Relay the generated PCS event to subsribers
+// TODO: Relay the generated HD event to subsribers
 
 // TODO: import connector based on the environment
 
 
-var PCSModel = function () {
+var HumanDataModel = function () {
 
     var model = {
 
-        identity: "x",
+        username: '',
 
-        // Contains seeds from other pcs models online
-        seeds: {},
+        identity: '',
+
+        companionUUID: '',
 
         // Facebook data set dynamically when received from client
 
-        facebookID: "",
-        facebookName: "",
+        facebookID: '',
+        facebookName: '',
         facebookFriends: [],
 
-        /*
-                facebookID: "140151603157984",
-                facebookName: "Niko Mäkitalo",
-                facebookFriends: [
-                    "102684690214746",
-                    "117525188729419",
-                    "119560198524790",
-                    "120144918465781"
-                ],
-        */
-        // Ble data
 
-        bleUUID: "FB694B90-F49E-4597-8306-171BBA78F844",
+        // Contains seeds from other hd models online
+        seeds: {},
 
-        knownBLEDevices: {
-            "717f860e-f0e6-4c93-a4e3-cc724d27e05e": "nikkis@iphone",
-            "5bf2e050-4730-46de-b6a7-2c8be4d9fa36": "nikkis@iphone5",
-            "8b034f7b-fa9b-540f-acf3-88c0ca70c84f": "nikkis@ibeacon",
-            "FB694B90-F49E-4597-8306-171BBA78F844": "nikkis@mac"
-        },
 
-        knownCompanionDevices: {
-            "717f860e-f0e6-4c93-a4e3-cc724d27e05e": "nikkis@iphone"
-        },
+        // my own devices
+        devices: {},
 
 
         proxemicUsers: {},
@@ -79,7 +63,7 @@ var PCSModel = function () {
 
     // PHASE 3
     var eventCallbacks = {
-        'local': {}
+        local: {}
     };
 
     var connectors = {};
@@ -95,9 +79,9 @@ var PCSModel = function () {
     // INITIALIZING
 
     // Starts the whole thing
-    that.startPCS = function () {
-        log('Starting PCS..');
-        initializePCS();
+    that.startHDmodel = function () {
+        log('Starting HD..');
+        initializeHDmodel();
     };
 
 
@@ -160,7 +144,7 @@ var PCSModel = function () {
 
     that.dispatch = function (senderId, inputData) {
 
-        log('PCS data received:');
+        log('raw data received:');
         log(inputData);
 
         var
@@ -214,11 +198,12 @@ var PCSModel = function () {
                     setTimeout(function () {
                         var newMD5 = getHashForEventType(key);
                         if (eventUpdateTimes[key] && newMD5 === oldMD5) {
-                            log('SAME VALUE TOO LONG (' + generatorInfo.validTime + '): ' + oldMD5 + ' vs. ' + newMD5);
+                            log('SAME VALUE TOO LONG for ' + key + ' (' + generatorInfo.validTime + '): ' + oldMD5 + ' vs. ' + newMD5);
                             model[key] = {};
                             var eventToPublish = {
                                 eventType: key,
-                                eventValue: model[key]
+                                eventValue: model[key],
+                                md5: newMD5
                             };
 
                             localCallbackForEvent(eventToPublish);
@@ -230,7 +215,7 @@ var PCSModel = function () {
 
             }
 
-            // TODO: check data type (PCS_event_types define also the input data)
+            // TODO: check data type (HD_event_types define also the input data)
 
             // TODO: merge to the model
         }
@@ -238,9 +223,11 @@ var PCSModel = function () {
 
     that.getSeed = function (to_identity) {
         return {
+            username: model.username,
             identity: model.identity,
             facebookID: model.facebookID,
-            bleUUID: model.bleUUID
+            companionUUID: model.companionUUID,
+            devices: model.devices
         };
     };
 
@@ -252,23 +239,23 @@ var PCSModel = function () {
         seedDispatcher('seed_broadcast', model.identity, that.getSeed());
     };
 
-    that.newSeedReceived = function (pcsIdentity, seedData) {
-        model.seeds[pcsIdentity] = seedData;
+    that.newSeedBroadcastReceived = function (hdmIdentity, seedData) {
+        model.seeds[hdmIdentity] = seedData;
         // dispatch seed to the newcomer, but not to self
-        if (pcsIdentity !== model.identity) {
-            log('sending pcs seed');
+        if (hdmIdentity !== model.identity) {
+            log('sending hdm seed');
             seedDispatcher('seed_broadcast_reply', seedData.identity, that.getSeed());
         }
     };
 
-    that.newSeedReplyReceived = function (pcsIdentity, seedData) {
-        model.seeds[pcsIdentity] = seedData;
+    that.newSeedBroadcastReplyReceived = function (hdmIdentity, seedData) {
+        model.seeds[seedData.identity] = seedData;
         // dispatch seed to the newcomer, but not to self
     };
 
     // PRIVATE METHODS
 
-    function initializePCS() {
+    function initializeHDmodel() {
         log('Initializing Physical-Cyber-Social model');
         that.model = model;
     }
@@ -278,6 +265,51 @@ var PCSModel = function () {
         var datadataJsonString = model[eventType] ? JSON.stringify(model[eventType]) : '';
         var lastUpdateTime = eventUpdateTimes[eventType];
         return md5(datadataJsonString + lastUpdateTime);
+    }
+
+
+
+    that.getDeviceByUUID = function (deviceUUID) {
+        log('getting: ' + deviceUUID);
+        var device = {
+                identity: '',
+                companion: false,
+                uuid: '',
+                ownDevice: false
+            },
+            seedKey;
+
+        for (seedKey in that.model.devices) {
+            if (that.model.devices.hasOwnProperty(seedKey)) {
+                if (Object.keys(that.model.devices).indexOf(deviceUUID) !== -1) {
+                    device.identity = that.model.devices[deviceUUID];
+                    device.companion = model.companionUUID === deviceUUID;
+                    device.uuid = deviceUUID;
+                    device.username = device.identity.split('@', 1)[0];
+                    device.ownDevice = true;
+                    log('Own device');
+                    return device;
+                }
+            }
+        }
+
+        for (seedKey in that.model.seeds) {
+            if (that.model.seeds.hasOwnProperty(seedKey)) {
+                if (that.model.seeds[seedKey].devices.hasOwnProperty(deviceUUID)) {
+                    device.identity = that.model.seeds[seedKey].devices[deviceUUID];
+                    device.companion = that.model.seeds[seedKey].companionUUID === deviceUUID;
+                    device.uuid = deviceUUID;
+                    device.username = device.identity.split('@', 1)[0];
+                    device.ownDevice = false;
+                    log('Others device');
+                    return device;
+                }
+            }
+
+        }
+
+        // If nothing found, return empty undefined
+        return undefined;
     }
 
 
@@ -294,58 +326,67 @@ var PCSModel = function () {
 
 /// Initialize
 
-var pcsModel = PCSModel();
-pcsModel.startPCS();
+var hdModel = HumanDataModel();
+hdModel.startHDmodel();
 
 
 ////////// PHASE 1
 
-pcsModel.addInputListener('facebook_friends', function (theModel, facebookFriends) {
+hdModel.addInputListener('facebook_friends', function (theModel, facebookFriends) {
 
-    theModel.facebookFriends = facebookFriends;
+    theModel.facebookFriends = {};
+    var seedId;
+    for (seedId in theModel.seeds) {
+        if (theModel.seeds.hasOwnProperty(seedId)) {
 
-    // TODO: use here real fb data
-
+            var username = theModel.seeds[seedId].username;
+            var fbFriendIDs = Object.keys(facebookFriends);
+            log(username + ' is:');
+            log(Object.keys(facebookFriends).indexOf(theModel.seeds[seedId].facebookID));
+            if (fbFriendIDs.indexOf(theModel.seeds[seedId].facebookID) !== -1) {
+                theModel.facebookFriends[username] = facebookFriends[fbFriendIDs[Object.keys(facebookFriends).indexOf(theModel.seeds[seedId].facebookID)]];
+                log('friend');
+            } else {
+                log('not friend');
+            }
+        }
+    }
 });
 
 
-pcsModel.addInputListener('ble_devices', function (theModel, proximitySet) {
+hdModel.addInputListener('ble_devices', function (theModel, proximitySet) {
 
     theModel.proxemicDevices = {};
     theModel.proxemicUsers = {};
 
     var
-        measurementIndex,
         measuredUsername,
         measuredDeviceId,
         unknownDevicesIndex = 0,
         bleIdentity,
         rssiValue;
-    for (measurementIndex = 0; measurementIndex < proximitySet.length; measurementIndex += 1) {
+    for (bleIdentity in proximitySet) {
+        if (proximitySet.hasOwnProperty(bleIdentity)) {
 
-        bleIdentity = proximitySet[measurementIndex][0];
-        rssiValue = proximitySet[measurementIndex][1];
+            rssiValue = proximitySet[bleIdentity];
 
-        if (Object.keys(theModel.knownBLEDevices).indexOf(bleIdentity) !== -1) {
+            var measuredDevice = hdModel.getDeviceByUUID(bleIdentity);
+            if (measuredDevice) {
+                if (measuredDevice.companion) {
+                    theModel.proxemicUsers[measuredDevice.username] = rssiValue;
+                }
+                theModel.proxemicDevices[measuredDevice.identity] = rssiValue;
 
-            measuredDeviceId = theModel.knownBLEDevices[bleIdentity];
-
-            if (Object.keys(theModel.knownCompanionDevices).indexOf(bleIdentity) !== -1) {
-                measuredUsername = measuredDeviceId.split('@', 1);
-                theModel.proxemicUsers[measuredUsername] = rssiValue;
+            } else {
+                // unknown device
+                theModel.unknownProxemicDevices["unknown_" + unknownDevicesIndex] = rssiValue;
+                unknownDevicesIndex += 1;
             }
-
-            theModel.proxemicDevices[measuredDeviceId] = rssiValue;
-
-        } else {
-            // unknown device
-            theModel.unknownProxemicDevices["unknown_" + unknownDevicesIndex] = rssiValue;
-            unknownDevicesIndex += 1;
         }
     }
 });
 
-pcsModel.addInputListener('gps_coordinates', function (theModel, coordinates) {
+hdModel.addInputListener('gps_coordinates', function (theModel, coordinates) {
     theModel.location = {};
     theModel.location['latitude'] = coordinates.latitude;
     theModel.location['longitude'] = coordinates.longitude;
@@ -357,18 +398,41 @@ pcsModel.addInputListener('gps_coordinates', function (theModel, coordinates) {
 
 
 
-// pcs event type (name), array of inputs that trigger the generator, interval in seconds (how fast/often the generator can be called)
-pcsModel.addEventGenerator('social_proximity_set', ['ble_devices', 'facebook_friends'], 3, 5, function (theModel) {
+// hd event type (name), array of inputs that trigger the generator, 
+// interval in seconds (how fast/often the generator can be called), and 
+// value indicating how long the event is valid
+hdModel.addEventGenerator('social_proximity_set', ['ble_devices', 'facebook_friends'], 3, 5, function (theModel) {
 
     // the the fb data
     console.log('SOCIAL PROXIMITY GRAPH CHANGED EVENT');
-    var event = {};
+
+    var event = {
+        eventType: 'social_proximity_set',
+        eventValue: {
+            friends: {}
+        }
+    };
+
+    var user;
+    for (user in theModel.proxemicUsers) {
+        if (theModel.proxemicUsers.hasOwnProperty(user)) {
+            log('friend: ' + user);
+            if (Object.keys(theModel.facebookFriends).indexOf(user) !== -1) {
+                event.eventValue.friends[user] = theModel.facebookFriends[user];
+            }
+        }
+    }
+
+    log(event);
+
     return event;
 });
 
 
-// pcs event type (name), array of inputs that trigger the generator, interval in seconds (how fast/often the generator can be called)
-pcsModel.addEventGenerator('location', ['gps_coordinates'], 3, 10, function (theModel) {
+// hd event type (name), array of inputs that trigger the generator, 
+// interval in seconds (how fast/often the generator can be called), and 
+// value indicating how long the event is valid
+hdModel.addEventGenerator('location', ['gps_coordinates'], 3, 10, function (theModel) {
 
     // Generate location output events
 
@@ -389,37 +453,88 @@ pcsModel.addEventGenerator('location', ['gps_coordinates'], 3, 10, function (the
 
 /// Start
 
+var bob = {
+    username: "bob",
+    identity: "bob@hd",
+    companionUUID: "FB694B90-F49E-4597-8306-171BBA78F844",
+    facebookID: "102684690214746",
+    devices: {
+        "5BF2E050-4730-46DE-B6A7-2C8BE4D9FA36": "bob@iphoneSE",
+        "8B034F7B-FA9B-540F-ACF3-88C0CA70C84F": "bob@ibeacon"
+    }
+};
+
+
+var nikkis = {
+    username: "nikkis",
+    identity: "nikkis@hd",
+    companionUUID: "717F860E-F0E6-4C93-A4E3-CC724D27E05E",
+    facebookID: "120144918465781",
+    devices: {
+        "717F860E-F0E6-4C93-A4E3-CC724D27E05E": "nikkis@iphone",
+        "FB694B90-F49E-4597-8306-171BBA78F844": "nikkis@mac"
+    }
+};
+
+var nkm = {
+    username: "nkm",
+    identity: "nkm@hd",
+    companionUUID: "717F860E-F0E6-4C93-A4E3-CC724D27E05B",
+    facebookID: "120144918465781",
+    devices: {
+        "717F860E-F0E6-4C93-A4E3-CC724D27E05E": "nkm@iphone5"
+    }
+};
 
 var connector;
 if (isNode()) {
 
     log('Node.js');
 
+    var setUser = bob;
+    hdModel.model.username = setUser.username;
+    hdModel.model.identity = setUser.identity;
+    hdModel.model.companionUUID = setUser.companionUUID;
+    hdModel.model.facebookID = setUser.facebookID;
+    hdModel.model.devices = setUser.devices;
+
     var NodeJSConnector = require('./connectors/nodeJSConnector.js');
-    connector = new NodeJSConnector(pcsModel);
+    connector = new NodeJSConnector(hdModel);
 
 } else {
 
     log('NOT Node.js');
 
-
     function askIdentity() {
-        var inputIdentity = prompt("Please enter your pcs model identity", "nikkis@pcs");
-        if (inputIdentity != null) {
+        var setUser,
+            inputIdentity = prompt("Please enter your username", "nikkis");
 
-            pcsModel.model.identity = inputIdentity;
+        if (inputIdentity != null && inputIdentity === 'nikkis') {
+            setUser = nikkis;
+        } else if (inputIdentity != null && inputIdentity === 'bob') {
+            setUser = bob;
+        } else if (inputIdentity != null && inputIdentity === 'nkm') {
+            setUser = nkm;
+        } else {
 
-            requirejs(["connectors/connectorForJS", "libs/md5"], function (connector) {
-                initializeConnector(pcsModel);
-
-                setTimeout(function () {
-                    pcsModel.broadcastSeed();
-                }, 2000);
-
-            });
+            return;
         }
-    }
 
+        hdModel.model.username = setUser.username;
+        hdModel.model.identity = setUser.identity;
+        hdModel.model.companionUUID = setUser.companionUUID;
+        hdModel.model.facebookID = setUser.facebookID;
+        hdModel.model.devices = setUser.devices;
+
+        requirejs(["connectors/connectorForJS", "libs/md5"], function (connector) {
+            initializeConnector(hdModel);
+
+            setTimeout(function () {
+                hdModel.broadcastSeed();
+            }, 2000);
+
+        });
+    }
 
     askIdentity();
 

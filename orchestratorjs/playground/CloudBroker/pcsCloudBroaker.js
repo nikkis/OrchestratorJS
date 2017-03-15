@@ -12,10 +12,10 @@ var io = new Server(PORT);
         deviceConnections: {
             deviceIdentity: < socket >
         },
-        pcsConnection: < socket >
+        hdConnection: < socket >
     }
 }*/
-var PCS_CONNECTION_POOL = {};
+var HD_CONNECTION_POOL = {};
 var DEVICE_CONNECTION_POOL = {};
 
 
@@ -26,8 +26,8 @@ function getConnectionInformation(deviceIdentity) {
     }
 
     var type = 'device';
-    if (parts[1].toLowerCase() === 'pcs') {
-        type = 'pcs';
+    if (parts[1].toLowerCase() === 'hd') {
+        type = 'hd';
     }
 
     return {
@@ -37,13 +37,13 @@ function getConnectionInformation(deviceIdentity) {
     };
 }
 
-function getPCSconnection(username) {
+function getHDconnection(username) {
 
-    var pcsConnectionSocket = PCS_CONNECTION_POOL[username];
-    if (!pcsConnectionSocket) {
-        throw 'No PCS Connection'
+    var hdConnectionSocket = HD_CONNECTION_POOL[username];
+    if (!hdConnectionSocket) {
+        throw 'No HD Connection'
     }
-    return pcsConnectionSocket;
+    return hdConnectionSocket;
 }
 
 
@@ -60,13 +60,13 @@ function removeConnection(socket) {
         delete DEVICE_CONNECTION_POOL[removeThisDeviceConnection];
     }
 
-    for (device_id in PCS_CONNECTION_POOL) {
-        if ((PCS_CONNECTION_POOL[device_id]).id == socket.id) {
+    for (device_id in HD_CONNECTION_POOL) {
+        if ((HD_CONNECTION_POOL[device_id]).id == socket.id) {
             removeThisDeviceConnection = device_id;
         }
     }
     if (removeThisDeviceConnection) {
-        delete PCS_CONNECTION_POOL[removeThisDeviceConnection];
+        delete HD_CONNECTION_POOL[removeThisDeviceConnection];
     }
 };
 
@@ -77,9 +77,9 @@ function addConnection(deviceIdentity, socket) {
     }
 
     var connectionInfo = getConnectionInformation(deviceIdentity);
-    if (connectionInfo.type === 'pcs') {
-        if (!PCS_CONNECTION_POOL[connectionInfo.user]) {
-            PCS_CONNECTION_POOL[connectionInfo.user] = socket;
+    if (connectionInfo.type === 'hd') {
+        if (!HD_CONNECTION_POOL[connectionInfo.user]) {
+            HD_CONNECTION_POOL[connectionInfo.user] = socket;
         }
 
     } else {
@@ -91,27 +91,27 @@ function addConnection(deviceIdentity, socket) {
 
 
 
-function dispacthToAllPCSs(eventName, pcsIdentity, seedData) {
-    if (!pcsIdentity) {
+function dispacthToAllHDs(eventName, hdIdentity, seedData) {
+    if (!hdIdentity) {
         return;
     }
-    var pcs_id;
-    for (pcs_id in PCS_CONNECTION_POOL) {
-        var pcsConnection = PCS_CONNECTION_POOL[pcs_id];
-        pcsConnection.emit(eventName, pcsIdentity, seedData);
+    var hd_id;
+    for (hd_id in HD_CONNECTION_POOL) {
+        var hdConnection = HD_CONNECTION_POOL[hd_id];
+        hdConnection.emit(eventName, hdIdentity, seedData);
     }
 };
 
 
-function dispacthDataToPCS(eventName, deviceIdentity, data) {
+function dispacthDataToHD(eventName, deviceIdentity, data) {
 
     if (!deviceIdentity) {
         return;
     }
 
     var connectionInfo = getConnectionInformation(deviceIdentity);
-    var pcsConnection = getPCSconnection(connectionInfo.user);
-    pcsConnection.emit(eventName, connectionInfo.deviceIdentity, data);
+    var hdConnection = getHDconnection(connectionInfo.user);
+    hdConnection.emit(eventName, connectionInfo.deviceIdentity, data);
 
 };
 
@@ -133,18 +133,18 @@ io.on('connection', function (socket) {
 
     socket.on('seed_broadcast', function (identity, data) {
         log('seed_broadcast');
-        dispacthToAllPCSs('seed_broadcast', identity, data);
+        dispacthToAllHDs('seed_broadcast', identity, data);
         log('seed_broadcast dispatched');
     });
 
     socket.on('seed_broadcast_reply', function (identity, data) {
-        log('pcs_seed_to: ' + identity);
+        log('hd_seed_to: ' + identity);
         try {
-            dispacthDataToPCS('seed_broadcast_reply', identity, data);
+            dispacthDataToHD('seed_broadcast_reply', identity, data);
         } catch (e) {
-            log('Error while dispatching PCS data: ' + e);
+            log('Error while dispatching HD data: ' + e);
         }
-        log('pcs_seed_to dispatched');
+        log('hd_seed_to dispatched');
     });
 
 
@@ -154,9 +154,9 @@ io.on('connection', function (socket) {
 
         try {
             addConnection(deviceIdentity, socket);
-            dispacthDataToPCS('data', deviceIdentity, data);
+            dispacthDataToHD('data', deviceIdentity, data);
         } catch (e) {
-            log('Error while dispatching PCS data: ' + e);
+            log('Error while dispatching HD data: ' + e);
         }
     });
 
