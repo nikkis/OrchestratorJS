@@ -460,7 +460,7 @@ var bob = {
     facebookID: "102684690214746",
     devices: {
         "5BF2E050-4730-46DE-B6A7-2C8BE4D9FA36": "bob@iphoneSE",
-        "FB694B90-F49E-4597-8306-171BBA78F844": "alice@mac"
+        "FB694B90-F49E-4597-8306-171BBA78F844": "bob@mac"
     }
 };
 
@@ -469,10 +469,10 @@ var alice = {
     username: "alice",
     identity: "alice@hd",
     companionUUID: "717F860E-F0E6-4C93-A4E3-CC724D27E05E",
-    facebookID: "120144918465781",
+    facebookID: "119560198524790",
     devices: {
         "717F860E-F0E6-4C93-A4E3-CC724D27E05E": "alice@iphone",
-        "8B034F7B-FA9B-540F-ACF3-88C0CA70C84F": "bob@ibeacon"
+        "8B034F7B-FA9B-540F-ACF3-88C0CA70C84F": "alice@ibeacon"
     }
 };
 
