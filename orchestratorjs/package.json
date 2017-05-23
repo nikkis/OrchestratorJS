@@ -8,7 +8,7 @@
         "fibers": ">=1.0.1",
         "socket.io": "*",
         "express": "3.2.6",
-        "mongoose": "3.6.18",
+        "mongoose": "4.7.3",
         "mongojs": "0.7.17",
         "winston": ">= 0.7.2",
         "mu2express": "0.x.x",

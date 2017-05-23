@@ -11,7 +11,6 @@ db.on('error', console.error.bind(console, 'Cannot connect to mongodb:'));
 mongoose.connect('mongodb://localhost/'+config.database);
 
 
-
 var actionInstanceDataSchema = mongoose.Schema({
     actionName: { type: String, unique: true },
     args: [],

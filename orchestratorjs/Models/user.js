@@ -12,7 +12,19 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.ObjectId;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Cannot connect to mongodb:'));
-mongoose.connect('mongodb://localhost/' + config.database);
+
+
+
+//var db = mongoose.createConnection('mongodb://localhost:27017/'+config.database);
+//var db = 
+mongoose.connect('mongodb://localhost/'+config.database);
+
+
+//attach lister to connected event
+mongoose.connection.once('connected', function() {
+	console.log("Connected to database 2")
+});
+
 
 var DeviceHandler = require(ROOT + '/Models/devicesHandler');
 var DEVICE_HANDLER = new DeviceHandler();
