@@ -4,7 +4,7 @@ module.exports = {
   body: function ( d1 ) {
     
 
-		d1.testCapability.test();  
+		var val = d1.testCapability.test();
   
   }
   

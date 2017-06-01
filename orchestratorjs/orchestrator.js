@@ -5,6 +5,14 @@ var ROOT = process.cwd();
 var HELPERS = require(ROOT + '/helpers/general.js');
 var log = HELPERS.log;
 
+var config = require(ROOT + '/config.json');
+
+var mongoose = require('mongoose');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Cannot connect to mongodb:'));
+mongoose.connect('mongodb://localhost/'+config.database);
+
+
 
 
 var passport = require('passport'),

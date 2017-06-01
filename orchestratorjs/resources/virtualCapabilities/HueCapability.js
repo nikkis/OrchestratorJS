@@ -1,7 +1,7 @@
 var hue = require("node-hue-api"),
     HueApi = hue.HueApi,
     lightState = hue.lightState;
-var hostname = "192.168.0.14";
+var hostname = "192.168.1.123";
 var username = "25fa138c1c7bbacf123c76429e69a67";
 
 
@@ -13,7 +13,7 @@ var displayResult = function (result) {
 var scenePostFix = ' on 0';
 
 
-module.exports = {
+var LightsModule = {
     registerNewUser: function () {
 
 
@@ -162,3 +162,9 @@ module.exports = {
     }
 
 };
+
+module.exports = LightsModule;
+
+var valot = LightsModule;
+
+valot.turnAllOn();

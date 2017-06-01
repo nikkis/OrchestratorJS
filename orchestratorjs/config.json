@@ -9,8 +9,7 @@
 
   "server": {
     "host": "localhost",
-    "port": 9000,
-    "socketio_debug": true
+    "port": 9000
   },
 
   "database": "socialDevicesOrchestratorDB",

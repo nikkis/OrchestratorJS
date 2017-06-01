@@ -7,6 +7,8 @@ var log = HELPERS.log;
 
 var config = require(ROOT + '/config.json');
 
+
+
 var colors = require('colors');
 var Fiber = require('fibers');
 
@@ -27,6 +29,7 @@ var MAXIMUM_WAIT_TIME_FOR_METHODCALL = 5000;
 var socket = require('socket.io');
 
 
+
 // initialize clients for the services
 var ojsDeviceRegistrySocket = (config.services.ojsDeviceRegistry.enabled) ? require('socket.io-client').connect('http://0.0.0.0:' + config.services.ojsDeviceRegistry.port) : undefined;
 var ojsConsoleSocket = (config.services.ojsConsole.enabled) ? require('socket.io-client').connect('http://0.0.0.0:' + config.services.ojsConsole.port) : undefined;
@@ -42,8 +45,7 @@ this.initialize = function (app) {
     var io = socket.listen(server, {
         log: config.server.socketio_debug
     });
-    if (!config.server.socketio_debug)
-        io.set('log level', 0);
+
 
     io.sockets.on('connection', function (socket) {
         log('connection');
@@ -108,7 +110,17 @@ this.initialize = function (app) {
                 }
                 a = actionPool[actionId];
                 //a.handleResponse(methodCallResponseValue);
-                a.handleResponse(actionId, methodCallId, methodCallResponseValue, methodCallResponseType);
+
+                log("actionId");
+                log(actionId);
+                log('methodCallResponseValue:');
+
+                log(methodCallResponseValue);
+
+                if (a) {
+                    a.handleResponse(actionId, methodCallId, methodCallResponseValue, methodCallResponseType);
+                }
+
             } catch (e) {
                 log(e);
             }
@@ -328,14 +340,13 @@ this.postActionInstance = function (req, res) {
         } catch (err) {
             log('Error while creating action instance: ' + err);
             var body = 'Error: ' + err + '\n';
-            /*res.status(400);
+
             res.setHeader('Content-Type', 'text/plain');
             res.setHeader('Content-Length', body.length);
             res.end(body);
-            */
 
-            res.setHeader('Reason', body);
-            res.send(400, body);
+            //res.setHeader('Reason', body);
+            //res.send(400, body);
 
         }
     });
@@ -461,6 +472,7 @@ function ActionRunnable(actionName) {
     };
 
     this.finishAction = function () {
+        log('Finishing action');
         actionFinishHandler(this.id);
     }
 
@@ -488,7 +500,7 @@ function ActionRunnable(actionName) {
                 this.bodyInstanceFiber.run(runResponse);
             }
         } catch (xx) {
-            log('xx run exp: ' + xx);
+            log('Exception in continuing to to run: ' + xx);
         }
     }
 
@@ -503,13 +515,6 @@ function ActionRunnable(actionName) {
         this.run(runResponse);
     };
 
-
-    this.defaultExceptionHandler = function (action, device_id, exception_str) {
-
-        // Implement here your own exception handler
-        log('Handling error, reason was: ' + exception_str + ', blame: ' + device_id);
-
-    };
 
     this.sendMethodCall = function (deviceId, methodArguments) {
 
@@ -546,18 +551,27 @@ function ActionRunnable(actionName) {
 
                 Fiber = require('fibers');
                 runRet = Fiber.yield();
-
+                log('RUNRET');
+                log(runRet);
+                log('RUNRET END');
                 // handle regular method calls and also methodcalls executed from event handlers
-                if (runRet['runRetType'] && runRet['runRetType'] == runYieldHelpers.METHOD_CALL_RESPONSE) {
-                    if (runRet['methodCallId'] && runRet['methodCallId'] == methodCallId) {
+                if (runRet['runRetType'] && runRet['runRetType'] === runYieldHelpers.METHOD_CALL_RESPONSE) {
+                    log('MC 0');
+                    if (runRet['methodCallId'] && runRet['methodCallId'] === methodCallId) {
                         runRetType = runRet['runRetType'];
-                        break;
+                        //break;
+                        log('got response for: ' + methodCallId);
+                        return runRet['runRetValue'];
                     }
 
                     // handle exceptions
-                } else if (runRet['runRetType'] && runRet['runRetType'] == runYieldHelpers.OJS_EXCEPTION) {
+                } else if (runRet['runRetType'] && runRet['runRetType'] === runYieldHelpers.OJS_EXCEPTION) {
+                    log('EXCEPTION 0');
+                    log(runRet['runRetType']);
                     runRetType = runRet['runRetType'];
-                    break;
+                    //break;
+                    log('got response for: ' + methodCallId);
+                    return runRet['runRetValue'];
                 }
             } catch (e) {
                 log(e);
@@ -568,22 +582,11 @@ function ActionRunnable(actionName) {
     };
 
 
-    /*
-    this.handleException = function(methodCallId, device_id, exception_str) {
-        log('Calling defaultExceptionHandler');
-        try {
-            this.defaultExceptionHandler(this, device_id, exception_str);
-        } catch(doubleError) {
-            log('Error while executing exception handler: '+doubleError);
-            actionFinishHandler(this.id);
-        }
 
-        if(device_id == 'server') {
-            log('server side error handled');
-            actionFinishHandler(this.id);
-        }
-    };
-*/
+
+    ////// EXCEPTION HANDLING
+
+
 
     /*
      *   This handles server-side exceptions, so basically just informs clients and then destroies the action
@@ -629,8 +632,39 @@ function ActionRunnable(actionName) {
     this.exceptionHandlerFiber = null;
     this.exceptionHandlingOn = false;
     this.exceptionHandler = function (action, device, exception_value) {
-        log('handling exception');
+        log('Default exception handling!');
+        log('Handling error, reason was: ' + exception_value + ', blame: ' + device.identity);
+        action.finishAction();
     };
+
+
+    /*
+    this.handleException = function(methodCallId, device_id, exception_str) {
+        log('Calling defaultExceptionHandler');
+        try {
+            this.defaultExceptionHandler(this, device_id, exception_str);
+        } catch(doubleError) {
+            log('Error while executing exception handler: '+doubleError);
+            actionFinishHandler(this.id);
+        }
+
+        if(device_id == 'server') {
+            log('server side error handled');
+            actionFinishHandler(this.id);
+        }
+    };
+    
+    this.defaultExceptionHandler = function (action, device_id, exception_str) {
+
+        // Implement here your own exception handler
+        log('Handling error, reason was: ' + exception_str + ', blame: ' + device_id);
+        action.finishAction();
+
+    };
+    */
+
+
+
     this.handleException = function (methodCallId, device_id, exception_value) {
         log('handling exception..');
 
@@ -654,9 +688,7 @@ function ActionRunnable(actionName) {
                 this.action.run(runResponse);
 
             } catch (eeer) {
-                log(eeer);
-                //log('exceptionHandler destroying action instance: '+exceptionActionIdentity);
-                //actionFinishHandler(exceptionActionIdentity);
+                log('Error handling exception: ' + eeer);
                 this.action.handleServerSideException(eeer);
             }
         });
@@ -666,6 +698,11 @@ function ActionRunnable(actionName) {
         };
         this.exceptionHandlerFiber.run(runResponse);
     };
+
+
+
+
+    ////// EVENT HANDLING
 
 
 
@@ -687,9 +724,7 @@ function ActionRunnable(actionName) {
                 this.action.eventHandlingOn = false;
                 log('evenhandler executed');
             } catch (eeer) {
-                log(eeer);
-                //log('eventHandler destroying action instance: '+eventActionIdentity);
-                //actionFinishHandler(eventActionIdentity);
+                log('Error handiling event: ' + eeer);
                 this.action.handleServerSideException(eeer);
             }
         });
@@ -700,12 +735,7 @@ function ActionRunnable(actionName) {
         this.eventHandlerFiber.run(runResponse);
     };
 
-
-
-    // add here the developer defined Action body function
     this.body = undefined;
-
-
 }
 
 
@@ -719,12 +749,6 @@ function executeBLEAction(res, actionName, deviceModels, actionParameters, coord
 
     log(actionName);
     try {
-
-        /*
-              var bodyDefinition = HELPERS.reRequire( ROOT + config.resources.actions + actionName + '.js' );
-
-              var action = new ActionRunnable( actionName );
-              */
 
         var bodyDefinition = HELPERS.reRequire(ROOT + config.resources.actions + actionName + '.js');
         var action = new ActionRunnable(actionName);
@@ -764,99 +788,10 @@ function executeBLEAction(res, actionName, deviceModels, actionParameters, coord
         var soc = CONNECTION_POOL[coordinatorDeviceIdentity];
         soc.emit('ojs_action_instance', params);
 
-        log('SALIL EKA SALIL VIKA 1');
-
-        // command also other participants to start peripheral?
-
-
         return actionID;
 
-
-
-
-        /*
-              if ( bodyDefinition[ 'exceptionHandler' ] ) {
-                action.exceptionHandler = bodyDefinition[ 'exceptionHandler' ];
-              }
-              if ( bodyDefinition[ 'serverSideExceptionHandler' ] ) {
-                action.serverSideExceptionHandler = bodyDefinition[ 'serverSideExceptionHandler' ];
-              }
-              if ( bodyDefinition[ 'eventHandler' ] ) {
-                action.eventHandler = bodyDefinition[ 'eventHandler' ];
-              }
-        */
-
-
-
-        /*
-
-
-              function getStubByDeviceIdParam( device_id_param ) {
-                log( device_id_param );
-                var r = undefined;
-                for ( j in deviceStubs ) {
-                  var stub = deviceStubs[ j ];
-                  if ( device_id_param == 'device:' + stub.identity ) {
-                    log( 'match' );
-                    return stub;
-                  }
-                }
-                return r;
-              }
-
-              function replaceIdsWithDevices( paramsArray ) {
-                for ( i in paramsArray ) {
-                  var param = paramsArray[ i ];
-                  if ( param instanceof Array ) {
-                    replaceIdsWithDevices( param );
-                  } else if ( param.slice( 0, 7 ) == 'device:' ) {
-                    log( 'device param: ' + param );
-                    paramsArray[ i ] = getStubByDeviceIdParam( param );
-                  } else {
-                    log( 'regular param: ' + param );
-                  }
-                }
-              }
-
-              replaceIdsWithDevices( parameters );
-              for ( i in deviceStubs ) {
-
-
-                action.participants[ deviceStubs[ i ].identity ] = deviceStubs[ i ];
-              }
-
-              var bodyInstanceFiber = Fiber( function() {
-                try {
-                  var fiber = Fiber.current;
-                  var o = {
-                    mySuper: this
-                  };
-                  var p = action.body;
-                  g( o, p, parameters );
-                  actionFinishHandler( action.id );
-                } catch ( serverSideError ) {
-                  log( serverSideError );
-                  try {
-                    //action.handleException('no-method-id','server',serverSideError);
-                    action.handleServerSideException( serverSideError );
-                  } catch ( doubleError ) {
-                    log( 'Error while handling server side error: ' + doubleError );
-                    actionFinishHandler( action.id );
-                  };
-                }
-              } );
-
-              action.setBodyInstance( bodyInstanceFiber );
-              action.run();
-
-              actionPool[ action.id ] = action;
-
-              return action.id;
-              */
-
-
     } catch (error) {
-        log(error);
+        log('EE: ' + error);
         throw (error);
     }
 }
@@ -885,28 +820,6 @@ function executeAction(res, actionName, deviceModels, parameters) {
         // create the device stubs
         var deviceStubs = createDevices(deviceModels, action.id, action);
 
-
-        /*
-        function replaceIdsWithStubs(devStub, params) {
-            var deviceTemp = 'device:'+devStub.identity;
-            for(j in params) {
-                var param = params[j];
-                if(param instanceof Array) {
-                    replaceIdsWithStubs(devStub, param);
-                } else {
-                    if(param == deviceTemp) {
-                        params[j] = devStub;
-                        log('pimpom: '+deviceTemp);
-                    }
-                }
-            }
-        }
-
-        for(i in deviceStubs) {
-            replaceIdsWithStubs(deviceStubs[i], parameters);
-            action.participants[deviceStubs[i].identity] = deviceStubs[i];
-        }
-*/
 
         function getStubByDeviceIdParam(device_id_param) {
             log(device_id_param);
@@ -939,14 +852,6 @@ function executeAction(res, actionName, deviceModels, parameters) {
         replaceIdsWithDevices(parameters);
         for (i in deviceStubs) {
 
-            /*log( 'dev: ' + deviceStubs[ i ].deviceName );
-            if ( deviceStubs[ i ] instanceof DeviceStub ) {
-              log( 'juuu u' );
-            } else {
-              log( 'eee ii' );
-            }*/
-
-
             action.participants[deviceStubs[i].identity] = deviceStubs[i];
         }
 
@@ -962,7 +867,6 @@ function executeAction(res, actionName, deviceModels, parameters) {
             } catch (serverSideError) {
                 log(serverSideError);
                 try {
-                    //action.handleException('no-method-id','server',serverSideError);
                     action.handleServerSideException(serverSideError);
                 } catch (doubleError) {
                     log('Error while handling server side error: ' + doubleError);
@@ -978,7 +882,7 @@ function executeAction(res, actionName, deviceModels, parameters) {
 
         return action.id;
     } catch (error) {
-        log(error);
+        log('EE: ' + error);
         throw (error);
     }
 }
@@ -992,7 +896,10 @@ function actionFinishHandler(actionid) {
                     fiber.run();
                 }
             }, ms * 1000);
-            Fiber.yield();
+            if (fiber) {
+                Fiber.yield();
+            }
+
         } catch (err) {
             log(err);
         }

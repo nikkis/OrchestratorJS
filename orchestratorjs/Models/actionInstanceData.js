@@ -4,11 +4,7 @@ log = HELPERS.log
 
 
 var config = require( ROOT + '/config.json' );
-
 var mongoose = require('mongoose');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Cannot connect to mongodb:'));
-mongoose.connect('mongodb://localhost/'+config.database);
 
 
 var actionInstanceDataSchema = mongoose.Schema({

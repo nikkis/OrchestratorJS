@@ -8,12 +8,8 @@ var log = HELPERS.log;
 
 
 var config = require(ROOT + '/config.json');
-
 var mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.ObjectId;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Cannot connect to mongodb:'));
-mongoose.connect( 'mongodb://localhost/' + config.database );
+
 
 
 var ojsConsoleSocket = (config.services.ojsConsole.enabled) ? require('socket.io-client').connect('http://0.0.0.0:' + config.services.ojsConsole.port) : undefined;
