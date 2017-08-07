@@ -403,10 +403,8 @@ function generateCapabilityStub(deviceId, actionid, capabilityName, action, devi
         this.Fiber = require('fibers');
         this.socket = socket;
         this.actionId = actionId;
-        //this.action = action;
         this.device = deviceStub;
         this.deviceId = deviceId;
-
     };
 
 
@@ -491,13 +489,20 @@ function ActionRunnable(actionName) {
         try {
             if (this.exceptionHandlingOn) {
                 log('option: exceptionhandler run');
-                this.exceptionHandlerFiber.run(runResponse);
+                if (this.exceptionHandlerFiber) {
+                    this.exceptionHandlerFiber.run(runResponse);
+                }
             } else if (this.eventHandlingOn) {
                 log('option: eventhandler run');
-                this.eventHandlerFiber.run(runResponse);
+                if (this.eventHandlerFiber) {
+                    this.eventHandlerFiber.run(runResponse);
+                }
             } else {
                 log('option: bodyinstance run');
-                this.bodyInstanceFiber.run(runResponse);
+                if (this.bodyInstanceFiber) {
+                    this.bodyInstanceFiber.run(runResponse);
+                }
+
             }
         } catch (xx) {
             log('Exception in continuing to to run: ' + xx);
